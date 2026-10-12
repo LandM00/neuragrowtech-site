@@ -19,3 +19,8 @@ Pubblicazione: Cloudflare Pages, collegato a questo repository. Ogni modifica su
 
 - **Anteprima:** le modifiche importanti si preparano sul ramo `anteprima`. Cloudflare le pubblica su https://anteprima.neuragrowtech.pages.dev senza toccare il sito vero. Quando sono approvate si uniscono a `main`.
 - **Manutenzione:** la pagina `/manutenzione/` si attiva da Cloudflare (dominio neuragrowtech.com → Rules → Redirect Rules → "Modalità manutenzione"): accendere la regola chiude il sito, spegnerla lo riapre.
+
+## Gioco "Fai il lavoro di NEX"
+
+`js/nexgame.js` + `css/nexgame.css`, usato in `/manutenzione/` e nella pagina 404. Testi nelle tre lingue dentro `nexgame.js`.
+Quando si modificano CSS o JS, aumentare il numero `?v=` nei link delle pagine, così i browser scaricano la versione nuova.
