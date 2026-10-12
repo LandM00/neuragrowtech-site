@@ -1,0 +1,526 @@
+[
+ [
+  "<title>Neura GrowTech · Gestione autonoma delle colture</title>",
+  "<title>Neura GrowTech · Gestión autónoma de cultivos</title>"
+ ],
+ [
+  "Neura GrowTech sviluppa NEX, il sistema che gestisce in autonomia nutrizione, irrigazione e clima nelle colture in serra, fuori suolo e vertical farm.",
+  "Neura GrowTech desarrolla NEX, el sistema que gestiona de forma autónoma la nutrición, el riego y el clima en invernaderos, cultivos sin suelo y granjas verticales."
+ ],
+ [
+  "Neura GrowTech · La serra che decide e agisce da sola",
+  "Neura GrowTech · El invernadero que decide y actúa por sí solo"
+ ],
+ [
+  "aria-label=\"Neura GrowTech, inizio pagina\"",
+  "aria-label=\"Neura GrowTech, inicio de la página\""
+ ],
+ [
+  "href=\"#come-funziona\">Come funziona</a>",
+  "href=\"#como-funciona\">Cómo funciona</a>"
+ ],
+ [
+  "href=\"#moduli\">Moduli</a>",
+  "href=\"#modulos\">Módulos</a>"
+ ],
+ [
+  "href=\"#sperimentazioni\">Sperimentazioni</a>",
+  "href=\"#ensayos\">Ensayos</a>"
+ ],
+ [
+  "href=\"#contatti\">Contatti</a>",
+  "href=\"#contacto\">Contacto</a>"
+ ],
+ [
+  "href=\"#contatti\">Diventa sito pilota</a>",
+  "href=\"#contacto\">Sé sitio piloto</a>"
+ ],
+ [
+  "Agricoltura in ambiente controllato",
+  "Agricultura en ambiente controlado"
+ ],
+ [
+  "<h1>La serra che <em>decide</em> e agisce da sola.</h1>",
+  "<h1>El invernadero que <em>decide</em> y actúa por sí solo.</h1>"
+ ],
+ [
+  "Neura GrowTech sviluppa NEX, un sistema hardware e software per serre, fuori suolo e vertical farm. NEX osserva la coltura, riconosce specie e stadio di crescita e regola da solo nutrizione, irrigazione e clima, in tempo reale.",
+  "Neura GrowTech desarrolla NEX, un sistema de hardware y software para invernaderos, cultivo sin suelo y granjas verticales. NEX observa el cultivo, reconoce la especie y la fase de crecimiento, y ajusta por sí solo la nutrición, el riego y el clima, en tiempo real."
+ ],
+ [
+  "href=\"#contatti\">Richiedi un progetto pilota</a>",
+  "href=\"#contacto\">Solicita un proyecto piloto</a>"
+ ],
+ [
+  "href=\"#come-funziona\">Scopri come funziona</a>",
+  "href=\"#como-funciona\">Descubre cómo funciona</a>"
+ ],
+ [
+  "Nato dalla ricerca del DISTAL, Università di Bologna",
+  "Nacido de la investigación del DISTAL, Universidad de Bolonia"
+ ],
+ [
+  "aria-label=\"Esempio di ciclo di controllo NEX\"",
+  "aria-label=\"Ejemplo de un ciclo de control de NEX\""
+ ],
+ [
+  "NEX · Serra 2 · Bancale B",
+  "NEX · Invernadero 2 · Mesa B"
+ ],
+ [
+  "<span class=\"live\">attivo</span>",
+  "<span class=\"live\">activo</span>"
+ ],
+ [
+  "<span class=\"tag\">Percezione</span>",
+  "<span class=\"tag\">Percepción</span>"
+ ],
+ [
+  "<dt>Coltura</dt><dd>Basilico · 3ª foglia vera</dd>",
+  "<dt>Cultivo</dt><dd>Albahaca · 3.ª hoja verdadera</dd>"
+ ],
+ [
+  "<dt>EC soluzione</dt>",
+  "<dt>CE solución</dt>"
+ ],
+ [
+  "<span class=\"tag\">Decisione</span>",
+  "<span class=\"tag\">Decisión</span>"
+ ],
+ [
+  "Stadio vegetativo avanzato: EC obiettivo 1.8 mS/cm, pH 5.8–6.0. VPD sopra soglia, aumentare umidità.",
+  "Fase vegetativa avanzada: CE objetivo 1,8 mS/cm, pH 5,8–6,0. DPV por encima del umbral, aumentar la humedad."
+ ],
+ [
+  "<span class=\"tag\">Azione</span>",
+  "<span class=\"tag\">Acción</span>"
+ ],
+ [
+  "<dd>Acido · 3 mL</dd>",
+  "<dd>Ácido · 3 mL</dd>"
+ ],
+ [
+  "<dd>Nebulizzazione · 40 s</dd>",
+  "<dd>Nebulización · 40 s</dd>"
+ ],
+ [
+  "Valori di esempio a scopo illustrativo",
+  "Valores de ejemplo con fines ilustrativos"
+ ],
+ [
+  "alt=\"Bancale di coltivazione fuori suolo sotto luci LED, con il sistema NEX installato sopra le piante\"",
+  "alt=\"Mesa de cultivo sin suelo bajo luces LED, con el sistema NEX instalado sobre las plantas\""
+ ],
+ [
+  "alt=\"Taniche di soluzioni concentrate A, B e acido collegate al sistema di dosaggio NEX-F\"",
+  "alt=\"Depósitos de soluciones madre A, B y ácido conectados al sistema de dosificación NEX-F\""
+ ],
+ [
+  "alt=\"Sensore ambientale NEX posizionato tra le piante di basilico\"",
+  "alt=\"Sensor ambiental NEX colocado entre plantas de albahaca\""
+ ],
+ [
+  "Installazione sperimentale in ambiente controllato: unità NEX sopra il bancale, dosaggio delle soluzioni nutritive e sensore ambientale.",
+  "Instalación experimental en ambiente controlado: unidad NEX sobre la mesa, dosificación de las soluciones nutritivas y sensor ambiental."
+ ],
+ [
+  "<span class=\"eyebrow\">Il problema</span>",
+  "<span class=\"eyebrow\">El problema</span>"
+ ],
+ [
+  "I dati ci sono. Manca chi li trasforma in azioni.",
+  "Los datos existen. Falta quien los convierta en acciones."
+ ],
+ [
+  "Fertirrigazione, irrigazione e clima vengono ancora gestiti in gran parte a esperienza, o con sistemi che si fermano al monitoraggio. I software di supporto alle decisioni suggeriscono, ma poi qualcuno deve intervenire a mano.",
+  "La fertirrigación, el riego y el clima se siguen gestionando en gran parte por experiencia, o con sistemas que se quedan en la monitorización. El software de apoyo a la decisión sugiere, pero luego alguien tiene que intervenir a mano."
+ ],
+ [
+  "Con i costi di fertilizzanti ed energia in crescita e meno personale specializzato disponibile, ogni correzione fatta in ritardo pesa su resa e margini.",
+  "Con el coste de los fertilizantes y la energía en aumento y menos personal especializado disponible, cada corrección tardía pesa en el rendimiento y en los márgenes."
+ ],
+ [
+  "dei prelievi di acqua dolce nel mondo è destinato all'agricoltura.",
+  "de las extracciones mundiales de agua dulce se destina a la agricultura."
+ ],
+ [
+  "di crescita annua prevista per l'agricoltura in ambiente controllato: serre hi-tech, fuori suolo e vertical farm.",
+  "de crecimiento anual previsto para la agricultura en ambiente controlado: invernaderos de alta tecnología, cultivo sin suelo y granjas verticales."
+ ],
+ [
+  "<b>Ogni ora</b><span>i parametri di una coltura fuori suolo cambiano. Un sistema che solo li registra lascia la correzione a una persona.",
+  "<b>Cada hora</b><span>cambian los parámetros de un cultivo sin suelo. Un sistema que solo los registra deja la corrección en manos de una persona."
+ ],
+ [
+  "<section id=\"come-funziona\">",
+  "<section id=\"como-funciona\">"
+ ],
+ [
+  "<span class=\"eyebrow\">Come funziona</span>",
+  "<span class=\"eyebrow\">Cómo funciona</span>"
+ ],
+ [
+  "Un ciclo chiuso, che gira da solo.",
+  "Un ciclo cerrado que funciona solo."
+ ],
+ [
+  "NEX unisce osservazione, analisi e controllo in un unico sistema. Il ciclo si ripete in continuo e si adatta a ciò che la pianta richiede in quel momento.",
+  "NEX une observación, análisis y control en un único sistema. El ciclo se repite de forma continua y se adapta a lo que la planta necesita en cada momento."
+ ],
+ [
+  "<h3>Percezione</h3>",
+  "<h3>Percepción</h3>"
+ ],
+ [
+  "Telecamere e sensori misurano in continuo lo stato della coltura, della soluzione nutritiva e dell'aria.",
+  "Cámaras y sensores miden de forma continua el estado del cultivo, de la solución nutritiva y del aire."
+ ],
+ [
+  "<li>immagini</li><li>EC</li><li>pH</li><li>temperatura</li><li>umidità</li>",
+  "<li>imágenes</li><li>CE</li><li>pH</li><li>temperatura</li><li>humedad</li>"
+ ],
+ [
+  "<h3>Decisione</h3>",
+  "<h3>Decisión</h3>"
+ ],
+ [
+  "Il nucleo cognitivo riconosce specie e stadio fenologico e calcola la strategia adatta, come una diagnosi agronomica personalizzata.",
+  "El núcleo cognitivo reconoce la especie y la fase fenológica y calcula la estrategia adecuada, como un diagnóstico agronómico personalizado."
+ ],
+ [
+  "<li>visione artificiale</li><li>machine learning</li><li>modelli agronomici</li>",
+  "<li>visión artificial</li><li>machine learning</li><li>modelos agronómicos</li>"
+ ],
+ [
+  "<h3>Azione</h3>",
+  "<h3>Acción</h3>"
+ ],
+ [
+  "NEX comanda direttamente pompe, valvole e impianti di climatizzazione. Nessun passaggio manuale tra il dato e l'intervento.",
+  "NEX controla directamente bombas, válvulas y equipos de climatización. Ningún paso manual entre el dato y la intervención."
+ ],
+ [
+  "<li>dosaggio</li><li>irrigazione</li><li>clima</li>",
+  "<li>dosificación</li><li>riego</li><li>clima</li>"
+ ],
+ [
+  "↻ Poi il ciclo ricomincia, verificando l'effetto dell'intervento.",
+  "↻ Después el ciclo vuelve a empezar y comprueba el efecto de la intervención."
+ ],
+ [
+  "<section id=\"moduli\">",
+  "<section id=\"modulos\">"
+ ],
+ [
+  "<span class=\"eyebrow\">La piattaforma</span>",
+  "<span class=\"eyebrow\">La plataforma</span>"
+ ],
+ [
+  "Tre moduli, una sola logica decisionale.",
+  "Tres módulos, una sola lógica de decisión."
+ ],
+ [
+  "Si parte dal processo che pesa di più sui costi e si aggiungono gli altri moduli quando serve. Tutti condividono gli stessi dati e la stessa intelligenza.",
+  "Se empieza por el proceso que más pesa en los costes y se añaden los demás módulos cuando hace falta. Todos comparten los mismos datos y la misma inteligencia."
+ ],
+ [
+  "<h3>Fertilizzazione</h3>",
+  "<h3>Fertirrigación</h3>"
+ ],
+ [
+  "Prepara e corregge la soluzione nutritiva in base allo stadio della coltura, dosando concentrati e correttori di pH.",
+  "Prepara y corrige la solución nutritiva según la fase del cultivo, dosificando soluciones madre y correctores de pH."
+ ],
+ [
+  "<dt>Controlla</dt><dd>EC, pH, dosaggi</dd>",
+  "<dt>Controla</dt><dd>CE, pH, dosificación</dd>"
+ ],
+ [
+  "<h3>Irrigazione</h3>",
+  "<h3>Riego</h3>"
+ ],
+ [
+  "Decide quando e quanto irrigare a partire dal fabbisogno reale delle piante, non da un timer fisso.",
+  "Decide cuándo y cuánto regar a partir de la demanda real de las plantas, no de un temporizador fijo."
+ ],
+ [
+  "<dt>Controlla</dt><dd>turni, volumi, drenaggio</dd>",
+  "<dt>Controla</dt><dd>turnos, volúmenes, drenaje</dd>"
+ ],
+ [
+  "<h3>Climatizzazione</h3>",
+  "<h3>Climatización</h3>"
+ ],
+ [
+  "Mantiene il microclima nella finestra ottimale per la coltura, agendo su ventilazione, umidificazione e temperatura.",
+  "Mantiene el microclima en la ventana óptima para el cultivo, actuando sobre ventilación, humidificación y temperatura."
+ ],
+ [
+  "<dt>Controlla</dt><dd>temperatura, UR, VPD</dd>",
+  "<dt>Controla</dt><dd>temperatura, HR, DPV</dd>"
+ ],
+ [
+  "Si installa sull'impianto che hai già.",
+  "Se instala sobre el equipo que ya tienes."
+ ],
+ [
+  "NEX è progettato per il retrofit: si collega alle infrastrutture esistenti, senza rifare la serra e senza cambiare il modo di coltivare.",
+  "NEX está diseñado para la adaptación de instalaciones existentes: se conecta a la infraestructura actual, sin rehacer el invernadero ni cambiar tu forma de cultivar."
+ ],
+ [
+  "<span class=\"eyebrow\">Risultati</span>",
+  "<span class=\"eyebrow\">Resultados</span>"
+ ],
+ [
+  "Cosa cambia in serra.",
+  "Qué cambia en el invernadero."
+ ],
+ [
+  "di input produttivi: acqua, fertilizzanti ed energia.",
+  "de insumos de producción: agua, fertilizantes y energía."
+ ],
+ [
+  "fino a +20%",
+  "hasta +20%"
+ ],
+ [
+  "di produttività, con rese più stabili tra un ciclo e l'altro.",
+  "de productividad, con rendimientos más estables de un ciclo a otro."
+ ],
+ [
+  "di interventi manuali in meno nella gestione quotidiana.",
+  "menos intervenciones manuales en la gestión diaria."
+ ],
+ [
+  "Stime basate sulle sperimentazioni condotte in ambiente operativo. I risultati variano in base a coltura e impianto.",
+  "Estimaciones basadas en ensayos realizados en entornos operativos. Los resultados varían según el cultivo y la instalación."
+ ],
+ [
+  "<span class=\"eyebrow\">Per chi è</span>",
+  "<span class=\"eyebrow\">Para quién es</span>"
+ ],
+ [
+  "Chi coltiva sul serio, e chi fa ricerca.",
+  "Para quien cultiva en serio y para quien investiga."
+ ],
+ [
+  "<span class=\"eyebrow\">Produzione</span>",
+  "<span class=\"eyebrow\">Producción</span>"
+ ],
+ [
+  "<h3>Serre tecnologiche, fuori suolo e vertical farm</h3>",
+  "<h3>Invernaderos tecnológicos, cultivo sin suelo y granjas verticales</h3>"
+ ],
+ [
+  "Aziende ad alta intensità produttiva, dove ogni punto di efficienza su nutrizione, acqua ed energia si vede a fine anno. NEX riduce i costi operativi e la dipendenza da competenze specialistiche sempre presenti.",
+  "Empresas de alta intensidad productiva, donde cada punto de eficiencia en nutrición, agua y energía se nota a final de año. NEX reduce los costes operativos y la dependencia de personal especializado siempre presente."
+ ],
+ [
+  "<span class=\"eyebrow\">Ricerca</span>",
+  "<span class=\"eyebrow\">Investigación</span>"
+ ],
+ [
+  "<h3>Università e centri sperimentali</h3>",
+  "<h3>Universidades y centros de investigación</h3>"
+ ],
+ [
+  "Protocolli standardizzati, meno variabilità operativa tra le prove e dati strutturati di alta qualità. Un'infrastruttura su cui costruire sperimentazioni ripetibili.",
+  "Protocolos estandarizados, menos variabilidad operativa entre ensayos y datos estructurados de alta calidad. Una infraestructura sobre la que construir experimentos repetibles."
+ ],
+ [
+  "<section id=\"tecnologia\">",
+  "<section id=\"tecnologia\">"
+ ],
+ [
+  "alt=\"Unità di calcolo NEX\"",
+  "alt=\"Unidad de cálculo NEX\""
+ ],
+ [
+  "<span class=\"eyebrow\">A che punto siamo</span>",
+  "<span class=\"eyebrow\">En qué punto estamos</span>"
+ ],
+ [
+  "Una tecnologia già validata sul campo.",
+  "Una tecnología ya validada en campo."
+ ],
+ [
+  "Maturità tecnologica: <b>TRL 6</b> su 9",
+  "Madurez tecnológica: <b>TRL 6</b> de 9"
+ ],
+ [
+  "<span>ricerca</span><span>prototipo in ambiente reale</span><span>mercato</span>",
+  "<span>investigación</span><span>prototipo en entorno real</span><span>mercado</span>"
+ ],
+ [
+  "Prototipi funzionanti e validazione in laboratorio<small>MVP completato</small>",
+  "Prototipos funcionales y validación en laboratorio<small>MVP completado</small>"
+ ],
+ [
+  "Sperimentazioni in ambienti operativi reali<small>anche in collaborazione con aziende del settore</small>",
+  "Ensayos en entornos operativos reales<small>también en colaboración con empresas del sector</small>"
+ ],
+ [
+  "Domanda di brevetto depositata presso l'UIBM<small>sistema e metodo per la gestione autonoma dei processi colturali</small>",
+  "Solicitud de patente presentada ante la Oficina Italiana de Patentes (UIBM)<small>sistema y método para la gestión autónoma de los procesos de cultivo</small>"
+ ],
+ [
+  "Industrializzazione e marcatura CE<small>in corso</small>",
+  "Industrialización y marcado CE<small>en curso</small>"
+ ],
+ [
+  "<section id=\"sperimentazioni\">",
+  "<section id=\"ensayos\">"
+ ],
+ [
+  "<span class=\"eyebrow\">Sperimentazioni</span>",
+  "<span class=\"eyebrow\">Ensayos</span>"
+ ],
+ [
+  "Ogni numero viene da una prova in serra.",
+  "Cada cifra procede de un ensayo en invernadero."
+ ],
+ [
+  "Qui raccogliamo le sperimentazioni e le validazioni di NEX: dove, su quale coltura, con quali moduli e con quali risultati misurati.",
+  "Aquí reunimos los ensayos y validaciones de NEX: dónde, en qué cultivo, con qué módulos y con qué resultados medidos."
+ ],
+ [
+  "alt=\"Camera di crescita con NEX installato sopra il bancale\"",
+  "alt=\"Cámara de crecimiento con NEX instalado sobre la mesa\""
+ ],
+ [
+  "<span class=\"pill\">Validazione</span><span class=\"mono\">DISTAL · Università di Bologna</span>",
+  "<span class=\"pill\">Validación</span><span class=\"mono\">DISTAL · Universidad de Bolonia</span>"
+ ],
+ [
+  "<h3>Gestione autonoma in camera di crescita</h3>",
+  "<h3>Gestión autónoma en cámara de crecimiento</h3>"
+ ],
+ [
+  "Coltura fuori suolo su bancali sotto luce LED, con NEX che gestisce la soluzione nutritiva e il microclima, riconoscendo lo stadio delle piante dalle immagini.",
+  "Cultivo sin suelo en mesas bajo iluminación LED, con NEX gestionando la solución nutritiva y el microclima y reconociendo la fase de las plantas a partir de imágenes."
+ ],
+ [
+  "<dt>Ambiente</dt><dd>Controllato, fuori suolo</dd>",
+  "<dt>Entorno</dt><dd>Controlado, sin suelo</dd>"
+ ],
+ [
+  "<dt>Moduli</dt>",
+  "<dt>Módulos</dt>"
+ ],
+ [
+  "<dt>Stato</dt><dd>Completata</dd>",
+  "<dt>Estado</dt><dd>Completado</dd>"
+ ],
+ [
+  "<span class=\"pill\">Prossimamente</span>",
+  "<span class=\"pill\">Próximamente</span>"
+ ],
+ [
+  "<h3>Progetti pilota in azienda</h3>",
+  "<h3>Proyectos piloto en empresas</h3>"
+ ],
+ [
+  "Le prime installazioni presso aziende agricole e centri di ricerca. Ogni progetto pilota avrà qui la sua scheda con i risultati misurati.",
+  "Las primeras instalaciones en empresas agrícolas y centros de investigación. Cada proyecto piloto tendrá aquí su ficha con los resultados medidos."
+ ],
+ [
+  "href=\"#contatti\">Candida la tua serra</a>",
+  "href=\"#contacto\">Presenta tu invernadero</a>"
+ ],
+ [
+  "Agronomia, ingegneria e software nella stessa squadra.",
+  "Agronomía, ingeniería y software en el mismo equipo."
+ ],
+ [
+  "Assegnista di ricerca al DISTAL. Direzione strategica e coordinamento.",
+  "Investigador contratado en el DISTAL. Dirección estratégica y coordinación."
+ ],
+ [
+  "Dottorando di ricerca. Sviluppo tecnologico e modelli decisionali.",
+  "Doctorando. Desarrollo tecnológico y modelos de decisión."
+ ],
+ [
+  "Ingegnere con esperienza industriale. Operazioni e industrializzazione.",
+  "Ingeniero con experiencia industrial. Operaciones e industrialización."
+ ],
+ [
+  "Tecnico al DISTAL. Sviluppo commerciale e rapporti con i clienti.",
+  "Técnico en el DISTAL. Desarrollo comercial y relación con clientes."
+ ],
+ [
+  "<span class=\"eyebrow\">Referenti scientifici</span>",
+  "<span class=\"eyebrow\">Asesores científicos</span>"
+ ],
+ [
+  "Francesco Orsini, Giorgio Gianquinto Prosdocimi e Giuseppina Pennisi, del Dipartimento di Scienze e Tecnologie Agro-Alimentari dell'Università di Bologna, esperti di fisiologia delle colture e sistemi di coltivazione innovativi.",
+  "Francesco Orsini, Giorgio Gianquinto Prosdocimi y Giuseppina Pennisi, del Departamento de Ciencias y Tecnologías Agroalimentarias (DISTAL) de la Universidad de Bolonia, expertos en fisiología de cultivos y sistemas de cultivo innovadores."
+ ],
+ [
+  "<section class=\"contact\" id=\"contatti\">",
+  "<section class=\"contact\" id=\"contacto\">"
+ ],
+ [
+  "<span class=\"eyebrow\">Progetti pilota</span>",
+  "<span class=\"eyebrow\">Proyectos piloto</span>"
+ ],
+ [
+  "Prova NEX nella tua serra.",
+  "Prueba NEX en tu invernadero."
+ ],
+ [
+  "Stiamo selezionando le prime aziende e i primi centri di ricerca con cui installare NEX. Raccontaci che cosa coltivi e com'è fatto il tuo impianto: valutiamo insieme da quale modulo partire.",
+  "Estamos seleccionando las primeras empresas y centros de investigación con los que instalar NEX. Cuéntanos qué cultivas y cómo es tu instalación, y valoraremos juntos por qué módulo empezar."
+ ],
+ [
+  "<small>Progetti pilota e offerte commerciali</small>",
+  "<small>Proyectos piloto y ofertas comerciales</small>"
+ ],
+ [
+  "<small>Strategia, partnership e investitori</small>",
+  "<small>Estrategia, alianzas e inversores</small>"
+ ],
+ [
+  "<small>Tecnologia, integrazione con l'impianto e collaborazioni scientifiche</small>",
+  "<small>Tecnología, integración con la instalación y colaboraciones científicas</small>"
+ ],
+ [
+  "<small>Installazioni, forniture e produzione</small>",
+  "<small>Instalaciones, suministros y producción</small>"
+ ],
+ [
+  "data-done=\"Copiato\"",
+  "data-done=\"Copiado\""
+ ],
+ [
+  ">Copia</button>",
+  ">Copiar</button>"
+ ],
+ [
+  "Progetto imprenditoriale in fase di costituzione, nato dalla ricerca del DISTAL, Università di Bologna",
+  "Empresa en fase de constitución, nacida de la investigación del DISTAL, Universidad de Bolonia"
+ ],
+ [
+  "href=\"#team\">Team</a>",
+  "href=\"#team\">Equipo</a>"
+ ],
+ [
+  "<span class=\"eyebrow\">Team</span>",
+  "<span class=\"eyebrow\">Equipo</span>"
+ ],
+ [
+  "<dd>1.42 mS/cm</dd>",
+  "<dd>1,42 mS/cm</dd>"
+ ],
+ [
+  "<dd>6.3</dd>",
+  "<dd>6,3</dd>"
+ ],
+ [
+  "<dt>VPD</dt><dd>1.12 kPa</dd>",
+  "<dt>DPV</dt><dd>1,12 kPa</dd>"
+ ],
+ [
+  "<dd>Stock A+B · 14 mL</dd>",
+  "<dd>Solución A+B · 14 mL</dd>"
+ ]
+]

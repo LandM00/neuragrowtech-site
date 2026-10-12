@@ -24,13 +24,20 @@
     a.addEventListener('click',function(){store('ngt-lang',a.getAttribute('hreflang'))});
   });
 
-  // suggest English to visitors whose browser is not in Italian (no automatic redirect)
+  // suggest the visitor's language on the Italian home (no automatic redirect)
   var hint=document.getElementById('lang-hint');
   if(hint){
-    var langs=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'it']).join(',').toLowerCase();
+    var paths={en:'/en/',es:'/es/'};
     var saved=read('ngt-lang');
-    if(saved==='en'){location.replace('/en/'+location.hash);return;}
-    if(!saved && langs.indexOf('it')!==0 && !/(^|,)it/.test(langs)){hint.hidden=false;}
-    hint.querySelector('.lang-hint-close').addEventListener('click',function(){hint.hidden=true;store('ngt-lang','it');});
+    if(saved&&paths[saved]){location.replace(paths[saved]+location.hash);return;}
+    var langs=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'it']).map(function(l){return String(l).toLowerCase().slice(0,2)});
+    if(!saved && langs.indexOf('it')===-1){
+      var pick=langs.indexOf('es')!==-1&&(langs.indexOf('en')===-1||langs.indexOf('es')<langs.indexOf('en'))?'es':'en';
+      var box=hint.querySelector('[data-hint="'+pick+'"]');
+      if(box){box.hidden=false;hint.hidden=false;}
+    }
+    hint.querySelectorAll('.lang-hint-close').forEach(function(btn){
+      btn.addEventListener('click',function(){hint.hidden=true;store('ngt-lang','it');});
+    });
   }
 })();

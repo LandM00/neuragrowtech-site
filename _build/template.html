@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Neura GrowTech · Gestione autonoma delle colture</title>
+<meta name="description" content="Neura GrowTech sviluppa NEX, il sistema che gestisce in autonomia nutrizione, irrigazione e clima nelle colture in serra, fuori suolo e vertical farm.">
+<!--HEAD_ALT-->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Neura GrowTech · La serra che decide e agisce da sola">
+<meta property="og:description" content="Neura GrowTech sviluppa NEX, il sistema che gestisce in autonomia nutrizione, irrigazione e clima nelle colture in serra, fuori suolo e vertical farm.">
+<meta property="og:url" content="{{URL}}">
+<meta property="og:image" content="https://neuragrowtech.com/img/nex-camera-crescita.jpg">
+<meta property="og:locale" content="{{LOCALE}}">
+<meta name="theme-color" content="#12262A">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="/js/main.js"></script>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Neura GrowTech, inizio pagina">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 21V11c0-3 2-5 5-5 0 3-2 5-5 5M13 15c0-2.5-1.8-4-4.5-4 0 2.5 1.8 4 4.5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="21.5" cy="7" r="2.2" fill="var(--accent)"/></svg>
+      NEURA GROWTECH
+    </a>
+    <ul>
+      <li><a href="#come-funziona">Come funziona</a></li>
+      <li><a href="#moduli">Moduli</a></li>
+      <li><a href="#sperimentazioni">Sperimentazioni</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contatti">Contatti</a></li>
+    </ul>
+    <div class="nav-end">
+      <!--LANG_SWITCH-->
+      <a class="btn" href="#contatti">Diventa sito pilota</a>
+    </div>
+  </div>
+</header>
+<!--LANG_HINT-->
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Agricoltura in ambiente controllato</span>
+        <h1>La serra che <em>decide</em> e agisce da sola.</h1>
+        <p class="lede">Neura GrowTech sviluppa NEX, un sistema hardware e software per serre, fuori suolo e vertical farm. NEX osserva la coltura, riconosce specie e stadio di crescita e regola da solo nutrizione, irrigazione e clima, in tempo reale.</p>
+        <div class="cta-row">
+          <a class="btn" href="#contatti">Richiedi un progetto pilota</a>
+          <a class="btn ghost" href="#come-funziona">Scopri come funziona</a>
+        </div>
+        <span class="origin">Nato dalla ricerca del DISTAL, Università di Bologna</span>
+      </div>
+
+      <div class="console" aria-label="Esempio di ciclo di controllo NEX">
+        <div class="console-head"><span>NEX · Serra 2 · Bancale B</span><span class="live">attivo</span></div>
+        <div class="stage" data-i="0">
+          <span class="tag">Percezione</span>
+          <dl>
+            <dt>Coltura</dt><dd>Basilico · 3ª foglia vera</dd>
+            <dt>EC soluzione</dt><dd>1.42 mS/cm</dd>
+            <dt>pH</dt><dd>6.3</dd>
+            <dt>VPD</dt><dd>1.12 kPa</dd>
+          </dl>
+        </div>
+        <div class="stage" data-i="1">
+          <span class="tag">Decisione</span>
+          <p>Stadio vegetativo avanzato: EC obiettivo 1.8 mS/cm, pH 5.8–6.0. VPD sopra soglia, aumentare umidità.</p>
+        </div>
+        <div class="stage" data-i="2">
+          <span class="tag">Azione</span>
+          <dl>
+            <dt>NEX-F</dt><dd>Stock A+B · 14 mL</dd>
+            <dt>NEX-F</dt><dd>Acido · 3 mL</dd>
+            <dt>NEX-C</dt><dd>Nebulizzazione · 40 s</dd>
+          </dl>
+        </div>
+        <div class="console-foot">Valori di esempio a scopo illustrativo</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding-bottom:clamp(3rem,7vw,5rem)">
+    <div class="band">
+      <figure class="photo"><img loading="lazy" src="/img/nex-camera-crescita.jpg" alt="Bancale di coltivazione fuori suolo sotto luci LED, con il sistema NEX installato sopra le piante"></figure>
+      <div class="side">
+        <figure class="photo"><img loading="lazy" src="/img/nex-f-dosaggio.jpg" alt="Taniche di soluzioni concentrate A, B e acido collegate al sistema di dosaggio NEX-F"></figure>
+        <figure class="photo"><img loading="lazy" src="/img/nex-sensore.jpg" alt="Sensore ambientale NEX posizionato tra le piante di basilico"></figure>
+      </div>
+    </div>
+    <figcaption>Installazione sperimentale in ambiente controllato: unità NEX sopra il bancale, dosaggio delle soluzioni nutritive e sensore ambientale.</figcaption>
+  </div>
+
+  <section>
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow">Il problema</span>
+        <h2>I dati ci sono. Manca chi li trasforma in azioni.</h2>
+        <p class="lede">Fertirrigazione, irrigazione e clima vengono ancora gestiti in gran parte a esperienza, o con sistemi che si fermano al monitoraggio. I software di supporto alle decisioni suggeriscono, ma poi qualcuno deve intervenire a mano.</p>
+        <p>Con i costi di fertilizzanti ed energia in crescita e meno personale specializzato disponibile, ogni correzione fatta in ritardo pesa su resa e margini.</p>
+      </div>
+      <div class="facts">
+        <div class="fact"><b>~70%</b><span>dei prelievi di acqua dolce nel mondo è destinato all'agricoltura.<small>FAO, 2023</small></span></div>
+        <div class="fact"><b>&gt;20%</b><span>di crescita annua prevista per l'agricoltura in ambiente controllato: serre hi-tech, fuori suolo e vertical farm.<small>CAGR · Grand View Research, 2024</small></span></div>
+        <div class="fact"><b>Ogni ora</b><span>i parametri di una coltura fuori suolo cambiano. Un sistema che solo li registra lascia la correzione a una persona.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="come-funziona">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Come funziona</span>
+        <h2>Un ciclo chiuso, che gira da solo.</h2>
+        <p class="lede">NEX unisce osservazione, analisi e controllo in un unico sistema. Il ciclo si ripete in continuo e si adatta a ciò che la pianta richiede in quel momento.</p>
+      </div>
+      <div class="loop">
+        <div class="step">
+          <h3>Percezione</h3>
+          <p>Telecamere e sensori misurano in continuo lo stato della coltura, della soluzione nutritiva e dell'aria.</p>
+          <ul><li>immagini</li><li>EC</li><li>pH</li><li>temperatura</li><li>umidità</li></ul>
+        </div>
+        <div class="step">
+          <h3>Decisione</h3>
+          <p>Il nucleo cognitivo riconosce specie e stadio fenologico e calcola la strategia adatta, come una diagnosi agronomica personalizzata.</p>
+          <ul><li>visione artificiale</li><li>machine learning</li><li>modelli agronomici</li></ul>
+        </div>
+        <div class="step">
+          <h3>Azione</h3>
+          <p>NEX comanda direttamente pompe, valvole e impianti di climatizzazione. Nessun passaggio manuale tra il dato e l'intervento.</p>
+          <ul><li>dosaggio</li><li>irrigazione</li><li>clima</li></ul>
+        </div>
+      </div>
+      <p class="loop-note">↻ Poi il ciclo ricomincia, verificando l'effetto dell'intervento.</p>
+    </div>
+  </section>
+
+  <section id="moduli">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">La piattaforma</span>
+        <h2>Tre moduli, una sola logica decisionale.</h2>
+        <p class="lede">Si parte dal processo che pesa di più sui costi e si aggiungono gli altri moduli quando serve. Tutti condividono gli stessi dati e la stessa intelligenza.</p>
+      </div>
+      <div class="modules">
+        <article class="module">
+          <span class="code">NEX-F</span>
+          <h3>Fertilizzazione</h3>
+          <p>Prepara e corregge la soluzione nutritiva in base allo stadio della coltura, dosando concentrati e correttori di pH.</p>
+          <dl><dt>Controlla</dt><dd>EC, pH, dosaggi</dd></dl>
+        </article>
+        <article class="module">
+          <span class="code">NEX-I</span>
+          <h3>Irrigazione</h3>
+          <p>Decide quando e quanto irrigare a partire dal fabbisogno reale delle piante, non da un timer fisso.</p>
+          <dl><dt>Controlla</dt><dd>turni, volumi, drenaggio</dd></dl>
+        </article>
+        <article class="module">
+          <span class="code">NEX-C</span>
+          <h3>Climatizzazione</h3>
+          <p>Mantiene il microclima nella finestra ottimale per la coltura, agendo su ventilazione, umidificazione e temperatura.</p>
+          <dl><dt>Controlla</dt><dd>temperatura, UR, VPD</dd></dl>
+        </article>
+      </div>
+      <div class="retrofit">
+        <h3>Si installa sull'impianto che hai già.</h3>
+        <p>NEX è progettato per il retrofit: si collega alle infrastrutture esistenti, senza rifare la serra e senza cambiare il modo di coltivare.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Risultati</span>
+        <h2>Cosa cambia in serra.</h2>
+      </div>
+      <div class="results">
+        <div class="result"><span class="num">−15–20%</span><p>di input produttivi: acqua, fertilizzanti ed energia.</p></div>
+        <div class="result"><span class="num">fino a +20%</span><p>di produttività, con rese più stabili tra un ciclo e l'altro.</p></div>
+        <div class="result"><span class="num">&gt;70%</span><p>di interventi manuali in meno nella gestione quotidiana.</p></div>
+      </div>
+      <p class="footnote">Stime basate sulle sperimentazioni condotte in ambiente operativo. I risultati variano in base a coltura e impianto.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Per chi è</span>
+        <h2>Chi coltiva sul serio, e chi fa ricerca.</h2>
+      </div>
+      <div class="aud">
+        <article>
+          <span class="eyebrow">Produzione</span>
+          <h3>Serre tecnologiche, fuori suolo e vertical farm</h3>
+          <p>Aziende ad alta intensità produttiva, dove ogni punto di efficienza su nutrizione, acqua ed energia si vede a fine anno. NEX riduce i costi operativi e la dipendenza da competenze specialistiche sempre presenti.</p>
+        </article>
+        <article>
+          <span class="eyebrow">Ricerca</span>
+          <h3>Università e centri sperimentali</h3>
+          <p>Protocolli standardizzati, meno variabilità operativa tra le prove e dati strutturati di alta qualità. Un'infrastruttura su cui costruire sperimentazioni ripetibili.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="tecnologia">
+    <div class="wrap status">
+      <figure class="photo"><img loading="lazy" src="/img/nex-unita.jpg" alt="Unità di calcolo NEX"></figure>
+      <div style="display:flex;flex-direction:column;gap:1.5rem;min-width:0">
+        <span class="eyebrow">A che punto siamo</span>
+        <h2>Una tecnologia già validata sul campo.</h2>
+        <div>
+          <div class="mono" style="font-size:.85rem">Maturità tecnologica: <b>TRL 6</b> su 9</div>
+          <div class="trl" aria-hidden="true"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span></span><span></span><span></span></div>
+          <div class="trl-labels"><span>ricerca</span><span>prototipo in ambiente reale</span><span>mercato</span></div>
+        </div>
+        <ul class="milestones">
+          <li><span class="dot done"></span><div>Prototipi funzionanti e validazione in laboratorio<small>MVP completato</small></div></li>
+          <li><span class="dot done"></span><div>Sperimentazioni in ambienti operativi reali<small>anche in collaborazione con aziende del settore</small></div></li>
+          <li><span class="dot done"></span><div>Domanda di brevetto depositata presso l'UIBM<small>sistema e metodo per la gestione autonoma dei processi colturali</small></div></li>
+          <li><span class="dot"></span><div>Industrializzazione e marcatura CE<small>in corso</small></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="sperimentazioni">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Sperimentazioni</span>
+        <h2>Ogni numero viene da una prova in serra.</h2>
+        <p class="lede">Qui raccogliamo le sperimentazioni e le validazioni di NEX: dove, su quale coltura, con quali moduli e con quali risultati misurati.</p>
+      </div>
+      <div class="trials">
+        <article class="trial">
+          <figure class="photo"><img loading="lazy" src="/img/nex-camera-crescita.jpg" alt="Camera di crescita con NEX installato sopra il bancale"></figure>
+          <div class="trial-body">
+            <div class="trial-meta"><span class="pill">Validazione</span><span class="mono">DISTAL · Università di Bologna</span></div>
+            <h3>Gestione autonoma in camera di crescita</h3>
+            <p>Coltura fuori suolo su bancali sotto luce LED, con NEX che gestisce la soluzione nutritiva e il microclima, riconoscendo lo stadio delle piante dalle immagini.</p>
+            <dl class="trial-facts">
+              <dt>Ambiente</dt><dd>Controllato, fuori suolo</dd>
+              <dt>Moduli</dt><dd>NEX-F, NEX-C</dd>
+              <dt>Stato</dt><dd>Completata</dd>
+            </dl>
+          </div>
+        </article>
+        <article class="trial upcoming">
+          <div class="trial-body">
+            <div class="trial-meta"><span class="pill">Prossimamente</span></div>
+            <h3>Progetti pilota in azienda</h3>
+            <p>Le prime installazioni presso aziende agricole e centri di ricerca. Ogni progetto pilota avrà qui la sua scheda con i risultati misurati.</p>
+            <a class="btn ghost" href="#contatti">Candida la tua serra</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Team</span>
+        <h2>Agronomia, ingegneria e software nella stessa squadra.</h2>
+      </div>
+      <div class="team">
+        <div class="person"><span class="role">CEO</span><h3>Matteo Landolfo</h3><p>Assegnista di ricerca al DISTAL. Direzione strategica e coordinamento.</p></div>
+        <div class="person"><span class="role">CTO</span><h3>Fabio Perotti</h3><p>Dottorando di ricerca. Sviluppo tecnologico e modelli decisionali.</p></div>
+        <div class="person"><span class="role">COO</span><h3>Giuseppe Landolfo</h3><p>Ingegnere con esperienza industriale. Operazioni e industrializzazione.</p></div>
+        <div class="person"><span class="role">Business</span><h3>Alessandro Pistillo</h3><p>Tecnico al DISTAL. Sviluppo commerciale e rapporti con i clienti.</p></div>
+      </div>
+      <div class="advisors">
+        <span class="eyebrow">Referenti scientifici</span>
+        <p>Francesco Orsini, Giorgio Gianquinto Prosdocimi e Giuseppina Pennisi, del Dipartimento di Scienze e Tecnologie Agro-Alimentari dell'Università di Bologna, esperti di fisiologia delle colture e sistemi di coltivazione innovativi.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contatti">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow">Progetti pilota</span>
+        <h2>Prova NEX nella tua serra.</h2>
+        <p class="lede">Stiamo selezionando le prime aziende e i primi centri di ricerca con cui installare NEX. Raccontaci che cosa coltivi e com'è fatto il tuo impianto: valutiamo insieme da quale modulo partire.</p>
+      </div>
+      <div class="mail">
+        <div class="mail-row"><div><small>Progetti pilota e offerte commerciali</small><b>Alessandro Pistillo</b><a class="addr" href="mailto:a.pistillo@neuragrowtech.com">a.pistillo@neuragrowtech.com</a></div><button class="copy" type="button" data-done="Copiato" data-copy="a.pistillo@neuragrowtech.com">Copia</button></div>
+        <div class="mail-row"><div><small>Strategia, partnership e investitori</small><b>Matteo Landolfo · CEO</b><a class="addr" href="mailto:m.landolfo@neuragrowtech.com">m.landolfo@neuragrowtech.com</a></div><button class="copy" type="button" data-done="Copiato" data-copy="m.landolfo@neuragrowtech.com">Copia</button></div>
+        <div class="mail-row"><div><small>Tecnologia, integrazione con l'impianto e collaborazioni scientifiche</small><b>Fabio Perotti · CTO</b><a class="addr" href="mailto:f.perotti@neuragrowtech.com">f.perotti@neuragrowtech.com</a></div><button class="copy" type="button" data-done="Copiato" data-copy="f.perotti@neuragrowtech.com">Copia</button></div>
+        <div class="mail-row"><div><small>Installazioni, forniture e produzione</small><b>Giuseppe Landolfo · COO</b><a class="addr" href="mailto:g.landolfo@neuragrowtech.com">g.landolfo@neuragrowtech.com</a></div><button class="copy" type="button" data-done="Copiato" data-copy="g.landolfo@neuragrowtech.com">Copia</button></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Neura GrowTech · Progetto imprenditoriale in fase di costituzione, nato dalla ricerca del DISTAL, Università di Bologna</span>
+    <span>Bologna · neuragrowtech.com</span>
+  </div>
+</footer>
+</body>
+</html>
