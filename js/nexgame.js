@@ -1,216 +1,333 @@
-/* "Fai il lavoro di NEX" — mini-gioco usato nelle pagine di manutenzione e 404.
-   Uso: NexGame.mount(elemento, 'it'|'en'|'es') -> { setLang(l) }
-   La simulazione gira a passo fisso con un generatore casuale con seme: quando "gioca NEX"
-   la serra subisce esattamente gli stessi imprevisti della partita del visitatore. */
+/* "Fai il lavoro di NEX" — mini-gioco delle pagine /gioco/, /manutenzione/ e 404.
+   Uso: NexGame.mount(elemento, 'it'|'en'|'es', { shareUrl }) -> { setLang(l) }
+   - Gioco infinito: cicli di 40 giorni uno dopo l'altro, si perde solo se la pianta muore.
+   - Punti: si guadagnano solo con tutti i parametri in fascia; valgono di più vicino al centro
+     (precisione) e con una serie lunga (moltiplicatore). Bonus a ogni raccolto.
+   - La simulazione è a passo fisso con generatori casuali con seme: "Guarda NEX" rigioca la
+     stessa identica serra (stessa deriva, stessi imprevisti) per lo stesso numero di giorni.
+   - È una simulazione semplificata: i numeri sono del gioco, non rese o prestazioni reali. */
 (function () {
   var STR = {
     it: {
-      head: 'Serra di prova · Basilico', headNex: 'NEX al comando', day: 'Giorno',
+      head: 'Serra di prova · Basilico', headNex: 'NEX al comando', day: 'Giorno', cycle: 'Ciclo', pts: 'Punti', bestShort: 'Record',
       st: ['Seme', 'Germinazione', 'Cotiledoni', 'Prime foglie vere', 'Pianta adulta', 'Pronta per il raccolto'],
       start_t: 'Fai il lavoro di NEX',
-      start_p: 'EC, pH e VPD si spostano da soli. Tienili nella fascia verde con ▲ ▼ e porta il basilico al raccolto, al giorno 40.',
-      start_b: 'Inizia',
-      over_t: 'La piantina non ce l’ha fatta.', over_p: 'È arrivata al giorno {d}.',
-      win_t: 'Raccolto!', win_p: 'Hai portato il basilico al giorno 40.',
-      watch: 'Guarda come lo fa NEX', again: 'Rigioca', best: 'Il tuo record: {g} g',
-      cmp_t: 'Stessa serra, stessi imprevisti.', you: 'Tu', nex: 'NEX',
-      r_day: 'Giorno raggiunto', r_health: 'Salute media', r_yield: 'Raccolto', r_input: 'Correzioni a mano',
-      cta: 'NEX lo fa da solo, ogni pochi secondi, 24 ore su 24. Vuoi provarlo nella tua serra?',
-      vpd: 'VPD', ec: 'EC', g: 'g', auto: 'automatico',
-      ev: ['☀ Picco di sole: VPD in salita', '💧 Rabbocco con acqua: EC in calo', '⚗ Acqua di rete alcalina: pH in salita', '☁ Cielo coperto e umido: VPD in calo', '🌡 Caldo, la pianta beve: EC in salita']
+      start_p: 'EC, pH e VPD si spostano da soli. Tienili nella fascia verde con ▲ ▼: più sei preciso e costante, più punti fai. Ogni 40 giorni si raccoglie e si riparte. Fin dove arrivi?',
+      keys: 'Da tastiera: Q/A, W/S, E/D.', start_b: 'Inizia',
+      over_t: 'La pianta non ce l’ha fatta.', over_p: '{p} punti · giorno {d} · ciclo {c}.',
+      newbest: 'Nuovo record!',
+      nexline: 'NEX corregge questi parametri da solo, ogni pochi secondi, 24 ore su 24.',
+      watch: 'Guarda come lo fa NEX', again: 'Rigioca', share: 'Sfida un collega', copied: 'Testo copiato',
+      skip: 'Vai al risultato',
+      cmp_t: 'Stessa serra, stessi imprevisti, stessi giorni.', you: 'Tu', nex: 'NEX',
+      r_day: 'Giorni', r_band: 'Tempo con tutto in fascia', r_manual: 'Correzioni a mano', r_pts: 'Punti',
+      auto: 'automatico',
+      note: 'Simulazione semplificata a scopo dimostrativo: non rappresenta rese o prestazioni reali.',
+      cta: 'Vuoi vedere NEX in una serra vera?',
+      harvest: '🌿 Raccolto! +{b} punti · si riparte con il ciclo {c}',
+      pause_t: 'In pausa', resume: 'Riprendi',
+      shareText: 'Ho fatto {p} punti nella serra di NEX (giorno {d}, ciclo {c}). Riesci a fare meglio?',
+      ev: ['☀ Picco di sole: VPD in salita', '💧 Rabbocco con acqua: EC in calo', '⚗ Acqua di rete alcalina: pH in salita', '☁ Cielo coperto e umido: VPD in calo', '🌡 Caldo, la pianta beve: EC in salita'],
+      vpd: 'VPD', ec: 'EC'
     },
     en: {
-      head: 'Test greenhouse · Basil', headNex: 'NEX in control', day: 'Day',
+      head: 'Test greenhouse · Basil', headNex: 'NEX in control', day: 'Day', cycle: 'Cycle', pts: 'Points', bestShort: 'Best',
       st: ['Seed', 'Germination', 'Cotyledons', 'First true leaves', 'Mature plant', 'Ready to harvest'],
       start_t: 'Do NEX’s job',
-      start_p: 'EC, pH and VPD drift on their own. Keep them in the green band with ▲ ▼ and get the basil to harvest on day 40.',
-      start_b: 'Start',
-      over_t: 'The seedling didn’t make it.', over_p: 'It reached day {d}.',
-      win_t: 'Harvest!', win_p: 'You got the basil to day 40.',
-      watch: 'Watch NEX do it', again: 'Play again', best: 'Your best: {g} g',
-      cmp_t: 'Same greenhouse, same surprises.', you: 'You', nex: 'NEX',
-      r_day: 'Day reached', r_health: 'Average health', r_yield: 'Harvest', r_input: 'Manual corrections',
-      cta: 'NEX does this on its own, every few seconds, around the clock. Want to try it in your greenhouse?',
-      vpd: 'VPD', ec: 'EC', g: 'g', auto: 'automatic',
-      ev: ['☀ Sun peak: VPD rising', '💧 Topping up with water: EC falling', '⚗ Alkaline tap water: pH rising', '☁ Cloudy and humid: VPD falling', '🌡 Hot day, the plant drinks: EC rising']
+      start_p: 'EC, pH and VPD drift on their own. Keep them in the green band with ▲ ▼: the more precise and steady you are, the more points you score. Every 40 days you harvest and start again. How far can you go?',
+      keys: 'Keyboard: Q/A, W/S, E/D.', start_b: 'Start',
+      over_t: 'The plant didn’t make it.', over_p: '{p} points · day {d} · cycle {c}.',
+      newbest: 'New best!',
+      nexline: 'NEX corrects these parameters on its own, every few seconds, around the clock.',
+      watch: 'Watch NEX do it', again: 'Play again', share: 'Challenge a colleague', copied: 'Text copied',
+      skip: 'Skip to result',
+      cmp_t: 'Same greenhouse, same surprises, same days.', you: 'You', nex: 'NEX',
+      r_day: 'Days', r_band: 'Time with everything in range', r_manual: 'Manual corrections', r_pts: 'Points',
+      auto: 'automatic',
+      note: 'Simplified simulation for demonstration only: it does not represent real yields or performance.',
+      cta: 'Want to see NEX in a real greenhouse?',
+      harvest: '🌿 Harvest! +{b} points · starting cycle {c}',
+      pause_t: 'Paused', resume: 'Resume',
+      shareText: 'I scored {p} points in the NEX greenhouse (day {d}, cycle {c}). Can you beat it?',
+      ev: ['☀ Sun peak: VPD rising', '💧 Topping up with water: EC falling', '⚗ Alkaline tap water: pH rising', '☁ Cloudy and humid: VPD falling', '🌡 Hot day, the plant drinks: EC rising'],
+      vpd: 'VPD', ec: 'EC'
     },
     es: {
-      head: 'Invernadero de prueba · Albahaca', headNex: 'NEX al mando', day: 'Día',
+      head: 'Invernadero de prueba · Albahaca', headNex: 'NEX al mando', day: 'Día', cycle: 'Ciclo', pts: 'Puntos', bestShort: 'Récord',
       st: ['Semilla', 'Germinación', 'Cotiledones', 'Primeras hojas verdaderas', 'Planta adulta', 'Lista para cosechar'],
       start_t: 'Haz el trabajo de NEX',
-      start_p: 'La CE, el pH y el DPV se desvían solos. Mantenlos en la franja verde con ▲ ▼ y lleva la albahaca a la cosecha, el día 40.',
-      start_b: 'Empezar',
-      over_t: 'La plántula no lo ha conseguido.', over_p: 'Ha llegado al día {d}.',
-      win_t: '¡Cosecha!', win_p: 'Has llevado la albahaca al día 40.',
-      watch: 'Mira cómo lo hace NEX', again: 'Volver a jugar', best: 'Tu récord: {g} g',
-      cmp_t: 'Mismo invernadero, mismos imprevistos.', you: 'Tú', nex: 'NEX',
-      r_day: 'Día alcanzado', r_health: 'Salud media', r_yield: 'Cosecha', r_input: 'Correcciones manuales',
-      cta: 'NEX lo hace solo, cada pocos segundos, las 24 horas. ¿Quieres probarlo en tu invernadero?',
-      vpd: 'DPV', ec: 'CE', g: 'g', auto: 'automático',
-      ev: ['☀ Pico de sol: DPV en aumento', '💧 Relleno con agua: CE en descenso', '⚗ Agua de red alcalina: pH en aumento', '☁ Cielo nublado y húmedo: DPV en descenso', '🌡 Calor, la planta bebe: CE en aumento']
+      start_p: 'La CE, el pH y el DPV se desvían solos. Mantenlos en la franja verde con ▲ ▼: cuanto más preciso y constante seas, más puntos harás. Cada 40 días se cosecha y se vuelve a empezar. ¿Hasta dónde llegas?',
+      keys: 'Con teclado: Q/A, W/S, E/D.', start_b: 'Empezar',
+      over_t: 'La planta no lo ha conseguido.', over_p: '{p} puntos · día {d} · ciclo {c}.',
+      newbest: '¡Nuevo récord!',
+      nexline: 'NEX corrige estos parámetros por sí solo, cada pocos segundos, las 24 horas.',
+      watch: 'Mira cómo lo hace NEX', again: 'Volver a jugar', share: 'Reta a un colega', copied: 'Texto copiado',
+      skip: 'Ir al resultado',
+      cmp_t: 'Mismo invernadero, mismos imprevistos, mismos días.', you: 'Tú', nex: 'NEX',
+      r_day: 'Días', r_band: 'Tiempo con todo en rango', r_manual: 'Correcciones manuales', r_pts: 'Puntos',
+      auto: 'automático',
+      note: 'Simulación simplificada con fines demostrativos: no representa rendimientos ni prestaciones reales.',
+      cta: '¿Quieres ver NEX en un invernadero real?',
+      harvest: '🌿 ¡Cosecha! +{b} puntos · empieza el ciclo {c}',
+      pause_t: 'En pausa', resume: 'Continuar',
+      shareText: 'He hecho {p} puntos en el invernadero de NEX (día {d}, ciclo {c}). ¿Puedes superarlo?',
+      ev: ['☀ Pico de sol: DPV en aumento', '💧 Relleno con agua: CE en descenso', '⚗ Agua de red alcalina: pH en aumento', '☁ Cielo nublado y húmedo: DPV en descenso', '🌡 Calor, la planta bebe: CE en aumento'],
+      vpd: 'DPV', ec: 'CE'
     }
   };
 
-  var HARVEST = 40, DT = 1 / 30, DAY_SEC = 1.4, MAX_YIELD = 420;
-  // bilanciamento (vedi README): deriva casuale, imprevisti annunciati, difficoltà che cresce con i giorni
-  var DRIFT = .023, CAP = .008, LOSS = 20, D0 = 1.15, D1 = 1.8, EV_MAG = .058, EV_WARN = 2, EV_GAP = 7, EV_FIRST = 4;
-  var EVENTS = [[2, 1], [0, -1], [1, 1], [2, -1], [0, 1]];
+  // ---------- simulazione (nessun accesso al DOM) ----------
+  var C = {
+    HARVEST: 40, DT: 1 / 30, DAY_SEC: 2, MOVE: 5,
+    DRIFT: .023, CAP: .008, LOSS: 20, REGEN: 6,
+    D0: 1.15, D1: 1.8, RAMP: 60, D2: .3, DMAX: 2.8,
+    EV_MAG: .058, EV_WARN: 2, EV_GAP: 7, EV_FIRST: 5,
+    LIGHT: 2 / 3, NIGHT: .006,
+    PTS: 10, STREAK_STEP: 4, MULT_MAX: 3, HARVEST_BONUS: 200
+  };
   var GAUGES = [
     { k: 'ec',  unit: 'mS/cm', min: .4, max: 3.2, lo: 1.5, hi: 2.1,  step: .12, dec: 2, key: ['q', 'a'] },
     { k: 'ph',  unit: '',      min: 4.4, max: 7.6, lo: 5.6, hi: 6.3, step: .12, dec: 1, key: ['w', 's'] },
     { k: 'vpd', unit: 'kPa',   min: .2, max: 2.2, lo: .8, hi: 1.25,  step: .08, dec: 2, key: ['e', 'd'] }
   ];
+  var EVENTS = [[2, 1], [0, -1], [1, 1], [2, -1], [0, 1]];
 
-  var PLANT = '<svg class="ng-plant" viewBox="0 0 120 150" aria-hidden="true">' +
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+  function Sim(seed) {
+    this.r = rng(seed); this.er = rng(seed ^ 0x5bd1e995);
+    this.t = 0; this.day = 0; this.health = 100; this.points = 0; this.mult = 1; this.streak = 0;
+    this.inBand = 0; this.n = 0; this.presses = 0; this.cycle = 1; this.cyH = 0; this.cyN = 0;
+    this.next = C.EV_FIRST; this.pend = null; this.shown = null; this.showUntil = 0; this.lastHarvest = null;
+    this.g = GAUGES.map(function (d) { return { v: (d.lo + d.hi) / 2, vel: 0, push: 0, cd: 0 }; });
+  }
+  Sim.prototype.diff = function () {
+    var d = C.D0 + (C.D1 - C.D0) * Math.min(1, this.day / C.RAMP) + C.D2 * Math.max(0, (this.day - C.RAMP) / C.HARVEST);
+    return Math.min(C.DMAX, d);
+  };
+  Sim.prototype.isDay = function () { return (this.day % 1) < C.LIGHT; };
+  Sim.prototype.cycleDay = function () { return this.day - (this.cycle - 1) * C.HARVEST; };
+  Sim.prototype.nudge = function (i, dir) {
+    var d = GAUGES[i], g = this.g[i];
+    g.v = Math.max(d.min, Math.min(d.max, g.v + dir * d.step)); g.vel *= .4; this.presses++;
+  };
+  Sim.prototype.nex = function () {
+    var DT = C.DT;
+    this.g.forEach(function (g, i) {
+      var d = GAUGES[i]; g.cd -= DT; if (g.cd > 0) return;
+      var w = d.hi - d.lo, p = g.v + (g.vel + g.push) * DT * C.MOVE * 6;
+      if (p < d.lo + w * .15 || p > d.hi - w * .15) {
+        g.v = Math.max(d.min, Math.min(d.max, g.v + (p < d.lo + w * .15 ? 1 : -1) * d.step * .6));
+        g.vel *= .3; g.push *= .3; g.cd = .3;
+      }
+    });
+  };
+  // un passo da DT secondi; restituisce i punti bonus se in questo passo c'è stato un raccolto
+  Sim.prototype.step = function (auto) {
+    var s = this, DT = C.DT, diff = s.diff(), harvested = 0;
+    if (!s.pend && s.t >= s.next - C.EV_WARN) {
+      var k = Math.floor(s.er() * EVENTS.length);
+      s.pend = { k: k, at: s.next, mag: C.EV_MAG * (.7 + .6 * s.er()) * diff };
+      s.shown = k; s.showUntil = s.next + 1.5;
+    }
+    if (s.pend && s.t >= s.pend.at) {
+      var ev = EVENTS[s.pend.k], d0 = GAUGES[ev[0]];
+      s.g[ev[0]].push = ev[1] * (d0.max - d0.min) * s.pend.mag;
+      s.pend = null; s.next = s.t + C.EV_GAP * (.75 + .5 * s.er()) / Math.sqrt(diff);
+    }
+    if (s.shown !== null && s.t > s.showUntil) s.shown = null;
+    var night = !s.isDay();
+    s.g.forEach(function (g, i) {
+      var d = GAUGES[i], span = d.max - d.min, cap = span * C.CAP * diff;
+      g.vel += (s.r() - .5) * span * C.DRIFT * diff * DT * 60;
+      if (night && i === 2) g.vel -= span * C.NIGHT * DT;
+      g.vel *= .985;
+      g.vel = Math.max(-cap, Math.min(cap, g.vel));
+      g.v += (g.vel + g.push) * DT * C.MOVE; g.push *= .93;
+      if (g.v <= d.min || g.v >= d.max) { g.v = Math.max(d.min, Math.min(d.max, g.v)); g.vel *= -.3; g.push = 0; }
+    });
+    if (auto) s.nex();
+    var out = 0, prec = 0;
+    s.g.forEach(function (g, i) {
+      var d = GAUGES[i], c = (d.lo + d.hi) / 2, half = (d.hi - d.lo) / 2;
+      if (g.v < d.lo || g.v > d.hi) out++;
+      prec += Math.max(0, 1 - Math.abs(g.v - c) / half);
+    });
+    prec /= 3;
+    if (out) {
+      s.health = Math.max(0, s.health - out * C.LOSS * DT); s.streak = 0; s.mult = 1;
+    } else {
+      s.health = Math.min(100, s.health + C.REGEN * DT); s.streak += DT; s.inBand++;
+      s.mult = Math.min(C.MULT_MAX, 1 + Math.floor(s.streak / C.STREAK_STEP) * .5);
+      s.points += C.PTS * (.3 + .7 * prec) * s.mult * DT;
+    }
+    s.n++; s.cyH += s.health; s.cyN++; s.t += DT; s.day += DT / C.DAY_SEC;
+    if (s.health > 0 && s.day >= s.cycle * C.HARVEST) {
+      harvested = Math.round(C.HARVEST_BONUS * (s.cyH / s.cyN) / 100);
+      s.points += harvested; s.cycle++; s.cyH = 0; s.cyN = 0; s.lastHarvest = { bonus: harvested, until: s.t + 3 };
+    }
+    return harvested;
+  };
+  Sim.prototype.result = function () {
+    return { day: Math.floor(this.day), cycle: this.cycle, points: Math.round(this.points),
+             band: this.n ? Math.round(this.inBand / this.n * 100) : 0, presses: this.presses };
+  };
+
+  // ---------- interfaccia ----------
+  var PLANT = '<svg class="ng-plant" viewBox="0 0 120 170" aria-hidden="true">' +
+    '<defs><linearGradient id="ngcone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E86BC8" stop-opacity=".38"/><stop offset="1" stop-color="#8E7CFF" stop-opacity="0"/></linearGradient></defs>' +
+    '<polygon class="ng-cone" points="22,14 98,14 116,150 4,150" fill="url(#ngcone)"/>' +
+    '<rect x="16" y="4" width="88" height="10" rx="2" fill="#1E2C2E" stroke="#3A4D50"/>' +
+    '<g class="ng-leds"></g>' +
+    '<g transform="translate(0,20)">' +
     '<path d="M22 118h76l-8 30H30z" fill="#2B3B3D"/><rect x="18" y="112" width="84" height="9" rx="2" fill="#3A4D50"/>' +
     '<ellipse cx="60" cy="114" rx="38" ry="4" fill="#E9ECE6" opacity=".85"/>' +
-    '<g class="ng-pl" style="transform-origin:60px 113px;transition:transform .3s">' +
+    '<g class="ng-pl" style="transform-origin:60px 113px;transition:transform .3s,filter .3s"><g class="ng-sway">' +
     '<path class="ng-stem" d="M60 113V100" stroke="#6FAE5F" stroke-width="3.2" stroke-linecap="round" fill="none"/>' +
     '<g class="ng-s"><ellipse cx="51" cy="99" rx="9" ry="5" fill="#7DBB6A" transform="rotate(-20 51 99)"/><ellipse cx="69" cy="99" rx="9" ry="5" fill="#7DBB6A" transform="rotate(20 69 99)"/></g>' +
     '<g class="ng-s"><path d="M60 100V78" stroke="#6FAE5F" stroke-width="3" stroke-linecap="round"/><path d="M60 84c-10-2-18 2-21 9 9 2 17-1 21-9z" fill="#4E9A4B"/><path d="M60 84c10-2 18 2 21 9-9 2-17-1-21-9z" fill="#4E9A4B"/></g>' +
     '<g class="ng-s"><path d="M60 78V58" stroke="#6FAE5F" stroke-width="2.8" stroke-linecap="round"/><path d="M60 64c-12-4-22 1-26 10 11 3 21-1 26-10z" fill="#3F8E43"/><path d="M60 64c12-4 22 1 26 10-11 3-21-1-26-10z" fill="#3F8E43"/></g>' +
     '<g class="ng-s"><path d="M60 58V40" stroke="#6FAE5F" stroke-width="2.6" stroke-linecap="round"/><path d="M60 46c-10-5-19-2-23 6 9 4 18 1 23-6z" fill="#357F3B"/><path d="M60 46c10-5 19-2 23 6-9 4-18 1-23-6z" fill="#357F3B"/><path d="M60 41c-4-8-1-14 0-16 1 2 4 8 0 16z" fill="#4E9A4B"/></g>' +
     '<g class="ng-s"><path d="M60 40V30" stroke="#6FAE5F" stroke-width="2.2" stroke-linecap="round"/><path d="M60 34c-7-4-14-2-17 4 7 3 13 1 17-4z" fill="#2F7535"/><path d="M60 34c7-4 14-2 17 4-7 3-13 1-17-4z" fill="#2F7535"/><path d="M60 30c-3-6-1-10 0-12 1 2 3 6 0 12z" fill="#4E9A4B"/></g>' +
-    '</g><circle class="ng-seed" cx="60" cy="112" r="3.5" fill="#8A6A45"/></svg>';
+    '</g></g><circle class="ng-seed" cx="60" cy="112" r="3.5" fill="#8A6A45"/></g></svg>';
 
-  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
   function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function read(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
-  function mount(root, lang) {
+  function mount(root, lang, opts) {
+    opts = opts || {};
+    var shareUrl = opts.shareUrl || 'https://neuragrowtech.com/gioco/';
     root.classList.add('ng');
     root.innerHTML =
-      '<div class="ng-head"><span class="ng-label"></span><span><span class="ng-daylbl"></span> <b class="ng-day">0</b> / ' + HARVEST + '</span></div>' +
+      '<div class="ng-head"><span class="ng-label"></span><span class="ng-meta"><span class="ng-cyc"></span><span class="ng-dayw"><span class="ng-daylbl"></span> <b class="ng-day">0</b></span></span></div>' +
+      '<div class="ng-score"><span><span class="ng-ptslbl"></span> <b class="ng-pts">0</b><i class="ng-mult"></i></span><span class="ng-bestw"></span></div>' +
       '<div class="ng-alert" aria-live="polite"></div>' +
       '<div class="ng-body"><div class="ng-plantwrap">' + PLANT +
       '<div class="ng-health" aria-hidden="true"><i></i></div><div class="ng-stage"></div></div><div class="ng-gauges"></div></div>' +
-      '<div class="ng-ov"><h2 class="ng-ov-t"></h2><p class="ng-ov-p"></p><div class="ng-cmp"></div><p class="ng-cta" hidden></p>' +
-      '<div class="ng-ov-btns"></div><span class="ng-best"></span></div>';
+      '<div class="ng-ov"><h2 class="ng-ov-t"></h2><p class="ng-ov-p"></p><p class="ng-ov-nex"></p><div class="ng-cmp"></div><p class="ng-note"></p><p class="ng-cta"></p>' +
+      '<div class="ng-ov-btns"></div><span class="ng-ov-best"></span></div>';
     var q = function (s) { return root.querySelector(s); };
-    var gauges = GAUGES.map(function (d, i) {
-      var g = Object.create(d), span = d.max - d.min, el = document.createElement('div');
+    var ledHtml = '';
+    for (var li = 0; li < 9; li++) ledHtml += '<circle cx="' + (24 + li * 9) + '" cy="12" r="2" fill="' + (li % 3 === 1 ? '#8E7CFF' : '#E86BC8') + '"/>';
+    q('.ng-leds').innerHTML = ledHtml;
+
+    var ui = GAUGES.map(function (d, i) {
+      var span = d.max - d.min, el = document.createElement('div');
       el.className = 'ng-gauge';
       el.innerHTML = '<span class="ng-name"></span><div class="ng-track"><div class="ng-band" style="top:' + ((d.max - d.hi) / span * 100) + '%;bottom:' + ((d.lo - d.min) / span * 100) + '%"></div><div class="ng-needle"></div></div>' +
         '<span class="ng-val"></span><div class="ng-ctl"><button type="button" aria-label="+">▲</button><button type="button" aria-label="−">▼</button></div><span class="ng-keys">' + d.key[0].toUpperCase() + ' / ' + d.key[1].toUpperCase() + '</span>';
       q('.ng-gauges').appendChild(el);
-      g.el = el; g.needle = el.querySelector('.ng-needle'); g.val = el.querySelector('.ng-val'); g.name = el.querySelector('.ng-name');
       var b = el.querySelectorAll('.ng-ctl button');
       hold(b[0], function () { nudge(i, 1); }); hold(b[1], function () { nudge(i, -1); });
-      return g;
+      return { el: el, track: el.querySelector('.ng-track'), needle: el.querySelector('.ng-needle'), val: el.querySelector('.ng-val'), name: el.querySelector('.ng-name') };
     });
 
     function hold(btn, fn) {
       var t = null; function stop() { clearInterval(t); t = null; }
-      btn.addEventListener('pointerdown', function (e) { e.preventDefault(); fn(); stop(); t = setInterval(fn, 140); });
+      btn.addEventListener('pointerdown', function (e) { e.preventDefault(); fn(); stop(); t = setInterval(fn, 160); });
       ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (ev) { btn.addEventListener(ev, stop); });
       btn.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } });
     }
     document.addEventListener('keydown', function (e) {
       if (e.target && /input|textarea/i.test(e.target.tagName)) return;
       var k = e.key.toLowerCase();
-      gauges.forEach(function (g, i) { if (k === g.key[0]) nudge(i, 1); if (k === g.key[1]) nudge(i, -1); });
+      GAUGES.forEach(function (d, i) { if (k === d.key[0]) nudge(i, 1); if (k === d.key[1]) nudge(i, -1); });
     });
 
-    var S, mode = 'idle', seed = 1, you = null, nexRes = null, raf = 0, acc = 0, last = 0;
-    var best = +(read('ngt-nex-best-g') || 0);
+    var S = new Sim(1), mode = 'idle', seed = 1, you = null, nexRes = null, raf = 0, acc = 0, last = 0;
+    var best = +(read('ngt-nex-best-pts') || 0), newBest = false;
 
-    function reset(s) {
-      S = { r: rng(s), er: rng(s ^ 0x5bd1e995), t: 0, day: 0, health: 100, hsum: 0, n: 0, presses: 0, next: EV_FIRST, pend: null, shown: null, showUntil: 0 };
-      gauges.forEach(function (g) { g.v = (g.lo + g.hi) / 2; g.vel = 0; g.push = 0; g.cd = 0; });
-    }
-    function result() {
-      var avg = S.n ? S.hsum / S.n : 100, d = Math.min(HARVEST, Math.floor(S.day)), won = S.day >= HARVEST;
-      return { day: d, won: won, avg: Math.round(avg), yield: won ? Math.round(MAX_YIELD * avg / 100) : 0, presses: S.presses };
-    }
     function nudge(i, dir) {
       if (mode !== 'play') return;
-      var g = gauges[i], nv = Math.max(g.min, Math.min(g.max, g.v + dir * g.step));
-      S.presses++;
-      g.v = nv; g.vel *= .4; draw();
+      S.nudge(i, dir); drop(i, dir); draw();
     }
-    function nexControl() {
-      gauges.forEach(function (g) {
-        g.cd = (g.cd || 0) - DT; if (g.cd > 0) return;
-        var w = g.hi - g.lo, p = g.v + (g.vel + g.push) * DT * 6 * 6;
-        if (p < g.lo + w * .15 || p > g.hi - w * .15) {
-          g.v = Math.max(g.min, Math.min(g.max, g.v + (p < g.lo + w * .15 ? 1 : -1) * g.step * .6));
-          g.vel *= .3; g.push *= .3; g.cd = .3;
-        }
-      });
-    }
-    function step() {
-      var diff = D0 + (D1 - D0) * Math.min(1, S.day / HARVEST);
-      // imprevisti: annunciati EV_WARN secondi prima, stessa sequenza per il giocatore e per NEX
-      if (!S.pend && S.t >= S.next - EV_WARN) {
-        var k = Math.floor(S.er() * EVENTS.length);
-        S.pend = { k: k, at: S.next, mag: EV_MAG * (.7 + .6 * S.er()) * diff };
-        S.shown = k; S.showUntil = S.next + 1.5;
-      }
-      if (S.pend && S.t >= S.pend.at) {
-        var ev = EVENTS[S.pend.k], tg = gauges[ev[0]];
-        tg.push = ev[1] * (tg.max - tg.min) * S.pend.mag;
-        S.pend = null; S.next = S.t + EV_GAP * (.75 + .5 * S.er()) / Math.sqrt(diff);
-      }
-      if (S.shown !== null && S.t > S.showUntil) S.shown = null;
-      gauges.forEach(function (g) {
-        var span = g.max - g.min, cap = span * CAP * diff;
-        g.vel += (S.r() - .5) * span * DRIFT * diff * DT * 60;
-        g.vel *= .985;
-        g.vel = Math.max(-cap, Math.min(cap, g.vel));
-        g.v += (g.vel + g.push) * DT * 6; g.push *= .93;
-        if (g.v <= g.min || g.v >= g.max) { g.v = Math.max(g.min, Math.min(g.max, g.v)); g.vel *= -.3; g.push = 0; }
-      });
-      if (mode === 'nex') nexControl();
-      var out = gauges.filter(function (g) { return g.v < g.lo || g.v > g.hi; }).length;
-      S.health = out ? Math.max(0, S.health - out * LOSS * DT) : Math.min(100, S.health + 6 * DT);
-      S.hsum += S.health; S.n++; S.t += DT; S.day += DT / DAY_SEC;
+    function drop(i, dir) {
+      var d = document.createElement('span'); d.className = 'ng-drop ' + (dir > 0 ? 'up' : 'down');
+      ui[i].track.appendChild(d); setTimeout(function () { if (d.parentNode) d.parentNode.removeChild(d); }, 600);
     }
     function loop(ts) {
       if (mode !== 'play' && mode !== 'nex') return;
-      var speed = mode === 'nex' ? 3 : 1;
+      var speed = mode === 'nex' ? 4 : 1;
       acc += Math.min(.1, (ts - (last || ts)) / 1000) * speed; last = ts;
-      while (acc >= DT) {
-        acc -= DT; step();
-        if (S.health <= 0 || S.day >= HARVEST) { draw(); return finish(); }
+      while (acc >= C.DT) {
+        acc -= C.DT; S.step(mode === 'nex');
+        if (S.health <= 0) { draw(); return finish(); }
+        if (mode === 'nex' && S.day >= you.day + 1) { draw(); return finish(); }
       }
       draw(); raf = requestAnimationFrame(loop);
     }
     function finish() {
-      var r = result();
+      cancelAnimationFrame(raf);
+      var sk = q('.ng-skip'); if (sk) sk.parentNode.removeChild(sk);
+      var r = S.result();
       if (mode === 'play') {
-        you = r;
-        if (r.yield > best) { best = r.yield; store('ngt-nex-best-g', String(best)); }
-        mode = 'idle'; show(r.won ? 'win' : 'over');
-      } else { nexRes = r; mode = 'idle'; show('compare'); }
+        you = r; newBest = r.points > best;
+        if (newBest) { best = r.points; store('ngt-nex-best-pts', String(best)); }
+        mode = 'idle'; show('over');
+      } else {
+        nexRes = r; nexRes.day = Math.min(nexRes.day, you.day); mode = 'idle'; show('compare');
+      }
+    }
+    function skip() {
+      if (mode !== 'nex') return;
+      cancelAnimationFrame(raf);
+      while (S.health > 0 && S.day < you.day + 1) S.step(true);
+      draw(); finish();
     }
     function run(m) {
       cancelAnimationFrame(raf);
       if (m === 'play') seed = (Math.random() * 1e9) | 0;
-      reset(seed); mode = m; acc = 0; last = 0; q('.ng-ov').hidden = true;
+      S = new Sim(seed); mode = m; acc = 0; last = 0;
+      q('.ng-ov').hidden = true;
       root.classList.toggle('ng-nexmode', m === 'nex');
+      var old = q('.ng-skip'); if (old) old.parentNode.removeChild(old);
+      if (m === 'nex') {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'ng-skip'; b.textContent = STR[lang].skip;
+        b.addEventListener('click', skip); q('.ng-score').appendChild(b);
+      }
       draw(); raf = requestAnimationFrame(loop);
     }
+    // pausa automatica se si cambia scheda
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden && mode === 'play') { cancelAnimationFrame(raf); mode = 'paused'; show('pause'); }
+    });
 
+    function num(n) { try { return n.toLocaleString(lang === 'en' ? 'en-GB' : lang === 'es' ? 'es-ES' : 'it-IT'); } catch (e) { return String(n); } }
     function fmt(v, dec) { var s = v.toFixed(dec); return lang === 'en' ? s : s.replace('.', ','); }
+    function fill(s, r) { return s.replace('{p}', num(r.points || 0)).replace('{d}', r.day).replace('{c}', r.cycle).replace('{b}', r.bonus); }
+
     function draw() {
       var t = STR[lang];
-      gauges.forEach(function (g) {
-        var span = g.max - g.min, o = g.v < g.lo || g.v > g.hi;
-        g.needle.style.top = ((g.max - g.v) / span * 100) + '%';
-        g.el.classList.toggle('out', o);
-        g.val.textContent = fmt(g.v, g.dec) + (g.unit ? ' ' + g.unit : '');
-        g.name.textContent = g.k === 'vpd' ? t.vpd : g.k === 'ec' ? t.ec : 'pH';
+      ui.forEach(function (u, i) {
+        var d = GAUGES[i], g = S.g[i], span = d.max - d.min, o = g.v < d.lo || g.v > d.hi;
+        u.needle.style.top = ((d.max - g.v) / span * 100) + '%';
+        u.el.classList.toggle('out', o);
+        u.el.classList.toggle('warn', S.shown !== null && EVENTS[S.shown][0] === i);
+        u.val.textContent = fmt(g.v, d.dec) + (d.unit ? ' ' + d.unit : '');
+        u.name.textContent = d.k === 'vpd' ? t.vpd : d.k === 'ec' ? t.ec : 'pH';
       });
-      var al = q('.ng-alert'), evk = S.shown;
-      al.textContent = evk !== null ? t.ev[evk] : '';
-      al.classList.toggle('on', evk !== null);
-      gauges.forEach(function (g, i) { g.el.classList.toggle('warn', evk !== null && EVENTS[evk][0] === i); });
-      var d = Math.min(HARVEST, Math.floor(S.day)), s = d < 3 ? 0 : d < 8 ? 1 : d < 16 ? 2 : d < 26 ? 3 : d < HARVEST ? 4 : 5;
-      q('.ng-day').textContent = d;
+      // giorno / notte in "time-lapse": la luce dei LED sale e scende gradualmente ogni giornata
+      var f = S.day % 1, fade = .1, L;
+      if (f < C.LIGHT) L = Math.min(1, f / fade, (C.LIGHT - f) / fade); else L = 0;
+      if (mode === 'idle' && S.day === 0) L = 1;
+      root.style.setProperty('--ng-light', L.toFixed(3));
+      // avvisi: raccolto > imprevisto > alba/notte
+      var al = q('.ng-alert'), msg = '', kind = '';
+      if (S.lastHarvest && S.t < S.lastHarvest.until) { msg = fill(t.harvest, { bonus: S.lastHarvest.bonus, cycle: S.cycle, day: 0 }); kind = 'good'; }
+      else if (S.shown !== null) { msg = t.ev[S.shown]; kind = 'on'; }
+      al.textContent = msg; al.className = 'ng-alert' + (kind ? ' ' + kind : '');
+      // pianta e contatori
+      var cd = Math.min(C.HARVEST, Math.floor(S.cycleDay())), s = cd < 3 ? 0 : cd < 8 ? 1 : cd < 16 ? 2 : cd < 26 ? 3 : cd < C.HARVEST - 2 ? 4 : 5;
+      q('.ng-day').textContent = Math.floor(S.day);
+      q('.ng-daylbl').textContent = t.day;
+      q('.ng-cyc').textContent = t.cycle + ' ' + S.cycle;
       q('.ng-stage').textContent = t.st[s];
       q('.ng-label').textContent = mode === 'nex' ? t.headNex : t.head;
-      q('.ng-daylbl').textContent = t.day;
+      q('.ng-ptslbl').textContent = t.pts;
+      q('.ng-pts').textContent = num(Math.round(S.points));
+      q('.ng-mult').textContent = S.mult > 1 ? '×' + fmt(S.mult, 1).replace(/[.,]0$/, '') : '';
+      q('.ng-bestw').textContent = best ? t.bestShort + ' ' + num(best) : '';
       root.querySelectorAll('.ng-s').forEach(function (el, k) { el.style.display = s > k ? '' : 'none'; });
       q('.ng-stem').style.display = s > 0 ? '' : 'none';
       q('.ng-seed').style.display = s === 0 ? '' : 'none';
@@ -224,37 +341,60 @@
     var shown = 'start';
     function show(kind) {
       shown = kind;
-      var t = STR[lang], ov = q('.ng-ov'), btns = q('.ng-ov-btns'), cmp = q('.ng-cmp'), cta = q('.ng-cta');
-      ov.hidden = false; cmp.innerHTML = ''; btns.innerHTML = ''; cta.hidden = true;
-      function btn(label, cls, fn) { var b = document.createElement('button'); b.type = 'button'; b.className = cls; b.textContent = label; b.addEventListener('click', fn); btns.appendChild(b); }
+      var t = STR[lang], ov = q('.ng-ov'), btns = q('.ng-ov-btns'), cmp = q('.ng-cmp');
+      ov.hidden = false; cmp.innerHTML = ''; btns.innerHTML = '';
+      ['.ng-ov-p', '.ng-ov-nex', '.ng-note', '.ng-cta', '.ng-ov-best'].forEach(function (s) { q(s).textContent = ''; });
+      function btn(label, cls, fn) { var b = document.createElement('button'); b.type = 'button'; b.className = cls; b.textContent = label; b.addEventListener('click', fn); btns.appendChild(b); return b; }
+      function shareBtn() {
+        var b = btn(t.share, 'btn ghost', function () {
+          var text = fill(t.shareText, you);
+          if (navigator.share) { navigator.share({ title: 'Neura GrowTech', text: text, url: shareUrl }).catch(function () {}); return; }
+          var full = text + ' ' + shareUrl;
+          function ok() { b.textContent = t.copied; setTimeout(function () { b.textContent = t.share; }, 1800); }
+          try { navigator.clipboard.writeText(full).then(ok, function () {}); } catch (e) {}
+        });
+      }
       if (kind === 'start') {
-        q('.ng-ov-t').textContent = t.start_t; q('.ng-ov-p').textContent = t.start_p;
+        q('.ng-ov-t').textContent = t.start_t;
+        q('.ng-ov-p').textContent = t.start_p + ' ' + t.keys;
         btn(t.start_b, 'btn', function () { run('play'); });
-      } else if (kind === 'over' || kind === 'win') {
-        q('.ng-ov-t').textContent = kind === 'win' ? t.win_t : t.over_t;
-        q('.ng-ov-p').textContent = kind === 'win' ? t.win_p + ' ' + t.r_yield + ': ' + you.yield + ' ' + t.g + '.' : t.over_p.replace('{d}', you.day);
+        if (best) q('.ng-ov-best').textContent = t.bestShort + ': ' + num(best);
+      } else if (kind === 'pause') {
+        q('.ng-ov-t').textContent = t.pause_t;
+        btn(t.resume, 'btn', function () { q('.ng-ov').hidden = true; mode = 'play'; last = 0; raf = requestAnimationFrame(loop); });
+      } else if (kind === 'over') {
+        q('.ng-ov-t').textContent = newBest ? t.newbest : t.over_t;
+        q('.ng-ov-p').textContent = fill(t.over_p, you);
+        q('.ng-ov-nex').textContent = t.nexline;
         btn(t.watch, 'btn', function () { run('nex'); });
         btn(t.again, 'btn ghost', function () { run('play'); });
+        shareBtn();
+        q('.ng-ov-best').textContent = t.bestShort + ': ' + num(best);
       } else if (kind === 'compare') {
-        q('.ng-ov-t').textContent = t.cmp_t; q('.ng-ov-p').textContent = '';
-        var rows = [[t.r_day, you.day + ' / ' + HARVEST, nexRes.day + ' / ' + HARVEST],
-                    [t.r_health, you.avg + '%', nexRes.avg + '%'],
-                    [t.r_yield, you.yield + ' ' + t.g, nexRes.yield + ' ' + t.g],
-                    [t.r_input, String(you.presses), '0 · ' + t.auto]];
+        q('.ng-ov-t').textContent = t.cmp_t;
+        var rows = [[t.r_day, String(you.day), String(nexRes.day)],
+                    [t.r_band, you.band + '%', nexRes.band + '%'],
+                    [t.r_manual, String(you.presses), '0 · ' + t.auto],
+                    [t.r_pts, num(you.points), num(nexRes.points)]];
         cmp.innerHTML = '<table><thead><tr><th></th><th>' + esc(t.you) + '</th><th>' + esc(t.nex) + '</th></tr></thead><tbody>' +
           rows.map(function (r) { return '<tr><th>' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td></tr>'; }).join('') + '</tbody></table>';
-        cta.hidden = false;
-        cta.innerHTML = esc(t.cta) + ' <a href="mailto:info@neuragrowtech.com">info@neuragrowtech.com</a>';
+        q('.ng-ov-nex').textContent = t.nexline;
+        q('.ng-note').textContent = t.note;
+        q('.ng-cta').innerHTML = esc(t.cta) + ' <a href="mailto:info@neuragrowtech.com">info@neuragrowtech.com</a>';
         btn(t.again, 'btn', function () { run('play'); });
+        shareBtn();
       }
-      q('.ng-best').textContent = best ? t.best.replace('{g}', best) : '';
     }
 
-    reset(seed); draw(); show('start');
+    draw(); show('start');
     return {
-      setLang: function (l) { if (!STR[l]) return; lang = l; draw(); if (!q('.ng-ov').hidden) show(shown); }
+      setLang: function (l) {
+        if (!STR[l]) return; lang = l; draw();
+        var sk = q('.ng-skip'); if (sk) sk.textContent = STR[l].skip;
+        if (!q('.ng-ov').hidden) show(shown);
+      }
     };
   }
 
-  window.NexGame = { mount: mount };
+  window.NexGame = { mount: mount, Sim: Sim, C: C, GAUGES: GAUGES };
 })();

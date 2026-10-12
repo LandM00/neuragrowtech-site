@@ -22,7 +22,9 @@ Pubblicazione: Cloudflare Pages, collegato a questo repository. Ogni modifica su
 
 ## Gioco "Fai il lavoro di NEX"
 
-`js/nexgame.js` + `css/nexgame.css`, usato in `/manutenzione/` e nella pagina 404. Testi nelle tre lingue dentro `nexgame.js`.
-Il codice del gioco viene **inserito dentro le due pagine** da `python3 _build/build.py`: dopo ogni modifica a `nexgame.js` rilanciare lo script.
-Quando si modificano CSS o JS, aumentare il numero `?v=` nei link delle pagine, così i browser scaricano la versione nuova.
-Bilanciamento attuale (simulato su 60 partite per profilo): chi non tocca nulla perde verso il giorno 6, un giocatore medio arriva al raccolto circa 6 volte su 10, NEX sempre. I parametri sono le costanti in cima a `nexgame.js` (DRIFT, CAP, LOSS, D0, D1, EV_*).
+- Pagine: `/gioco/` (da condividere), `/manutenzione/`, `404.html`, generate da `_build/game_pages.py` (testi delle pagine) tramite `python3 _build/build.py`.
+- Motore e testi del gioco: `js/nexgame.js`; stile: `css/nexgame.css`. Il codice del gioco viene inserito dentro le pagine dal build: dopo ogni modifica rilanciare `python3 _build/build.py`.
+- Gioco infinito a cicli di 40 giorni; punti solo con tutti i parametri in fascia, maggiorati da precisione e serie; bonus a ogni raccolto.
+- "Guarda NEX" rigioca la stessa serra (stesso seme) per gli stessi giorni. Il confronto usa solo grandezze del gioco (giorni, tempo in fascia, correzioni a mano, punti) con la nota "simulazione semplificata".
+- Bilanciamento (50 partite simulate per profilo): chi non tocca nulla arriva al giorno ~5, principiante ~42, giocatore medio ~70 (2 cicli), bravo ~120. Costanti in `C` all'inizio di `nexgame.js`.
+- Quando si modificano CSS o JS aumentare `CSS_VER` in `game_pages.py` (e `?v=` nel template del sito).

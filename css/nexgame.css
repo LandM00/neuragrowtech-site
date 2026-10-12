@@ -65,3 +65,30 @@ body.mt-page{background:var(--panel);color:var(--panel-ink)}
 .ng-gauge.warn .ng-track{box-shadow:0 0 0 2px rgba(232,176,75,.7)}
 @media (prefers-reduced-motion:no-preference){.ng-gauge.warn .ng-track{animation:ngpulse .8s ease-in-out infinite alternate}}
 @keyframes ngpulse{from{box-shadow:0 0 0 2px rgba(232,176,75,.25)}to{box-shadow:0 0 0 3px rgba(232,176,75,.85)}}
+
+/* v10: punteggio, LED giorno/notte, gocce, raccolto */
+.ng-head .ng-meta{display:flex;gap:.9rem}
+.ng-score{display:flex;justify-content:space-between;align-items:center;gap:.8rem;padding-top:.6rem;font-size:.75rem;color:var(--panel-muted);flex-wrap:wrap}
+.ng-score b{color:var(--panel-ink);font-size:1.05rem;font-weight:500;font-variant-numeric:tabular-nums}
+.ng-mult{font-style:normal;margin-left:.45rem;color:#F3C979;font-weight:500}
+.ng-skip{font:inherit;font-size:.72rem;background:transparent;color:var(--panel-ink);border:1px solid rgba(255,255,255,.25);border-radius:4px;padding:.3rem .55rem;cursor:pointer}
+.ng-alert.info{background:rgba(142,124,255,.16);color:#C9C0FF}
+.ng-alert.good{background:rgba(88,210,122,.16);color:#8EE3A6}
+.ng{--ng-light:1}
+.ng-leds circle{opacity:calc(.15 + .85 * var(--ng-light))}
+.ng-body{background:rgba(232,107,200,calc(.05 * var(--ng-light)));border-radius:8px}
+.ng-cone{opacity:var(--ng-light)}
+@media (prefers-reduced-motion:no-preference){
+  .ng-sway{transform-origin:60px 113px;animation:ngsway 4s ease-in-out infinite alternate}
+  .ng-leds circle{filter:drop-shadow(0 0 2px rgba(232,107,200,.9))}
+}
+@keyframes ngsway{from{transform:rotate(-1.2deg)}to{transform:rotate(1.2deg)}}
+.ng-drop{position:absolute;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:#7FD3FF;pointer-events:none;opacity:0}
+.ng-drop.up{bottom:6px;animation:ngup .55s ease-out}
+.ng-drop.down{top:6px;animation:ngdown .55s ease-out}
+@keyframes ngup{from{opacity:.9;transform:translateY(0)}to{opacity:0;transform:translateY(-40px)}}
+@keyframes ngdown{from{opacity:.9;transform:translateY(0)}to{opacity:0;transform:translateY(40px)}}
+.ng-ov-nex{color:var(--panel-ink)!important}
+.ng-ov-nex:empty,.ng-note:empty,.ng-cta:empty,.ng-ov-best:empty{display:none}
+.ng-note{font-size:.75rem!important;opacity:.85}
+.ng-cmp td:nth-child(2){color:var(--panel-ink)}

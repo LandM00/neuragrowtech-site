@@ -87,12 +87,15 @@ def build():
     open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
-        f"{urls}\n</urlset>\n")
+        f"{urls}\n  <url>\n    <loc>{BASE}/gioco/</loc>\n    <lastmod>{LASTMOD}</lastmod>\n  </url>\n</urlset>\n")
     print("scritto sitemap.xml")
     return ok
 
 
-GAME_PAGES = ["manutenzione/index.html", "404.html"]
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import game_pages  # noqa: E402
+
+GAME_PAGES = list(game_pages.PAGES.keys())
 
 
 def inline_game():
@@ -114,5 +117,6 @@ def inline_game():
 
 if __name__ == "__main__":
     ok = build()
+    game_pages.build_pages(ROOT)
     ok = inline_game() and ok
     sys.exit(0 if ok else 1)
