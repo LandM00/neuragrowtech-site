@@ -14,3 +14,8 @@ Per aggiungere una lingua: crea `_build/lang/<codice>.json`, aggiungi la lingua 
 - `fonts/` — caratteri ospitati in locale (niente Google Fonts, quindi nessun dato inviato a terzi)
 
 Pubblicazione: Cloudflare Pages, collegato a questo repository. Ogni modifica sul ramo `main` va online in automatico.
+
+## Anteprima e manutenzione
+
+- **Anteprima:** le modifiche importanti si preparano sul ramo `anteprima`. Cloudflare le pubblica su https://anteprima.neuragrowtech.pages.dev senza toccare il sito vero. Quando sono approvate si uniscono a `main`.
+- **Manutenzione:** la pagina `/manutenzione/` si attiva da Cloudflare (dominio neuragrowtech.com → Rules → Redirect Rules → "Modalità manutenzione"): accendere la regola chiude il sito, spegnerla lo riapre.
