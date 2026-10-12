@@ -23,4 +23,5 @@ Pubblicazione: Cloudflare Pages, collegato a questo repository. Ogni modifica su
 ## Gioco "Fai il lavoro di NEX"
 
 `js/nexgame.js` + `css/nexgame.css`, usato in `/manutenzione/` e nella pagina 404. Testi nelle tre lingue dentro `nexgame.js`.
+Il codice del gioco viene **inserito dentro le due pagine** da `python3 _build/build.py`: dopo ogni modifica a `nexgame.js` rilanciare lo script.
 Quando si modificano CSS o JS, aumentare il numero `?v=` nei link delle pagine, così i browser scaricano la versione nuova.

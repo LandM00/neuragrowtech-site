@@ -10,6 +10,7 @@ Per aggiungere una lingua: crea _build/lang/<codice>.json e aggiungi una riga in
 """
 import json
 import os
+import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -91,5 +92,27 @@ def build():
     return ok
 
 
+GAME_PAGES = ["manutenzione/index.html", "404.html"]
+
+
+def inline_game():
+    """Inserisce js/nexgame.js direttamente nelle pagine con il gioco (nessun file esterno da caricare)."""
+    js = open(os.path.join(ROOT, "js", "nexgame.js"), encoding="utf-8").read().replace("</script", "<\\/script")
+    block = '<script data-cfasync="false" id="nexgame-src">\n' + js + '\n</script>'
+    for rel in GAME_PAGES:
+        path = os.path.join(ROOT, rel)
+        page = open(path, encoding="utf-8").read()
+        new = re.sub(r'<script data-cfasync="false" (?:src="/js/nexgame\.js[^"]*">|id="nexgame-src">.*?)</script>',
+                     lambda m: block, page, count=1, flags=re.S)
+        if new == page and 'id="nexgame-src"' not in page:
+            print("gioco non inserito in", rel)
+            return False
+        open(path, "w", encoding="utf-8").write(new)
+        print("gioco inserito in", rel)
+    return True
+
+
 if __name__ == "__main__":
-    sys.exit(0 if build() else 1)
+    ok = build()
+    ok = inline_game() and ok
+    sys.exit(0 if ok else 1)
