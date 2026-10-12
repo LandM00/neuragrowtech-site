@@ -7,8 +7,8 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#12262A">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/style.css?v=6">
-<link rel="stylesheet" href="/css/nexgame.css?v=6">
+<link rel="stylesheet" href="/css/style.css?v=7">
+<link rel="stylesheet" href="/css/nexgame.css?v=7">
 </head>
 <body class="mt-page">
 <main class="wrap mt">
@@ -23,23 +23,24 @@
   </div>
   <div class="mt-grid">
     <div class="mt-copy">
-      <span class="eyebrow" data-t="eyebrow"></span>
-      <h1 data-t="title"></h1>
-      <p data-t="body"></p>
-      <div class="mt-actions"><a class="btn" href="/" data-href="home_href" data-t="home"></a></div>
+      <span class="eyebrow" data-t="eyebrow">Errore 404</span>
+      <h1 data-t="title">Questa pagina non esiste.</h1>
+      <p data-t="body">Il link potrebbe essere sbagliato o la pagina è stata spostata. Torna alla home, oppure prova a fare il lavoro di NEX.</p>
+      <div class="mt-actions"><a class="btn" href="/" data-href="home_href" data-t="home">Torna alla home</a></div>
     </div>
     <div id="nexgame"></div>
   </div>
 </main>
-<script src="/js/nexgame.js?v=6"></script>
-<script>
+<script data-cfasync="false" src="/js/nexgame.js?v=7"></script>
+<script data-cfasync="false">
 (function(){
   var T={"it": {"doc": "Pagina non trovata", "eyebrow": "Errore 404", "title": "Questa pagina non esiste.", "body": "Il link potrebbe essere sbagliato o la pagina è stata spostata. Torna alla home, oppure prova a fare il lavoro di NEX.", "home": "Torna alla home", "home_href": "/"}, "en": {"doc": "Page not found", "eyebrow": "Error 404", "title": "This page does not exist.", "body": "The link may be wrong or the page has moved. Go back to the home page, or try doing NEX’s job.", "home": "Back to home", "home_href": "/en/"}, "es": {"doc": "Página no encontrada", "eyebrow": "Error 404", "title": "Esta página no existe.", "body": "Puede que el enlace sea incorrecto o que la página se haya movido. Vuelve al inicio o prueba a hacer el trabajo de NEX.", "home": "Volver al inicio", "home_href": "/es/"}};
   function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
   function read(k){try{return localStorage.getItem(k)}catch(e){return null}}
   var lang=read('ngt-lang');
   if(!T[lang]){lang='en';var ls=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'it']);for(var i=0;i<ls.length;i++){var c=String(ls[i]).toLowerCase().slice(0,2);if(T[c]){lang=c;break;}}}
-  var game=NexGame.mount(document.getElementById('nexgame'),lang);
+  var game={setLang:function(){}};
+  try{game=NexGame.mount(document.getElementById('nexgame'),lang);}catch(e){if(window.console)console.error(e);}
   function setLang(l){
     lang=l;document.documentElement.lang=l;var t=T[l];
     document.querySelectorAll('[data-t]').forEach(function(el){el.textContent=t[el.getAttribute('data-t')];});
