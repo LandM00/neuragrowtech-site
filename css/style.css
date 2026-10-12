@@ -31,6 +31,7 @@
   --bg:#0E1B1D;--surface:#152628;--ink:#E2EAE5;--muted:#93A6A2;--line:#27393B;--accent:#F06AA6;--accent-soft:#3A1A2A;--leaf:#7DBB86;--panel:#081213;--panel-ink:#DDE8E2;--panel-muted:#7E9893;color-scheme:dark}
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:var(--s0);line-height:1.6;margin:0}
 .wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}

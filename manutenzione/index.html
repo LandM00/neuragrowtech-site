@@ -10,40 +10,232 @@
 <link rel="stylesheet" href="/css/style.css">
 <style>
   body{background:var(--panel);color:var(--panel-ink)}
-  .mt{min-height:100vh;display:flex;flex-direction:column;justify-content:center;gap:2.5rem;padding-block:3rem}
+  .mt{min-height:100vh;display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);padding-block:clamp(1.5rem,4vw,3rem)}
+  .mt-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
   .mt .brand{color:var(--panel-ink)}
-  .mt-msgs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem;border-top:1px solid rgba(255,255,255,.12);padding-top:2rem}
-  .mt-msg{display:flex;flex-direction:column;gap:.75rem;min-width:0}
-  .mt-msg .eyebrow{color:var(--panel-muted)}
-  .mt-msg h1,.mt-msg h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:700}
-  .mt-msg p{color:var(--panel-muted)}
+  .mt .lang{border-color:rgba(255,255,255,.2)}
+  .mt .lang button{font:inherit;background:none;border:0;color:var(--panel-muted);padding:.45rem .6rem;cursor:pointer;letter-spacing:.04em}
+  .mt .lang button[aria-pressed="true"]{background:var(--panel-ink);color:var(--panel)}
+  .mt-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(2rem,5vw,4rem);align-items:center;flex:1}
+  .mt-copy{display:flex;flex-direction:column;gap:1.1rem;min-width:0}
+  .mt-copy .eyebrow{color:var(--panel-muted)}
+  .mt-copy h1{font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:800;font-stretch:125%}
+  .mt-copy p{color:var(--panel-muted);font-size:1.05rem}
   .mt-mail{font-family:var(--f-mono);color:var(--panel-ink);overflow-wrap:anywhere}
-  @media (max-width:860px){.mt-msgs{grid-template-columns:1fr}}
+  @media (max-width:860px){.mt-grid{grid-template-columns:1fr}}
+
+  /* game */
+  .game{position:relative;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:1.1rem;background:rgba(0,0,0,.18);min-width:0;font-family:var(--f-mono);font-size:.78rem}
+  .game-head{display:flex;justify-content:space-between;gap:1rem;color:var(--panel-muted);text-transform:uppercase;letter-spacing:.06em;font-size:.7rem;padding-bottom:.8rem;border-bottom:1px solid rgba(255,255,255,.08)}
+  .game-head b{color:var(--panel-ink);font-weight:500;font-variant-numeric:tabular-nums}
+  .game-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:1rem;padding-top:1rem;align-items:end}
+  .plant-wrap{display:flex;flex-direction:column;align-items:center;gap:.5rem}
+  .plant{width:100%;max-width:190px;height:auto;display:block}
+  .health{width:100%;max-width:190px;height:6px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden}
+  .health i{display:block;height:100%;width:100%;background:#58D27A;transition:width .2s,background .2s}
+  .stage-label{color:var(--panel-muted);font-size:.72rem;text-align:center;min-height:1.2em}
+  .gauges{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem}
+  .gauge{display:flex;flex-direction:column;align-items:center;gap:.4rem;min-width:0}
+  .gauge .name{color:var(--panel-ink);font-weight:500}
+  .gauge .val{color:var(--panel-muted);font-variant-numeric:tabular-nums;font-size:.72rem}
+  .track{position:relative;width:26px;height:150px;border-radius:13px;background:rgba(255,255,255,.08);overflow:hidden}
+  .band{position:absolute;left:0;right:0;background:rgba(88,210,122,.28);border-top:1px solid #58D27A;border-bottom:1px solid #58D27A}
+  .needle{position:absolute;left:3px;right:3px;height:6px;margin-top:-3px;border-radius:3px;background:var(--panel-ink);transition:background .15s}
+  .gauge.out .needle{background:#F06AA6}
+  .gauge.out .val{color:#F590BD}
+  .ctl{display:flex;gap:.35rem}
+  .ctl button{font:inherit;width:2.4rem;height:2.4rem;border-radius:6px;border:1px solid rgba(255,255,255,.22);background:transparent;color:var(--panel-ink);cursor:pointer;touch-action:manipulation;user-select:none}
+  .ctl button:hover{border-color:var(--panel-ink)}
+  .ctl button:active{background:rgba(255,255,255,.12)}
+  .keys{color:var(--panel-muted);font-size:.65rem;opacity:.7}
+  @media (hover:none){.keys{display:none}}
+  .overlay{position:absolute;inset:0;border-radius:12px;background:rgba(8,18,19,.9);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:.9rem;padding:clamp(1.25rem,4vw,2rem);font-family:var(--f-body);font-size:.95rem}
+  .overlay h2{font-size:clamp(1.3rem,3vw,1.7rem);font-weight:700}
+  .overlay p{color:var(--panel-muted);max-width:44ch}
+  .overlay .best{font-family:var(--f-mono);font-size:.75rem;color:var(--panel-muted)}
+  @media (max-width:520px){.game-body{grid-template-columns:1fr}.plant{max-width:150px}.track{height:120px}}
 </style>
 </head>
 <body>
 <main class="wrap mt">
-  <span class="brand">
-    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 21V11c0-3 2-5 5-5 0 3-2 5-5 5M13 15c0-2.5-1.8-4-4.5-4 0 2.5 1.8 4 4.5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="21.5" cy="7" r="2.2" fill="var(--accent)"/></svg>
-    NEURA GROWTECH
-  </span>
-  <div class="mt-msgs">
-    <div class="mt-msg" lang="it">
-      <span class="eyebrow">Italiano</span>
-      <h1>Stiamo aggiornando il sito.</h1>
-      <p>Torniamo online a breve. Per qualsiasi richiesta scrivici a <a class="mt-mail" href="mailto:info@neuragrowtech.com">info@neuragrowtech.com</a>.</p>
+  <div class="mt-top">
+    <a class="brand" href="/" aria-label="Neura GrowTech">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 21V11c0-3 2-5 5-5 0 3-2 5-5 5M13 15c0-2.5-1.8-4-4.5-4 0 2.5 1.8 4 4.5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="21.5" cy="7" r="2.2" fill="var(--accent)"/></svg>
+      NEURA GROWTECH
+    </a>
+    <div class="lang" role="group" aria-label="Lingua / Language / Idioma">
+      <button type="button" data-lang="it" lang="it">IT</button><button type="button" data-lang="en" lang="en">EN</button><button type="button" data-lang="es" lang="es">ES</button>
     </div>
-    <div class="mt-msg" lang="en">
-      <span class="eyebrow">English</span>
-      <h2>We are updating our website.</h2>
-      <p>We will be back online shortly. For any enquiry, write to <a class="mt-mail" href="mailto:info@neuragrowtech.com">info@neuragrowtech.com</a>.</p>
+  </div>
+
+  <div class="mt-grid">
+    <div class="mt-copy">
+      <span class="eyebrow" data-t="eyebrow"></span>
+      <h1 data-t="title"></h1>
+      <p data-t="body"></p>
+      <p><span data-t="contact"></span> <a class="mt-mail" href="mailto:info@neuragrowtech.com">info@neuragrowtech.com</a></p>
     </div>
-    <div class="mt-msg" lang="es">
-      <span class="eyebrow">Español</span>
-      <h2>Estamos actualizando la web.</h2>
-      <p>Volveremos a estar en línea en breve. Para cualquier consulta, escríbenos a <a class="mt-mail" href="mailto:info@neuragrowtech.com">info@neuragrowtech.com</a>.</p>
+
+    <div class="game" id="game">
+      <div class="game-head"><span data-t="g_head"></span><span><span data-t="g_day"></span> <b id="day">0</b></span></div>
+      <div class="game-body">
+        <div class="plant-wrap">
+          <svg class="plant" id="plant" viewBox="0 0 120 150" aria-hidden="true">
+            <path d="M22 118h76l-8 30H30z" fill="#2B3B3D"/>
+            <rect x="18" y="112" width="84" height="9" rx="2" fill="#3A4D50"/>
+            <ellipse cx="60" cy="114" rx="38" ry="4" fill="#E9ECE6" opacity=".85"/>
+            <g id="pl" style="transform-origin:60px 113px;transition:transform .3s">
+              <path id="stem" d="M60 113V100" stroke="#6FAE5F" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+              <g id="s1"><ellipse cx="51" cy="99" rx="9" ry="5" fill="#7DBB6A" transform="rotate(-20 51 99)"/><ellipse cx="69" cy="99" rx="9" ry="5" fill="#7DBB6A" transform="rotate(20 69 99)"/></g>
+              <g id="s2"><path d="M60 100V78" stroke="#6FAE5F" stroke-width="3" stroke-linecap="round"/><path d="M60 84c-10-2-18 2-21 9 9 2 17-1 21-9z" fill="#4E9A4B"/><path d="M60 84c10-2 18 2 21 9-9 2-17-1-21-9z" fill="#4E9A4B"/></g>
+              <g id="s3"><path d="M60 78V58" stroke="#6FAE5F" stroke-width="2.8" stroke-linecap="round"/><path d="M60 64c-12-4-22 1-26 10 11 3 21-1 26-10z" fill="#3F8E43"/><path d="M60 64c12-4 22 1 26 10-11 3-21-1-26-10z" fill="#3F8E43"/></g>
+              <g id="s4"><path d="M60 58V40" stroke="#6FAE5F" stroke-width="2.6" stroke-linecap="round"/><path d="M60 46c-10-5-19-2-23 6 9 4 18 1 23-6z" fill="#357F3B"/><path d="M60 46c10-5 19-2 23 6-9 4-18 1-23-6z" fill="#357F3B"/><path d="M60 41c-4-8-1-14 0-16 1 2 4 8 0 16z" fill="#4E9A4B"/></g>
+            </g>
+            <circle id="seed" cx="60" cy="112" r="3.5" fill="#8A6A45"/>
+          </svg>
+          <div class="health" aria-hidden="true"><i id="hp"></i></div>
+          <div class="stage-label" id="stage"></div>
+        </div>
+        <div class="gauges" id="gauges"></div>
+      </div>
+      <div class="overlay" id="overlay">
+        <h2 id="ov-title"></h2>
+        <p id="ov-text"></p>
+        <span class="best" id="ov-best"></span>
+        <button type="button" class="btn" id="ov-btn"></button>
+      </div>
     </div>
   </div>
 </main>
+
+<script>
+(function(){
+  var T={
+    it:{eyebrow:'Sito in aggiornamento',title:'Torniamo online a breve.',body:'Stiamo aggiornando il sito di Neura GrowTech. Nel frattempo, prova a fare il lavoro di NEX.',contact:'Per qualsiasi richiesta:',
+        g_head:'Serra di prova · Basilico',g_day:'Giorno',start_t:'Fai il lavoro di NEX',start_p:'EC, pH e VPD si spostano da soli. Tienili nella fascia verde con ▲ ▼: più a lungo ci riesci, più la piantina cresce.',start_b:'Inizia',
+        over_t:'La piantina non ce l’ha fatta.',over_p:'È arrivata al giorno {d}. NEX corregge questi parametri da solo, ogni pochi secondi, 24 ore su 24.',again:'Riprova',best:'Record: giorno {d}',
+        st:['Seme','Germinazione','Cotiledoni','Prime foglie vere','Pianta adulta','Pronta per il raccolto'],keys:'tasti',vpd:'VPD'},
+    en:{eyebrow:'Website update in progress',title:'We will be back online shortly.',body:'We are updating the Neura GrowTech website. In the meantime, try doing NEX’s job.',contact:'For any enquiry:',
+        g_head:'Test greenhouse · Basil',g_day:'Day',start_t:'Do NEX’s job',start_p:'EC, pH and VPD drift on their own. Keep them in the green band with ▲ ▼: the longer you manage, the more the seedling grows.',start_b:'Start',
+        over_t:'The seedling didn’t make it.',over_p:'It reached day {d}. NEX corrects these parameters on its own, every few seconds, around the clock.',again:'Try again',best:'Best: day {d}',
+        st:['Seed','Germination','Cotyledons','First true leaves','Mature plant','Ready to harvest'],keys:'keys',vpd:'VPD'},
+    es:{eyebrow:'Web en actualización',title:'Volvemos a estar en línea en breve.',body:'Estamos actualizando la web de Neura GrowTech. Mientras tanto, prueba a hacer el trabajo de NEX.',contact:'Para cualquier consulta:',
+        g_head:'Invernadero de prueba · Albahaca',g_day:'Día',start_t:'Haz el trabajo de NEX',start_p:'La CE, el pH y el DPV se desvían solos. Mantenlos en la franja verde con ▲ ▼: cuanto más aguantes, más crece la plántula.',start_b:'Empezar',
+        over_t:'La plántula no lo ha conseguido.',over_p:'Ha llegado al día {d}. NEX corrige estos parámetros por sí solo, cada pocos segundos, las 24 horas.',again:'Reintentar',best:'Récord: día {d}',
+        st:['Semilla','Germinación','Cotiledones','Primeras hojas verdaderas','Planta adulta','Lista para cosechar'],keys:'teclas',vpd:'DPV'}
+  };
+  function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function read(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  var langs=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'it']).map(function(l){return String(l).toLowerCase().slice(0,2)});
+  var lang=read('ngt-lang');
+  if(!T[lang]){lang='en';for(var i=0;i<langs.length;i++){if(T[langs[i]]){lang=langs[i];break;}}}
+
+  // ----- game state -----
+  var G=[
+    {k:'EC', unit:'mS/cm', min:.4, max:3.2, lo:1.5, hi:2.1, step:.12, dec:2, key:['q','a']},
+    {k:'pH', unit:'',      min:4.4, max:7.6, lo:5.6, hi:6.3, step:.12, dec:1, key:['w','s']},
+    {k:'VPD',unit:'kPa',   min:.2, max:2.2, lo:.8, hi:1.25, step:.08, dec:2, key:['e','d']}
+  ];
+  var box=document.getElementById('gauges');
+  G.forEach(function(g,i){
+    var el=document.createElement('div');el.className='gauge';
+    var span=g.max-g.min;
+    el.innerHTML='<span class="name"></span><div class="track"><div class="band" style="top:'+((g.max-g.hi)/span*100)+'%;bottom:'+((g.lo-g.min)/span*100)+'%"></div><div class="needle"></div></div>'+
+      '<span class="val"></span><div class="ctl"><button type="button" aria-label="'+g.k+' +">▲</button><button type="button" aria-label="'+g.k+' −">▼</button></div><span class="keys">'+g.key[0].toUpperCase()+' / '+g.key[1].toUpperCase()+'</span>';
+    box.appendChild(el);g.el=el;g.needle=el.querySelector('.needle');g.val=el.querySelector('.val');g.name=el.querySelector('.name');
+    var b=el.querySelectorAll('.ctl button');
+    hold(b[0],function(){nudge(i,1)});hold(b[1],function(){nudge(i,-1)});
+  });
+  function hold(btn,fn){
+    var t=null;
+    function stop(){clearInterval(t);t=null;}
+    btn.addEventListener('pointerdown',function(e){e.preventDefault();fn();stop();t=setInterval(fn,140);});
+    ['pointerup','pointerleave','pointercancel'].forEach(function(ev){btn.addEventListener(ev,stop)});
+    btn.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();fn();}});
+  }
+  document.addEventListener('keydown',function(e){
+    var k=e.key.toLowerCase();
+    G.forEach(function(g,i){if(k===g.key[0])nudge(i,1);if(k===g.key[1])nudge(i,-1);});
+  });
+
+  var running=false,day=0,health=100,elapsed=0,last=0,best=+(read('ngt-nex-best')||0);
+  function nudge(i,dir){if(!running)return;var g=G[i];g.v=Math.max(g.min,Math.min(g.max,g.v+dir*g.step));g.vel*=.4;draw();}
+  function reset(){G.forEach(function(g){g.v=(g.lo+g.hi)/2;g.vel=0;});day=0;health=100;elapsed=0;}
+  function stageOf(d){return d<3?0:d<8?1:d<16?2:d<26?3:d<40?4:5;}
+
+  function draw(){
+    var t=T[lang],out=false;
+    G.forEach(function(g){
+      var span=g.max-g.min,o=g.v<g.lo||g.v>g.hi;out=out||o;
+      g.needle.style.top=((g.max-g.v)/span*100)+'%';
+      g.el.classList.toggle('out',o);
+      g.val.textContent=(lang==='it'||lang==='es'?g.v.toFixed(g.dec).replace('.',','):g.v.toFixed(g.dec))+(g.unit?' '+g.unit:'');
+      g.name.textContent=g.k==='VPD'?t.vpd:(g.k==='EC'&&lang==='es'?'CE':g.k);
+    });
+    var d=Math.floor(day),s=stageOf(d);
+    document.getElementById('day').textContent=d;
+    document.getElementById('stage').textContent=t.st[s];
+    ['s1','s2','s3','s4'].forEach(function(id,k){document.getElementById(id).style.display=s>k?'':'none';});
+    document.getElementById('stem').style.display=s>0?'':'none';
+    document.getElementById('seed').style.display=s===0?'':'none';
+    var hp=document.getElementById('hp');hp.style.width=health+'%';hp.style.background=health>55?'#58D27A':health>25?'#E8B04B':'#F06AA6';
+    var droop=(100-health)/100;
+    document.getElementById('pl').style.transform='rotate('+(droop*18)+'deg) scaleY('+(1-droop*.18)+')';
+    document.getElementById('pl').style.filter='saturate('+(1-droop*.8)+')';
+    return out;
+  }
+
+  function tick(ts){
+    if(!running)return;
+    var dt=Math.min(.05,(ts-(last||ts))/1000);last=ts;elapsed+=dt;
+    var diff=1+elapsed/25;
+    G.forEach(function(g){
+      var span=g.max-g.min;
+      g.vel+=(Math.random()-.5)*span*.03*diff*dt*60;
+      g.vel*=.985;
+      g.vel=Math.max(-span*.012*diff,Math.min(span*.012*diff,g.vel));
+      g.v+=g.vel*dt*6;
+      if(Math.random()<.004*diff){g.vel+=(Math.random()<.5?-1:1)*span*.02;} // sudden event: sun, refill, irrigation
+      if(g.v<=g.min||g.v>=g.max){g.v=Math.max(g.min,Math.min(g.max,g.v));g.vel*=-.3;}
+    });
+    var out=draw();
+    var outCount=G.filter(function(g){return g.v<g.lo||g.v>g.hi}).length;
+    health=outCount?Math.max(0,health-outCount*26*dt):Math.min(100,health+6*dt);
+    day+=dt/1.4;
+    if(health<=0){gameOver();return;}
+    requestAnimationFrame(tick);
+  }
+
+  var ov=document.getElementById('overlay');
+  function showOverlay(kind){
+    var t=T[lang];ov.hidden=false;ov.dataset.kind=kind;
+    document.getElementById('ov-title').textContent=kind==='start'?t.start_t:t.over_t;
+    document.getElementById('ov-text').textContent=kind==='start'?t.start_p:t.over_p.replace('{d}',Math.floor(day));
+    document.getElementById('ov-best').textContent=best?t.best.replace('{d}',best):'';
+    document.getElementById('ov-btn').textContent=kind==='start'?t.start_b:t.again;
+  }
+  function gameOver(){
+    running=false;var d=Math.floor(day);
+    if(d>best){best=d;store('ngt-nex-best',String(d));}
+    draw();showOverlay('over');
+  }
+  document.getElementById('ov-btn').addEventListener('click',function(){
+    reset();ov.hidden=true;running=true;last=0;draw();requestAnimationFrame(tick);
+  });
+
+  // ----- language -----
+  function setLang(l){
+    lang=l;document.documentElement.lang=l;
+    var t=T[l];
+    document.querySelectorAll('[data-t]').forEach(function(el){el.textContent=t[el.getAttribute('data-t')];});
+    document.querySelectorAll('.lang button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===l?'true':'false')});
+    document.title='Neura GrowTech · '+t.eyebrow;
+    if(!ov.hidden)showOverlay(ov.dataset.kind||'start');
+    draw();
+  }
+  document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',function(){store('ngt-lang',b.dataset.lang);setLang(b.dataset.lang);});});
+  reset();setLang(lang);showOverlay('start');
+})();
+</script>
 </body>
 </html>
