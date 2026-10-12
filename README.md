@@ -25,3 +25,4 @@ Pubblicazione: Cloudflare Pages, collegato a questo repository. Ogni modifica su
 `js/nexgame.js` + `css/nexgame.css`, usato in `/manutenzione/` e nella pagina 404. Testi nelle tre lingue dentro `nexgame.js`.
 Il codice del gioco viene **inserito dentro le due pagine** da `python3 _build/build.py`: dopo ogni modifica a `nexgame.js` rilanciare lo script.
 Quando si modificano CSS o JS, aumentare il numero `?v=` nei link delle pagine, così i browser scaricano la versione nuova.
+Bilanciamento attuale (simulato su 60 partite per profilo): chi non tocca nulla perde verso il giorno 6, un giocatore medio arriva al raccolto circa 6 volte su 10, NEX sempre. I parametri sono le costanti in cima a `nexgame.js` (DRIFT, CAP, LOSS, D0, D1, EV_*).

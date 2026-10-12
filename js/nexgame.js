@@ -16,7 +16,8 @@
       cmp_t: 'Stessa serra, stessi imprevisti.', you: 'Tu', nex: 'NEX',
       r_day: 'Giorno raggiunto', r_health: 'Salute media', r_yield: 'Raccolto', r_input: 'Correzioni a mano',
       cta: 'NEX lo fa da solo, ogni pochi secondi, 24 ore su 24. Vuoi provarlo nella tua serra?',
-      vpd: 'VPD', ec: 'EC', g: 'g', auto: 'automatico'
+      vpd: 'VPD', ec: 'EC', g: 'g', auto: 'automatico',
+      ev: ['☀ Picco di sole: VPD in salita', '💧 Rabbocco con acqua: EC in calo', '⚗ Acqua di rete alcalina: pH in salita', '☁ Cielo coperto e umido: VPD in calo', '🌡 Caldo, la pianta beve: EC in salita']
     },
     en: {
       head: 'Test greenhouse · Basil', headNex: 'NEX in control', day: 'Day',
@@ -30,7 +31,8 @@
       cmp_t: 'Same greenhouse, same surprises.', you: 'You', nex: 'NEX',
       r_day: 'Day reached', r_health: 'Average health', r_yield: 'Harvest', r_input: 'Manual corrections',
       cta: 'NEX does this on its own, every few seconds, around the clock. Want to try it in your greenhouse?',
-      vpd: 'VPD', ec: 'EC', g: 'g', auto: 'automatic'
+      vpd: 'VPD', ec: 'EC', g: 'g', auto: 'automatic',
+      ev: ['☀ Sun peak: VPD rising', '💧 Topping up with water: EC falling', '⚗ Alkaline tap water: pH rising', '☁ Cloudy and humid: VPD falling', '🌡 Hot day, the plant drinks: EC rising']
     },
     es: {
       head: 'Invernadero de prueba · Albahaca', headNex: 'NEX al mando', day: 'Día',
@@ -44,11 +46,15 @@
       cmp_t: 'Mismo invernadero, mismos imprevistos.', you: 'Tú', nex: 'NEX',
       r_day: 'Día alcanzado', r_health: 'Salud media', r_yield: 'Cosecha', r_input: 'Correcciones manuales',
       cta: 'NEX lo hace solo, cada pocos segundos, las 24 horas. ¿Quieres probarlo en tu invernadero?',
-      vpd: 'DPV', ec: 'CE', g: 'g', auto: 'automático'
+      vpd: 'DPV', ec: 'CE', g: 'g', auto: 'automático',
+      ev: ['☀ Pico de sol: DPV en aumento', '💧 Relleno con agua: CE en descenso', '⚗ Agua de red alcalina: pH en aumento', '☁ Cielo nublado y húmedo: DPV en descenso', '🌡 Calor, la planta bebe: CE en aumento']
     }
   };
 
   var HARVEST = 40, DT = 1 / 30, DAY_SEC = 1.4, MAX_YIELD = 420;
+  // bilanciamento (vedi README): deriva casuale, imprevisti annunciati, difficoltà che cresce con i giorni
+  var DRIFT = .023, CAP = .008, LOSS = 20, D0 = 1.15, D1 = 1.8, EV_MAG = .058, EV_WARN = 2, EV_GAP = 7, EV_FIRST = 4;
+  var EVENTS = [[2, 1], [0, -1], [1, 1], [2, -1], [0, 1]];
   var GAUGES = [
     { k: 'ec',  unit: 'mS/cm', min: .4, max: 3.2, lo: 1.5, hi: 2.1,  step: .12, dec: 2, key: ['q', 'a'] },
     { k: 'ph',  unit: '',      min: 4.4, max: 7.6, lo: 5.6, hi: 6.3, step: .12, dec: 1, key: ['w', 's'] },
@@ -76,6 +82,7 @@
     root.classList.add('ng');
     root.innerHTML =
       '<div class="ng-head"><span class="ng-label"></span><span><span class="ng-daylbl"></span> <b class="ng-day">0</b> / ' + HARVEST + '</span></div>' +
+      '<div class="ng-alert" aria-live="polite"></div>' +
       '<div class="ng-body"><div class="ng-plantwrap">' + PLANT +
       '<div class="ng-health" aria-hidden="true"><i></i></div><div class="ng-stage"></div></div><div class="ng-gauges"></div></div>' +
       '<div class="ng-ov"><h2 class="ng-ov-t"></h2><p class="ng-ov-p"></p><div class="ng-cmp"></div><p class="ng-cta" hidden></p>' +
@@ -109,8 +116,8 @@
     var best = +(read('ngt-nex-best-g') || 0);
 
     function reset(s) {
-      S = { r: rng(s), t: 0, day: 0, health: 100, hsum: 0, n: 0, presses: 0 };
-      gauges.forEach(function (g) { g.v = (g.lo + g.hi) / 2; g.vel = 0; });
+      S = { r: rng(s), er: rng(s ^ 0x5bd1e995), t: 0, day: 0, health: 100, hsum: 0, n: 0, presses: 0, next: EV_FIRST, pend: null, shown: null, showUntil: 0 };
+      gauges.forEach(function (g) { g.v = (g.lo + g.hi) / 2; g.vel = 0; g.push = 0; g.cd = 0; });
     }
     function result() {
       var avg = S.n ? S.hsum / S.n : 100, d = Math.min(HARVEST, Math.floor(S.day)), won = S.day >= HARVEST;
@@ -125,27 +132,38 @@
     function nexControl() {
       gauges.forEach(function (g) {
         g.cd = (g.cd || 0) - DT; if (g.cd > 0) return;
-        var w = g.hi - g.lo, p = g.v + g.vel * DT * 6 * 6;
+        var w = g.hi - g.lo, p = g.v + (g.vel + g.push) * DT * 6 * 6;
         if (p < g.lo + w * .15 || p > g.hi - w * .15) {
           g.v = Math.max(g.min, Math.min(g.max, g.v + (p < g.lo + w * .15 ? 1 : -1) * g.step * .6));
-          g.vel *= .3; g.cd = .3;
+          g.vel *= .3; g.push *= .3; g.cd = .3;
         }
       });
     }
     function step() {
-      var diff = 1 + S.t / 25;
+      var diff = D0 + (D1 - D0) * Math.min(1, S.day / HARVEST);
+      // imprevisti: annunciati EV_WARN secondi prima, stessa sequenza per il giocatore e per NEX
+      if (!S.pend && S.t >= S.next - EV_WARN) {
+        var k = Math.floor(S.er() * EVENTS.length);
+        S.pend = { k: k, at: S.next, mag: EV_MAG * (.7 + .6 * S.er()) * diff };
+        S.shown = k; S.showUntil = S.next + 1.5;
+      }
+      if (S.pend && S.t >= S.pend.at) {
+        var ev = EVENTS[S.pend.k], tg = gauges[ev[0]];
+        tg.push = ev[1] * (tg.max - tg.min) * S.pend.mag;
+        S.pend = null; S.next = S.t + EV_GAP * (.75 + .5 * S.er()) / Math.sqrt(diff);
+      }
+      if (S.shown !== null && S.t > S.showUntil) S.shown = null;
       gauges.forEach(function (g) {
-        var span = g.max - g.min;
-        g.vel += (S.r() - .5) * span * .03 * diff * DT * 60;
+        var span = g.max - g.min, cap = span * CAP * diff;
+        g.vel += (S.r() - .5) * span * DRIFT * diff * DT * 60;
         g.vel *= .985;
-        g.vel = Math.max(-span * .012 * diff, Math.min(span * .012 * diff, g.vel));
-        g.v += g.vel * DT * 6;
-        if (S.r() < .004 * diff) g.vel += (S.r() < .5 ? -1 : 1) * span * .02;
-        if (g.v <= g.min || g.v >= g.max) { g.v = Math.max(g.min, Math.min(g.max, g.v)); g.vel *= -.3; }
+        g.vel = Math.max(-cap, Math.min(cap, g.vel));
+        g.v += (g.vel + g.push) * DT * 6; g.push *= .93;
+        if (g.v <= g.min || g.v >= g.max) { g.v = Math.max(g.min, Math.min(g.max, g.v)); g.vel *= -.3; g.push = 0; }
       });
       if (mode === 'nex') nexControl();
       var out = gauges.filter(function (g) { return g.v < g.lo || g.v > g.hi; }).length;
-      S.health = out ? Math.max(0, S.health - out * 26 * DT) : Math.min(100, S.health + 6 * DT);
+      S.health = out ? Math.max(0, S.health - out * LOSS * DT) : Math.min(100, S.health + 6 * DT);
       S.hsum += S.health; S.n++; S.t += DT; S.day += DT / DAY_SEC;
     }
     function loop(ts) {
@@ -184,6 +202,10 @@
         g.val.textContent = fmt(g.v, g.dec) + (g.unit ? ' ' + g.unit : '');
         g.name.textContent = g.k === 'vpd' ? t.vpd : g.k === 'ec' ? t.ec : 'pH';
       });
+      var al = q('.ng-alert'), evk = S.shown;
+      al.textContent = evk !== null ? t.ev[evk] : '';
+      al.classList.toggle('on', evk !== null);
+      gauges.forEach(function (g, i) { g.el.classList.toggle('warn', evk !== null && EVENTS[evk][0] === i); });
       var d = Math.min(HARVEST, Math.floor(S.day)), s = d < 3 ? 0 : d < 8 ? 1 : d < 16 ? 2 : d < 26 ? 3 : d < HARVEST ? 4 : 5;
       q('.ng-day').textContent = d;
       q('.ng-stage').textContent = t.st[s];

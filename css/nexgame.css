@@ -60,3 +60,8 @@ body.mt-page{background:var(--panel);color:var(--panel-ink)}
 .ng-cmp td:last-child{color:#58D27A}
 .ng-cta a{color:var(--panel-ink);font-family:var(--f-mono);overflow-wrap:anywhere}
 @media (max-width:520px){.ng-body{grid-template-columns:1fr}.ng-plant{max-width:150px}.ng-track{height:120px}}
+.ng-alert{min-height:2.1rem;display:flex;align-items:center;margin-top:.6rem;padding:.35rem .6rem;border-radius:6px;font-family:var(--f-body);font-size:.85rem;color:transparent;background:transparent;transition:background .2s,color .2s}
+.ng-alert.on{background:rgba(232,176,75,.16);color:#F3C979}
+.ng-gauge.warn .ng-track{box-shadow:0 0 0 2px rgba(232,176,75,.7)}
+@media (prefers-reduced-motion:no-preference){.ng-gauge.warn .ng-track{animation:ngpulse .8s ease-in-out infinite alternate}}
+@keyframes ngpulse{from{box-shadow:0 0 0 2px rgba(232,176,75,.25)}to{box-shadow:0 0 0 3px rgba(232,176,75,.85)}}
