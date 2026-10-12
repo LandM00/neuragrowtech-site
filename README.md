@@ -2,7 +2,8 @@
 
 Sito di Neura GrowTech. Pagine statiche (HTML, CSS, JS), senza build: quello che c'è in questa cartella è esattamente ciò che viene pubblicato.
 
-- `index.html` — home
+- `index.html` — home in italiano (lingua principale)
+- `en/index.html` — home in inglese. Le due pagine hanno la stessa struttura: ogni modifica va fatta in entrambe.
 - `css/style.css` — stile (colori e caratteri definiti in cima al file)
 - `js/main.js` — animazione del pannello NEX e pulsanti "Copia"
 - `img/` — fotografie
