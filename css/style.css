@@ -219,3 +219,15 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
 .mail-row a.addr{text-decoration:none;color:inherit}
 .mail-row a.addr:hover{text-decoration:underline}
 @media (max-width:480px){.nav-end .btn{display:none}}
+
+/* contact: general address first, direct contacts below */
+.contact-side{display:flex;flex-direction:column;gap:1.5rem;min-width:0}
+.mail-primary{border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:1.25rem;display:flex;flex-direction:column;gap:.6rem}
+.mail-primary small{color:var(--panel-muted);font-size:.8rem}
+.mail-primary-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem}
+.mail-primary .addr{font-family:var(--f-mono);font-size:clamp(1rem,2.4vw,1.25rem);text-decoration:none;color:var(--panel-ink);overflow-wrap:anywhere}
+.mail-primary .addr:hover{text-decoration:underline}
+.mail-primary p{color:var(--panel-muted);font-size:.9rem}
+.contact-side .eyebrow{color:var(--panel-muted);margin-bottom:-.75rem}
+.mail.compact .mail-row{padding-block:.7rem}
+.mail.compact .addr{font-size:.85rem}
