@@ -7,8 +7,8 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#12262A">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/style.css?v=7">
-<link rel="stylesheet" href="/css/nexgame.css?v=7">
+<link rel="stylesheet" href="/css/style.css?v=8">
+<link rel="stylesheet" href="/css/nexgame.css?v=8">
 </head>
 <body class="mt-page">
 <main class="wrap mt">
@@ -31,7 +31,7 @@
     <div id="nexgame"></div>
   </div>
 </main>
-<script data-cfasync="false" src="/js/nexgame.js?v=7"></script>
+<script data-cfasync="false" src="/js/nexgame.js?v=8"></script>
 <script data-cfasync="false">
 (function(){
   var T={"it": {"doc": "Sito in aggiornamento", "eyebrow": "Sito in aggiornamento", "title": "Torniamo online a breve.", "body": "Stiamo aggiornando il sito di Neura GrowTech. Nel frattempo, prova a fare il lavoro di NEX.", "contact": "Per qualsiasi richiesta:"}, "en": {"doc": "Website update in progress", "eyebrow": "Website update in progress", "title": "We will be back online shortly.", "body": "We are updating the Neura GrowTech website. In the meantime, try doing NEX’s job.", "contact": "For any enquiry:"}, "es": {"doc": "Web en actualización", "eyebrow": "Web en actualización", "title": "Volvemos a estar en línea en breve.", "body": "Estamos actualizando la web de Neura GrowTech. Mientras tanto, prueba a hacer el trabajo de NEX.", "contact": "Para cualquier consulta:"}};
@@ -40,7 +40,11 @@
   var lang=read('ngt-lang');
   if(!T[lang]){lang='en';var ls=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'it']);for(var i=0;i<ls.length;i++){var c=String(ls[i]).toLowerCase().slice(0,2);if(T[c]){lang=c;break;}}}
   var game={setLang:function(){}};
-  try{game=NexGame.mount(document.getElementById('nexgame'),lang);}catch(e){if(window.console)console.error(e);}
+  var box=document.getElementById('nexgame');
+  try{game=NexGame.mount(box,lang);}catch(e){
+    box.innerHTML='<p style="font-family:monospace;font-size:.8rem;color:#F590BD;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:1rem"></p>';
+    box.firstChild.textContent='Il gioco non è partito: '+(e&&e.message?e.message:e)+' · '+navigator.userAgent;
+  }
   function setLang(l){
     lang=l;document.documentElement.lang=l;var t=T[l];
     document.querySelectorAll('[data-t]').forEach(function(el){el.textContent=t[el.getAttribute('data-t')];});
