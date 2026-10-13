@@ -11,7 +11,7 @@ BRAND = '''<a class="brand" href="/" aria-label="Neura GrowTech">
       NEURA GROWTECH
     </a>'''
 
-CSS_VER = "10"
+CSS_VER = "20"
 
 PAGES = {
     "gioco/index.html": {
@@ -83,7 +83,7 @@ def render(spec):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Neura GrowTech · {it["doc"]}</title>
 <meta name="robots" content="{spec["robots"]}">{canonical}
-<meta name="theme-color" content="#12262A">
+<meta name="theme-color" content="#F4F4F1">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/css/style.css?v={CSS_VER}">
 <link rel="stylesheet" href="/css/nexgame.css?v={CSS_VER}">
