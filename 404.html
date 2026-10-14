@@ -7,8 +7,8 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F4F4F1">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/style.css?v=21">
-<link rel="stylesheet" href="/css/nexgame.css?v=21">
+<link rel="stylesheet" href="/css/style.css?v=22">
+<link rel="stylesheet" href="/css/nexgame.css?v=22">
 </head>
 <body class="mt-page">
 <main class="wrap mt">
@@ -138,7 +138,7 @@
     EV_MAG: .058, EV_WARN: 2, EV_GAP: 7, EV_FIRST: 10,
     WARMUP_T: 50, DW: .5, EV_WARN_START: 3.5,
     SUNRISE: 6, SUNSET: 20, PHOTO_END: 22, NIGHT: .006, CLOUD_COVER: 4,
-    PTS: 10, STREAK_STEP: 4, MULT_MAX: 3, HARVEST_BONUS: 200
+    HELP_EV: 5, PTS: 10, STREAK_STEP: 4, MULT_MAX: 3, HARVEST_BONUS: 200
   };
   var GAUGES = [
     { k: 'ec',  unit: 'mS/cm', min: .4, max: 3.2, lo: 1.5, hi: 2.1,  step: .12, dec: 2, key: ['q', 'a'] },
@@ -160,7 +160,7 @@
     this.health = 100; this.points = 0; this.mult = 1; this.streak = 0;
     this.inBand = 0; this.n = 0; this.presses = 0; this.cycle = 1; this.cyH = 0; this.cyN = 0;
     this.next = C.EV_FIRST; this.pend = null; this.shown = null; this.showUntil = 0; this.lastHarvest = null;
-    this.cloudUntil = -1; this.active = null; this.activeUntil = 0;
+    this.cloudUntil = -1; this.active = null; this.activeUntil = 0; this.evN = 0;
     this.g = GAUGES.map(function (d) { return { v: (d.lo + d.hi) / 2, vel: 0, push: 0, cd: 0 }; });
   }
   Sim.prototype.daySec = function () { return C.DAY_SEC0 - (C.DAY_SEC0 - C.DAY_SEC1) * Math.min(1, this.t / C.SLOW_T); };
@@ -202,7 +202,7 @@
       for (var e = 0; e < EVENTS.length; e++) if (evOk(e, hAt)) list.push(e);
       var k = list[Math.floor(s.er() * list.length)];
       s.pend = { k: k, at: s.next, from: s.t, mag: C.EV_MAG * (.7 + .6 * s.er()) * diff };
-      s.shown = k; s.showUntil = s.next + .8;
+      s.shown = k; s.showUntil = s.next + .8; s.evN++;
     }
     if (s.pend && s.t >= s.pend.at) {
       var ev = EVENTS[s.pend.k], d0 = GAUGES[ev[0]];
@@ -451,8 +451,9 @@
         u.el.classList.toggle('out', o);
         var w = S.shown !== null && EVENTS[S.shown][0] === i;
         u.el.classList.toggle('warn', w);
-        u.btn[0].classList.toggle('hint', w && EVENTS[S.shown][1] < 0);
-        u.btn[1].classList.toggle('hint', w && EVENTS[S.shown][1] > 0);
+        var help = w && S.evN <= C.HELP_EV; // aiuto solo per i primi imprevisti
+        u.btn[0].classList.toggle('hint', help && EVENTS[S.shown][1] < 0);
+        u.btn[1].classList.toggle('hint', help && EVENTS[S.shown][1] > 0);
         u.name.textContent = d.k === 'vpd' ? t.vpd : d.k === 'ec' ? t.ec : 'pH';
         u.val.textContent = fmt(g.v, d.dec) + (d.unit ? ' ' + d.unit : '');
       });
@@ -461,10 +462,16 @@
       if (S.lastHarvest && S.t < S.lastHarvest.until) { msg = fill(t.harvest, { bonus: S.lastHarvest.bonus, cycle: S.cycle, day: 0 }); kind = 'good'; }
       else if (S.shown !== null) {
         var ev = EVENTS[S.shown], gk = GAUGES[ev[0]].k, gn = gk === 'vpd' ? t.vpd : gk === 'ec' ? t.ec : 'pH';
-        var cd = S.pend ? Math.max(1, Math.ceil(S.pend.at - S.t)) : null;
-        html = '<span class="ng-evc">' + (cd !== null ? cd + '<small>s</small>' : t.now) + '</span><span class="ng-evt">' + t.evT[S.shown] +
-          '</span><span class="ng-evd">' + gn + ' ' + (ev[1] > 0 ? '▲ ' + t.up : '▼ ' + t.down) + ' → ' + t.press + ' <b>' + (ev[1] > 0 ? '▼' : '▲') + '</b></span>';
-        msg = t.evT[S.shown]; kind = 'warn';
+        var cd = S.pend ? Math.max(1, Math.ceil(S.pend.at - S.t)) : null, eff = gn + ' ' + (ev[1] > 0 ? '▲ ' + t.up : '▼ ' + t.down);
+        if (S.evN <= C.HELP_EV) {
+          html = '<span class="ng-evc">' + (cd !== null ? cd + '<small>s</small>' : t.now) + '</span><span class="ng-evt">' + t.evT[S.shown] +
+            '</span><span class="ng-evd">' + eff + ' → ' + t.press + ' <b>' + (ev[1] > 0 ? '▼' : '▲') + '</b></span>';
+          kind = 'warn';
+        } else { // dopo i primi imprevisti: solo cosa succede, senza secondi né tasto suggerito
+          html = '<span class="ng-evt">' + t.evT[S.shown] + '</span><span class="ng-evd">' + eff + '</span>';
+          kind = 'warn bare';
+        }
+        msg = t.evT[S.shown];
       }
       else msg = !up ? (S.photo() ? t.w_dusk : t.w_night) : S.cloudy() ? t.w_cloud : t.w_clear;
       if (html !== null) { if (st._h !== html) { st.innerHTML = html; st._h = html; } }
