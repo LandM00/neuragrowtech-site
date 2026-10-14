@@ -7,8 +7,8 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F4F4F1">
 <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
-<link rel="stylesheet" href="/css/style.css?v=24">
-<link rel="stylesheet" href="/css/nexgame.css?v=24">
+<link rel="stylesheet" href="/css/style.css?v=25">
+<link rel="stylesheet" href="/css/nexgame.css?v=25">
 </head>
 <body class="mt-page">
 <main class="wrap mt">
@@ -137,7 +137,7 @@
     D0: 1.15, D1: 1.8, RAMP_T: 130, D2: .3, D2_T: 90, DMAX: 2.8,
     EV_MAG: .058, EV_WARN: 2, EV_GAP: 7, EV_FIRST: 10,
     WARMUP_T: 50, DW: .5, EV_WARN_START: 3.5,
-    SUNRISE: 6, SUNSET: 20, PHOTO_END: 22, NIGHT: .006, CLOUD_COVER: 4,
+    SUNRISE: 6, SUNSET: 20, PHOTO_END: 22, NIGHT: .006, CLOUD_COVER: 9,
     HELP_EV: 5, PTS: 10, STREAK_STEP: 4, MULT_MAX: 3, HARVEST_BONUS: 200
   };
   var GAUGES = [
@@ -200,6 +200,7 @@
       // l'imprevisto dipende dall'ora in cui accadrà: niente sole o nuvole di notte
       var hAt = s.hour(s.day + (s.next - s.t) / s.daySec()), list = [];
       for (var e = 0; e < EVENTS.length; e++) if (evOk(e, hAt)) list.push(e);
+      if (evOk(EV_CLOUD, hAt)) list.push(EV_CLOUD, EV_CLOUD); // di giorno le nuvole sono l'imprevisto più comune
       var k = list[Math.floor(s.er() * list.length)];
       s.pend = { k: k, at: s.next, from: s.t, mag: C.EV_MAG * (.7 + .6 * s.er()) * diff };
       s.shown = k; s.showUntil = s.next + .8; s.evN++;
