@@ -84,7 +84,7 @@ def render(spec):
 <title>Neura GrowTech · {it["doc"]}</title>
 <meta name="robots" content="{spec["robots"]}">{canonical}
 <meta name="theme-color" content="#F4F4F1">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
 <link rel="stylesheet" href="/css/style.css?v={CSS_VER}">
 <link rel="stylesheet" href="/css/nexgame.css?v={CSS_VER}">
 </head>
