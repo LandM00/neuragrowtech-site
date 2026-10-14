@@ -29,7 +29,9 @@
       cta: 'Vuoi vedere NEX in una serra vera?',
       harvest: '🌿 Raccolto! +{b} punti · si riparte con il ciclo {c}',
       pause_t: 'In pausa', resume: 'Riprendi',
-      shareText: 'Ho fatto {p} punti nella serra di NEX (giorno {d}, ciclo {c}). Riesci a fare meglio?',
+      shareRec: 'Nuovo record personale nella serra di NEX: {p} punti, arrivato al giorno {d}. 🌱',
+      shareRun: 'Ho fatto {p} punti nella serra di NEX (giorno {d}). Il mio record è {r}. 🌱',
+      jabs: ['Scommetto che non tieni EC, pH e VPD in fascia neanche per una settimana. 😏', 'Tu quanto resisti prima che il basilico appassisca?', 'Pensi di fare il lavoro di NEX meglio di me? Dimostralo.'],
       ev: ['☀ Picco di sole: VPD in salita', '💧 Rabbocco con acqua: EC in calo', '⚗ Acqua di rete alcalina: pH in salita',
            '☁ Arrivano le nuvole: VPD in calo', '🌡 Caldo, la pianta beve: EC in salita', '🌙 Umidità notturna: VPD in calo'],
       evT: ['Picco di sole', 'Rabbocco con acqua', 'Acqua di rete alcalina', 'Arrivano le nuvole', 'Caldo, la pianta beve', 'Umidità notturna'],
@@ -56,7 +58,9 @@
       cta: 'Want to see NEX in a real greenhouse?',
       harvest: '🌿 Harvest! +{b} points · starting cycle {c}',
       pause_t: 'Paused', resume: 'Resume',
-      shareText: 'I scored {p} points in the NEX greenhouse (day {d}, cycle {c}). Can you beat it?',
+      shareRec: 'New personal best in the NEX greenhouse: {p} points, made it to day {d}. 🌱',
+      shareRun: 'I scored {p} points in the NEX greenhouse (day {d}). My best is {r}. 🌱',
+      jabs: ['Bet you can’t keep EC, pH and VPD in range for even a week. 😏', 'How long can you last before the basil wilts?', 'Think you can do NEX’s job better than me? Prove it.'],
       ev: ['☀ Sun peak: VPD rising', '💧 Topping up with water: EC falling', '⚗ Alkaline tap water: pH rising',
            '☁ Clouds coming: VPD falling', '🌡 Hot day, the plant drinks: EC rising', '🌙 Humid night: VPD falling'],
       evT: ['Sun peak', 'Topping up with water', 'Alkaline tap water', 'Clouds coming', 'Hot day, the plant drinks', 'Humid night'],
@@ -83,7 +87,9 @@
       cta: '¿Quieres ver NEX en un invernadero real?',
       harvest: '🌿 ¡Cosecha! +{b} puntos · empieza el ciclo {c}',
       pause_t: 'En pausa', resume: 'Continuar',
-      shareText: 'He hecho {p} puntos en el invernadero de NEX (día {d}, ciclo {c}). ¿Puedes superarlo?',
+      shareRec: 'Nuevo récord personal en el invernadero de NEX: {p} puntos, llegué al día {d}. 🌱',
+      shareRun: 'He hecho {p} puntos en el invernadero de NEX (día {d}). Mi récord es {r}. 🌱',
+      jabs: ['Apuesto a que no mantienes la CE, el pH y el DPV en rango ni una semana. 😏', '¿Cuánto aguantas antes de que se marchite la albahaca?', '¿Crees que haces el trabajo de NEX mejor que yo? Demuéstralo.'],
       ev: ['☀ Pico de sol: DPV en aumento', '💧 Relleno con agua: CE en descenso', '⚗ Agua de red alcalina: pH en aumento',
            '☁ Llegan las nubes: DPV en descenso', '🌡 Calor, la planta bebe: CE en aumento', '🌙 Humedad nocturna: DPV en descenso'],
       evT: ['Pico de sol', 'Relleno con agua', 'Agua de red alcalina', 'Llegan las nubes', 'Calor, la planta bebe', 'Humedad nocturna'],
@@ -467,9 +473,10 @@
       function btn(label, cls, fn) { var b = document.createElement('button'); b.type = 'button'; b.className = cls; b.textContent = label; b.addEventListener('click', fn); btns.appendChild(b); return b; }
       function shareBtn() {
         var b = btn(t.share, 'ng-btn ghost', function () {
-          var text = fill(t.shareText, you);
-          if (navigator.share) { navigator.share({ title: 'Neura GrowTech', text: text, url: shareUrl }).catch(function () {}); return; }
-          var full = text + ' ' + shareUrl;
+          // record + battuta + link, tutto nel testo: molte app ignorano il testo se il link è passato a parte
+          var rec = you.points >= best, head = fill(rec ? t.shareRec : t.shareRun, you).replace('{r}', num(best));
+          var full = head + '\n' + t.jabs[Math.floor(Math.random() * t.jabs.length)] + '\n👉 ' + shareUrl;
+          if (navigator.share) { navigator.share({ text: full }).catch(function () {}); return; }
           function ok() { b.textContent = t.copied; setTimeout(function () { b.textContent = t.share; }, 1800); }
           try { navigator.clipboard.writeText(full).then(ok, function () {}); } catch (e) {}
         });
