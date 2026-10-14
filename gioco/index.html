@@ -8,8 +8,8 @@
 <link rel="canonical" href="https://neuragrowtech.com/gioco/">
 <meta name="theme-color" content="#F4F4F1">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/style.css?v=20">
-<link rel="stylesheet" href="/css/nexgame.css?v=20">
+<link rel="stylesheet" href="/css/style.css?v=21">
+<link rel="stylesheet" href="/css/nexgame.css?v=21">
 </head>
 <body class="mt-page">
 <main class="wrap mt">
@@ -67,6 +67,8 @@
       shareText: 'Ho fatto {p} punti nella serra di NEX (giorno {d}, ciclo {c}). Riesci a fare meglio?',
       ev: ['☀ Picco di sole: VPD in salita', '💧 Rabbocco con acqua: EC in calo', '⚗ Acqua di rete alcalina: pH in salita',
            '☁ Arrivano le nuvole: VPD in calo', '🌡 Caldo, la pianta beve: EC in salita', '🌙 Umidità notturna: VPD in calo'],
+      evT: ['Picco di sole', 'Rabbocco con acqua', 'Acqua di rete alcalina', 'Arrivano le nuvole', 'Caldo, la pianta beve', 'Umidità notturna'],
+      up: 'sale', down: 'scende', press: 'premi', now: 'ora',
       w_clear: '☀ Sereno', w_cloud: '☁ Nuvoloso · LED supplementari accesi', w_dusk: '🌇 Dopo il tramonto · LED supplementari accesi', w_night: '🌙 Notte',
       vpd: 'VPD', ec: 'EC'
     },
@@ -92,6 +94,8 @@
       shareText: 'I scored {p} points in the NEX greenhouse (day {d}, cycle {c}). Can you beat it?',
       ev: ['☀ Sun peak: VPD rising', '💧 Topping up with water: EC falling', '⚗ Alkaline tap water: pH rising',
            '☁ Clouds coming: VPD falling', '🌡 Hot day, the plant drinks: EC rising', '🌙 Humid night: VPD falling'],
+      evT: ['Sun peak', 'Topping up with water', 'Alkaline tap water', 'Clouds coming', 'Hot day, the plant drinks', 'Humid night'],
+      up: 'rising', down: 'falling', press: 'press', now: 'now',
       w_clear: '☀ Clear sky', w_cloud: '☁ Cloudy · supplemental LEDs on', w_dusk: '🌇 After sunset · supplemental LEDs on', w_night: '🌙 Night',
       vpd: 'VPD', ec: 'EC'
     },
@@ -117,6 +121,8 @@
       shareText: 'He hecho {p} puntos en el invernadero de NEX (día {d}, ciclo {c}). ¿Puedes superarlo?',
       ev: ['☀ Pico de sol: DPV en aumento', '💧 Relleno con agua: CE en descenso', '⚗ Agua de red alcalina: pH en aumento',
            '☁ Llegan las nubes: DPV en descenso', '🌡 Calor, la planta bebe: CE en aumento', '🌙 Humedad nocturna: DPV en descenso'],
+      evT: ['Pico de sol', 'Relleno con agua', 'Agua de red alcalina', 'Llegan las nubes', 'Calor, la planta bebe', 'Humedad nocturna'],
+      up: 'sube', down: 'baja', press: 'pulsa', now: 'ya',
       w_clear: '☀ Despejado', w_cloud: '☁ Nublado · LED suplementarios encendidos', w_dusk: '🌇 Tras la puesta de sol · LED suplementarios encendidos', w_night: '🌙 Noche',
       vpd: 'DPV', ec: 'CE'
     }
@@ -143,7 +149,9 @@
   // [indicatore, direzione]; l'indice corrisponde ai testi STR.ev
   var EVENTS = [[2, 1], [0, -1], [1, 1], [2, -1], [0, 1], [2, -1]];
   var EV_SUN = 0, EV_CLOUD = 3, EV_HEAT = 4;
-  var EV_DAY = [0, 1, 2, 3, 4], EV_NIGHT = [1, 2, 5];
+  // ore in cui ogni imprevisto è plausibile [da, a): sole e caldo nelle ore centrali, nuvole di giorno, umidità di notte
+  var EV_HOURS = [[10, 17], [0, 24], [0, 24], [7, 18], [11, 18], [21, 29]];
+  function evOk(k, h) { var r = EV_HOURS[k]; return (h >= r[0] && h < r[1]) || (h + 24 >= r[0] && h + 24 < r[1]); }
 
   function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 
@@ -191,10 +199,11 @@
     var s = this, DT = C.DT, diff = s.diff(), harvested = 0;
     if (!s.pend && s.t >= s.next - s.warn()) {
       // l'imprevisto dipende dall'ora in cui accadrà: niente sole o nuvole di notte
-      var dayAt = s.day + (s.next - s.t) / s.daySec(), list = s.sunUp(s.hour(dayAt)) ? EV_DAY : EV_NIGHT;
+      var hAt = s.hour(s.day + (s.next - s.t) / s.daySec()), list = [];
+      for (var e = 0; e < EVENTS.length; e++) if (evOk(e, hAt)) list.push(e);
       var k = list[Math.floor(s.er() * list.length)];
       s.pend = { k: k, at: s.next, from: s.t, mag: C.EV_MAG * (.7 + .6 * s.er()) * diff };
-      s.shown = k; s.showUntil = s.next + 1.5;
+      s.shown = k; s.showUntil = s.next + .8;
     }
     if (s.pend && s.t >= s.pend.at) {
       var ev = EVENTS[s.pend.k], d0 = GAUGES[ev[0]];
@@ -325,7 +334,7 @@
       q('.ng-gauges').appendChild(g);
       var b = g.querySelectorAll('.ng-ctl button');
       hold(b[0], function () { nudge(i, 1); }); hold(b[1], function () { nudge(i, -1); });
-      return { el: g, needle: g.querySelector('.ng-needle'), name: g.querySelector('.ng-dname'), val: g.querySelector('.ng-dval') };
+      return { el: g, btn: b, needle: g.querySelector('.ng-needle'), name: g.querySelector('.ng-dname'), val: g.querySelector('.ng-dval') };
     });
 
     function hold(btn, fn) {
@@ -441,16 +450,27 @@
         var d = GAUGES[i], g = S.g[i], o = g.v < d.lo || g.v > d.hi;
         u.needle.setAttribute('transform', 'rotate(' + ang(d, g.v).toFixed(1) + ')');
         u.el.classList.toggle('out', o);
-        u.el.classList.toggle('warn', S.shown !== null && EVENTS[S.shown][0] === i);
+        var w = S.shown !== null && EVENTS[S.shown][0] === i;
+        u.el.classList.toggle('warn', w);
+        u.btn[0].classList.toggle('hint', w && EVENTS[S.shown][1] < 0);
+        u.btn[1].classList.toggle('hint', w && EVENTS[S.shown][1] > 0);
         u.name.textContent = d.k === 'vpd' ? t.vpd : d.k === 'ec' ? t.ec : 'pH';
         u.val.textContent = fmt(g.v, d.dec) + (d.unit ? ' ' + d.unit : '');
       });
       // stato: raccolto > imprevisto in arrivo > meteo
-      var st = q('.ng-status'), msg, kind = '';
+      var st = q('.ng-status'), msg, kind = '', html = null;
       if (S.lastHarvest && S.t < S.lastHarvest.until) { msg = fill(t.harvest, { bonus: S.lastHarvest.bonus, cycle: S.cycle, day: 0 }); kind = 'good'; }
-      else if (S.shown !== null) { msg = '⚠ ' + t.ev[S.shown]; kind = 'warn'; }
+      else if (S.shown !== null) {
+        var ev = EVENTS[S.shown], gk = GAUGES[ev[0]].k, gn = gk === 'vpd' ? t.vpd : gk === 'ec' ? t.ec : 'pH';
+        var cd = S.pend ? Math.max(1, Math.ceil(S.pend.at - S.t)) : null;
+        html = '<span class="ng-evc">' + (cd !== null ? cd + '<small>s</small>' : t.now) + '</span><span class="ng-evt">' + t.evT[S.shown] +
+          '</span><span class="ng-evd">' + gn + ' ' + (ev[1] > 0 ? '▲ ' + t.up : '▼ ' + t.down) + ' → ' + t.press + ' <b>' + (ev[1] > 0 ? '▼' : '▲') + '</b></span>';
+        msg = t.evT[S.shown]; kind = 'warn';
+      }
       else msg = !up ? (S.photo() ? t.w_dusk : t.w_night) : S.cloudy() ? t.w_cloud : t.w_clear;
-      st.textContent = msg; st.className = 'ng-status' + (kind ? ' ' + kind : '');
+      if (html !== null) { if (st._h !== html) { st.innerHTML = html; st._h = html; } }
+      else if (st._h !== msg) { st.textContent = msg; st._h = msg; }
+      st.className = 'ng-status' + (kind ? ' ' + kind : '');
       // pianta
       var cf = Math.min(1, S.cycleDay() / C.HARVEST), s = cf < .07 ? 0 : cf < .2 ? 1 : cf < .4 ? 2 : cf < .65 ? 3 : cf < .93 ? 4 : 5;
       q('.ng-stage').textContent = t.crop + ' · ' + t.st[s] + ' · ' + t.cycle + ' ' + S.cycle;

@@ -72,7 +72,13 @@ body.mt-page.ng-dark-page{--pg-bg:#202124;--pg-ink:#E8EAED;--pg-soft:#9AA0A6;col
 .ng-health i{display:block;height:100%;background:var(--green);transition:width .2s}
 .ng-low .ng-health i{background:var(--red)}
 .ng-status{margin-top:.6rem;color:var(--soft);min-height:2.4em}
-.ng-status.warn{color:var(--amber);font-weight:400}
+.ng-status.warn{display:grid;grid-template-columns:auto 1fr;gap:.1rem .6rem;align-items:center;border-left:3px solid var(--amber);padding:.15rem 0 .15rem .6rem;color:var(--ink);font-weight:400}
+.ng-evc{grid-row:1/3;min-width:1.6em;font-size:1.3rem;font-weight:500;line-height:1;color:var(--amber);font-variant-numeric:tabular-nums}
+.ng-evc small{font-size:.65rem;margin-left:.1em}
+.ng-evt{font-weight:500}
+.ng-evd{font-size:.85em;color:#66665F}
+.ng-evd b{display:inline-block;min-width:1.5em;text-align:center;background:var(--amber);color:#fff;border-radius:3px;font-weight:500}
+.ng-gauge.warn .ng-ctl button.hint{background:var(--amber);border-color:var(--amber);color:#fff}
 .ng-status.good{color:var(--green)}
 .ng-stage{color:var(--soft);text-transform:uppercase;letter-spacing:.04em;font-size:.66rem}
 
