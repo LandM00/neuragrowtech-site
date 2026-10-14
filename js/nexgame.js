@@ -11,7 +11,7 @@
 (function () {
   var STR = {
     it: {
-      headNex: 'NEX al comando', day: 'G', cycle: 'Ciclo', hi: 'HI', health: 'Salute', bestShort: 'Record',
+      headNex: 'NEX al comando', day: 'Giorno ', cycle: 'Ciclo', hi: 'HI', health: 'Salute', bestShort: 'Record',
       st: ['Seme', 'Germinazione', 'Cotiledoni', 'Prime foglie vere', 'Pianta adulta', 'Pronta per il raccolto'],
       crop: 'Basilico',
       start_t: 'Fai il lavoro di NEX',
@@ -38,7 +38,7 @@
       vpd: 'VPD', ec: 'EC'
     },
     en: {
-      headNex: 'NEX in control', day: 'D', cycle: 'Cycle', hi: 'HI', health: 'Health', bestShort: 'Best',
+      headNex: 'NEX in control', day: 'Day ', cycle: 'Cycle', hi: 'HI', health: 'Health', bestShort: 'Best',
       st: ['Seed', 'Germination', 'Cotyledons', 'First true leaves', 'Mature plant', 'Ready to harvest'],
       crop: 'Basil',
       start_t: 'Do NEX’s job',
@@ -65,7 +65,7 @@
       vpd: 'VPD', ec: 'EC'
     },
     es: {
-      headNex: 'NEX al mando', day: 'D', cycle: 'Ciclo', hi: 'REC', health: 'Salud', bestShort: 'Récord',
+      headNex: 'NEX al mando', day: 'Día ', cycle: 'Ciclo', hi: 'REC', health: 'Salud', bestShort: 'Récord',
       st: ['Semilla', 'Germinación', 'Cotiledones', 'Primeras hojas verdaderas', 'Planta adulta', 'Lista para cosechar'],
       crop: 'Albahaca',
       start_t: 'Haz el trabajo de NEX',
