@@ -11,7 +11,7 @@ BRAND = '''<a class="brand" href="/" aria-label="Neura GrowTech">
       NEURA GROWTECH
     </a>'''
 
-CSS_VER = "22"
+CSS_VER = "23"
 
 PAGES = {
     "gioco/index.html": {

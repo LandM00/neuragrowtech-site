@@ -97,7 +97,7 @@
   var C = {
     HARVEST: 28, DT: 1 / 30, MOVE: 5,
     // durata di una giornata in secondi: lenta all'inizio (DAY_SEC0), a regime dopo SLOW_T secondi (DAY_SEC1)
-    DAY_SEC0: 10, DAY_SEC1: 7, SLOW_T: 60,
+    DAY_SEC0: 13, DAY_SEC1: 10, SLOW_T: 60,
     DRIFT: .023, CAP: .008, LOSS: 20, REGEN: 6,
     // difficoltà in funzione del tempo di gioco (secondi): riscaldamento, salita, poi crescita lenta
     D0: 1.15, D1: 1.8, RAMP_T: 130, D2: .3, D2_T: 90, DMAX: 2.8,
