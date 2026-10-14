@@ -118,11 +118,11 @@ img{display:block;max-width:100%}
 .loop h2{font-size:clamp(2rem,5.4vw,4.4rem)}
 .loop svg{width:min(860px,100%);height:auto}
 .loop .ring{fill:var(--paper);stroke:#C9CEC8;stroke-width:2.5;transition:fill .4s,stroke .4s}
-.loop .ring.on{fill:var(--green);stroke:var(--green)}
+.loop .ring.on{fill:url(#loopg);stroke:url(#loopg)}
 .loop .lab{font-family:var(--f-m);font-size:17px;fill:#8A9092;transition:fill .4s}
 .loop .lab.on{fill:#fff}
-.loop .arc{fill:none;stroke:var(--green);stroke-width:3;stroke-linecap:round}
-.loop .ret{fill:none;stroke:var(--green);stroke-width:2.5;stroke-dasharray:6 7;opacity:0;transition:opacity .5s}
+.loop .arc{fill:none;stroke:url(#loopg);stroke-width:3;stroke-linecap:round}
+.loop .ret{fill:none;stroke:url(#loopg);stroke-width:2.5;stroke-dasharray:6 7;opacity:0;transition:opacity .5s}
 .loop .ret.on{opacity:1}
 .loop p{color:var(--muted);max-width:52ch;margin:0;font-size:clamp(1rem,1.5vw,1.15rem)}
 
@@ -273,6 +273,7 @@ img{display:block;max-width:100%}
   <div class="stick">
     <h2 class="big">Un ciclo che non si ferma.</h2>
     <svg viewBox="0 0 860 260" aria-hidden="true">
+      <defs><linearGradient id="loopg" gradientUnits="userSpaceOnUse" x1="70" y1="80" x2="790" y2="200"><stop offset="0" stop-color="#7A00E0"/><stop offset=".45" stop-color="#2A1FD0"/><stop offset=".75" stop-color="#0036B8"/><stop offset="1" stop-color="#001C72"/></linearGradient></defs>
       <path class="arc" id="arc1" d="M190 120 C 270 40, 350 40, 380 110"/>
       <path class="arc" id="arc2" d="M480 110 C 510 40, 590 40, 670 120"/>
       <path class="ret" id="ret" d="M680 160 C 560 260, 300 260, 180 160"/>
@@ -288,7 +289,7 @@ img{display:block;max-width:100%}
   <div class="wrap">
     <div class="nh"><span class="eyebrow">Risultati</span><h2 class="big">Cosa cambia in serra.</h2></div>
     <div class="rows">
-      <div class="num"><b data-to="20" data-pre="−15–">−15–0%</b><div><h3>Input produttivi</h3><p>Meno acqua, fertilizzanti ed energia: NEX dosa solo ciò che serve, quando serve.</p></div></div>
+      <div class="num"><b data-to="20" data-pre="−">−0%</b><div><h3>Input produttivi, fino a</h3><p>Meno acqua, fertilizzanti ed energia: NEX dosa solo ciò che serve, quando serve.</p></div></div>
       <div class="num"><b data-to="20" data-pre="+">+0%</b><div><h3>Produttività, fino a</h3><p>Condizioni più stabili lungo tutto il ciclo, rese più costanti.</p></div></div>
       <div class="num"><b data-to="70" data-pre="&gt;">&gt;0%</b><div><h3>Interventi manuali in meno</h3><p>Le correzioni di routine le fa NEX. Il personale si occupa del resto.</p></div></div>
     </div>
