@@ -3,319 +3,533 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Neura GrowTech · Gestione autonoma delle colture</title>
-<meta name="description" content="Neura GrowTech sviluppa NEX, il sistema che gestisce in autonomia nutrizione, irrigazione e clima nelle colture in serra, fuori suolo e vertical farm.">
+<title>Neura GrowTech · NEX, la serra che decide e agisce da sola</title>
+<script data-cfasync="false">(function(){var t;try{t=localStorage.getItem("ngt-theme")}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t;})();</script>
+<meta name="description" content="NEX di Neura GrowTech osserva la coltura, riconosce lo stadio di crescita e regola nutrizione, irrigazione e clima in tempo reale. Spin-off dalla ricerca del DISTAL, Università di Bologna.">
 <link rel="canonical" href="https://neuragrowtech.com/">
 <link rel="alternate" hreflang="it" href="https://neuragrowtech.com/">
 <link rel="alternate" hreflang="en" href="https://neuragrowtech.com/en/">
 <link rel="alternate" hreflang="es" href="https://neuragrowtech.com/es/">
 <link rel="alternate" hreflang="x-default" href="https://neuragrowtech.com/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Neura GrowTech · La serra che decide e agisce da sola">
-<meta property="og:description" content="Neura GrowTech sviluppa NEX, il sistema che gestisce in autonomia nutrizione, irrigazione e clima nelle colture in serra, fuori suolo e vertical farm.">
+<meta property="og:title" content="Neura GrowTech · NEX, la serra che decide e agisce da sola">
+<meta property="og:description" content="NEX osserva la coltura e regola nutrizione, irrigazione e clima in tempo reale.">
 <meta property="og:url" content="https://neuragrowtech.com/">
-<meta property="og:image" content="https://neuragrowtech.com/img/nex-camera-crescita.jpg">
+<meta property="og:image" content="https://neuragrowtech.com/img/pilota/wide.jpg">
 <meta property="og:locale" content="it_IT">
-<meta name="theme-color" content="#12262A">
-<link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
-<link rel="preload" href="/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/css/style.css?v=3">
-<script data-cfasync="false" defer src="/js/main.js?v=3"></script>
+<meta name="theme-color" content="#111416">
+<link rel="icon" href="/img/logo/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/logo/apple-touch-icon.png">
+<style>
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-var.woff2") format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("/fonts/plex-sans-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("/fonts/plex-sans-500.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("/fonts/plex-sans-600.woff2") format("woff2");font-weight:600 700;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("/fonts/plex-mono-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("/fonts/plex-mono-500.woff2") format("woff2");font-weight:500 700;font-display:swap}
+/* Layout: racconto a scorrimento. Sezioni a tutta altezza; le sezioni 2, 3, 4 e 6 sono "bloccate" (sticky) mentre il contenuto avanza. */
+:root{
+  --paper:#FBFBF8; --ink:#16191A; --muted:#5D6466; --line:#D9DDD8; --green:#3A2BE0; --night:#111416; --night-ink:#EDEFEE; --night-muted:#9AA3A1; --accent:#B02E69;
+  --f-d:"Archivo","Arial Narrow",Arial,sans-serif; --f-b:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; --f-m:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --vh:100vh; color-scheme:light;
+}
+@supports (height:100svh){:root{--vh:100svh}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-b);line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+.big{font-family:var(--f-d);font-stretch:125%;font-weight:800;line-height:.98;letter-spacing:-.012em;margin:0;text-wrap:balance}
+.mono{font-family:var(--f-m)}
+.eyebrow{font-family:var(--f-m);font-size:.74rem;letter-spacing:.09em;text-transform:uppercase}
+.gut{padding-inline:clamp(16px,5vw,64px)}
+
+/* nav */
+.nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-block:.9rem;color:#fff;transition:background .4s,color .4s,box-shadow .4s}
+.nav:not(.solid){text-shadow:0 1px 10px rgba(0,0,0,.45)}
+.nav.solid{background:rgba(251,251,248,.86);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+.nav b{font-family:var(--f-d);font-stretch:125%;font-weight:800;letter-spacing:.04em;font-size:.95rem}
+.nav ul{display:flex;gap:1.6rem;list-style:none;margin:0;padding:0;font-size:.86rem}
+.nav ul a{color:inherit;text-decoration:none;opacity:.85}
+.nav .lang{font-family:var(--f-m);font-size:.74rem;opacity:.8}
+@media (max-width:820px){.nav ul{display:none}}
+
+/* 1 hero */
+.hero{position:relative;height:calc(var(--vh) * 1.35)}
+.hero .stick{position:sticky;top:0;height:var(--vh);overflow:hidden}
+.hero .scene{position:absolute;inset:0;width:100%;height:100%;transform:scale(calc(1 + .08 * var(--p,0)));transform-origin:50% 40%;will-change:transform}
+.hero .scene image{filter:saturate(.95)}
+.hero .ov{opacity:0;transition:opacity .6s ease}
+.hero .ov.on{opacity:1}
+.hero .box{fill:none;stroke:#8FA8FF;stroke-width:2}
+.hero .tag{font-family:var(--f-m);font-size:11px;fill:#fff}
+.hero .tagbg{fill:rgba(17,20,22,.82)}
+.panel{position:absolute;right:clamp(16px,5vw,64px);top:clamp(5rem,15vh,9rem);z-index:2;font-family:var(--f-m);font-size:.78rem;color:#fff;background:rgba(17,20,22,.72);border:1px solid rgba(143,168,255,.5);border-radius:8px;padding:.8rem .95rem;min-width:13rem;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transform:translateY(8px);transition:opacity .6s,transform .6s;opacity:calc(var(--pv,0) * (1 - var(--p,0) * 1.6))}
+.panel.on{--pv:1;transform:none}
+.panel .row{display:flex;justify-content:space-between;gap:1.2rem;padding:.18rem 0}
+.panel .row b{font-weight:500;font-variant-numeric:tabular-nums}
+.panel .t{color:#8FA8FF;letter-spacing:.08em;margin-bottom:.35rem}
+.panel .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#8FA8FF;margin-right:.45rem;vertical-align:1px}
+@media (prefers-reduced-motion:no-preference){.panel .dot{animation:blink 1.6s ease-in-out infinite}}
+@keyframes blink{50%{opacity:.25}}
+.panel i{font-style:normal;color:#9AA3A1;font-size:.66rem}
+@media (max-width:820px){.hero .bx{display:none}.panel{left:16px;right:16px;top:calc(4.2rem + env(safe-area-inset-top,0px));min-width:0;display:flex;flex-wrap:wrap;gap:.25rem .9rem;padding:.55rem .7rem;font-size:.68rem}.panel .row{padding:0;gap:.4rem}.panel .t{margin:0}.panel .last{display:none}}
+.hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,.15) 55%,rgba(0,0,0,.85) 100%),linear-gradient(90deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,.05) 50%,rgba(0,0,0,0) 100%)}
+.hero .copy{text-shadow:0 2px 24px rgba(0,0,0,.35)}
+.hero .copy{position:absolute;left:0;right:0;bottom:clamp(2rem,9vh,6rem);color:#fff;display:flex;flex-direction:column;gap:1.2rem;opacity:calc(1 - var(--p,0) * 1.6);transform:translateY(calc(var(--p,0) * -60px))}
+.hero .big{font-size:clamp(2.4rem,6vw,5rem);max-width:12ch}
+.hero p{margin:0;max-width:46ch;font-size:clamp(1rem,1.6vw,1.2rem);opacity:.92}
+.cta{display:flex;flex-wrap:wrap;gap:.8rem}
+.pill{display:inline-flex;align-items:center;gap:.4rem;font-size:.95rem;font-weight:500;text-decoration:none;padding:.75rem 1.3rem;border-radius:999px}
+.pill.light{background:#fff;color:#111}
+.pill.line{border:1px solid rgba(255,255,255,.7);color:#fff}
+.pill.dark{background:var(--ink);color:#fff}
+
+/* intestazione di sezione */
+.intro{padding-block:clamp(5rem,14vh,9rem) clamp(2rem,6vh,4rem);max-width:70rem;margin-inline:auto}
+.intro .big{font-size:clamp(2.2rem,6vw,4.8rem);max-width:16ch}
+.intro p{max-width:56ch;color:var(--muted);font-size:clamp(1rem,1.5vw,1.15rem);margin:1.2rem 0 0}
+
+/* 2 crescita */
+.grow{height:calc(var(--vh) * 3)}
+.grow .stick{position:sticky;top:0;height:var(--vh);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(1.5rem,5vw,5rem)}
+.grow .txt{display:flex;flex-direction:column;gap:1.4rem;min-width:0}
+.grow .eyebrow{color:var(--muted)}
+.grow h2{font-size:clamp(1.9rem,4.2vw,3.4rem)}
+.grow .stage{font-family:var(--f-d);font-stretch:125%;font-weight:800;font-size:clamp(2.4rem,7vw,5.8rem);line-height:1;color:var(--green);min-height:1em}
+.grow .bar{display:flex;gap:.6rem;font-size:.82rem}
+.grow .bar span{flex:1;border-top:3px solid var(--line);padding-top:.5rem;color:#8A9092;transition:color .3s,border-color .3s}
+.grow .bar span.on{border-color:var(--green);color:var(--ink)}
+.grow .pics{position:relative;height:min(78vh,720px);aspect-ratio:4/5;justify-self:center;max-width:100%;border-radius:18px;overflow:hidden;background:#E8EAE4}
+.grow .pics img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}
+.grow .pics img.on{opacity:1}
+@media (max-width:820px){.grow .stick{grid-template-columns:1fr;align-content:center;padding-top:4.5rem}.grow .pics{height:46vh;order:-1}.grow .stage{font-size:2.2rem}.grow h2{font-size:1.6rem}}
+
+/* 3 sistema */
+.sys{height:calc(var(--vh) * 3.2);background:var(--night);color:var(--night-ink)}
+.sys .stick{position:sticky;top:0;height:var(--vh);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:stretch}
+.sys .photo{position:relative;overflow:hidden}
+.sys .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .6s}
+.sys .photo img.dose{opacity:0}
+.sys.s3 .photo img.dose{opacity:1}
+.pin{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:2px solid #8FA8FF;background:rgba(143,168,255,.25);opacity:.25;transform:scale(.7);transition:opacity .4s,transform .4s}
+.pin::after{content:attr(data-l);position:absolute;left:28px;top:-3px;white-space:nowrap;font-family:var(--f-m);font-size:.72rem;background:var(--night);color:var(--night-ink);padding:.15rem .45rem;border-radius:4px}
+.pin.on{opacity:1;transform:scale(1)}
+@media (prefers-reduced-motion:no-preference){.pin.on{animation:ping 1.6s ease-out infinite}}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(143,168,255,.6)}100%{box-shadow:0 0 0 16px rgba(143,168,255,0)}}
+.sys .copy{display:flex;flex-direction:column;justify-content:center;gap:2rem;padding:clamp(1.5rem,5vw,5rem)}
+.sys .eyebrow{color:#8FA8FF}
+.sys h2{font-size:clamp(2rem,4.6vw,3.8rem)}
+.sys ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1.2rem;font-size:clamp(1rem,1.5vw,1.15rem)}
+.sys li{display:grid;grid-template-columns:2.2rem 1fr;gap:.6rem;opacity:.35;transition:opacity .4s}
+.sys li.on{opacity:1}
+.sys li b{font-family:var(--f-m);color:#8FA8FF;font-weight:500}
+@media (max-width:820px){.sys .stick{grid-template-columns:1fr;grid-template-rows:45% 55%}.sys .copy{gap:1rem;justify-content:flex-start;padding-top:1.5rem}.sys h2{font-size:1.7rem}}
+
+/* 4 ciclo */
+.loop{height:calc(var(--vh) * 2.6)}
+.loop .stick{position:sticky;top:0;height:var(--vh);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(1.5rem,4vh,3rem);text-align:center}
+.loop h2{font-size:clamp(2rem,5.4vw,4.4rem)}
+.loop svg{width:min(860px,100%);height:auto}
+.loop .ring{fill:var(--paper);stroke:#C9CEC8;stroke-width:2.5;transition:fill .4s,stroke .4s}
+.loop .ring.on{fill:url(#loopg);stroke:url(#loopg)}
+.loop .lab{font-family:var(--f-m);font-size:17px;fill:#8A9092;transition:fill .4s}
+.loop .lab.on{fill:#fff}
+.loop .arc{fill:none;stroke:url(#loopg);stroke-width:3;stroke-linecap:round}
+.loop .ret{fill:none;stroke:url(#loopg);stroke-width:2.5;stroke-dasharray:6 7;opacity:0;transition:opacity .5s}
+.loop .ret.on{opacity:1}
+.loop p{color:var(--muted);max-width:52ch;margin:0;font-size:clamp(1rem,1.5vw,1.15rem)}
+
+/* 5 numeri */
+.nums{padding-block:clamp(5rem,14vh,9rem)}
+.nums .wrap{max-width:72rem;margin-inline:auto}
+.nums .nh{display:flex;flex-direction:column;gap:1rem}
+.nums .nh .eyebrow{color:var(--muted)}
+.nums h2{font-size:clamp(2rem,5vw,4rem);max-width:16ch}
+.nums .rows{margin-top:clamp(2.5rem,7vh,4.5rem);border-bottom:1px solid var(--line)}
+.num{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:2rem;align-items:center;border-top:1px solid var(--line);padding-block:clamp(1.6rem,4vh,2.6rem);opacity:.15;transform:translateY(24px);transition:opacity .8s,transform .8s}
+.num.on{opacity:1;transform:none}
+.num b{font-family:var(--f-d);font-stretch:125%;font-weight:800;font-size:clamp(3rem,8.5vw,7rem);line-height:.9;letter-spacing:-.02em;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--ink)}
+.num h3{margin:0 0 .4rem;font-size:1.15rem;font-weight:500}
+.num p{margin:0;color:var(--muted);max-width:40ch}
+.nums .foot{margin-top:1.4rem;font-size:.82rem;color:#8A9092}
+@media (max-width:820px){.num{grid-template-columns:1fr;gap:.8rem}.num b{font-size:3.4rem}}
+
+/* 6 dal laboratorio alla serra */
+.trials{height:calc(var(--vh) * 2.2);background:var(--night)}
+.trials .stick{position:sticky;top:0;height:var(--vh);overflow:hidden}
+.trials h2{position:absolute;top:clamp(4.5rem,10vh,7rem);left:0;right:0;text-align:center;color:#fff;font-size:clamp(2rem,5.4vw,4.4rem);z-index:3;text-shadow:0 2px 24px rgba(0,0,0,.5)}
+.trials .card{--ch:min(58vh,56vw,600px);position:absolute;top:56%;height:var(--ch);width:calc(var(--ch) * .8);margin-top:calc(var(--ch) * -.5);border-radius:18px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.8);will-change:transform}
+.trials .card img{width:100%;height:100%;object-fit:cover}
+.trials .card .tag{position:absolute;left:1.2rem;bottom:1.2rem;color:#fff;display:flex;flex-direction:column;gap:.2rem;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.trials .card .tag b{font-family:var(--f-d);font-stretch:112%;font-weight:500;font-size:1.3rem}
+.trials .card .tag .eyebrow{opacity:.85}
+.trials .a{left:50%;transform:translateX(calc(-50% - var(--s,0) * 56%)) rotate(calc(-4deg * (1 - var(--s,0))))}
+.trials .b{left:50%;transform:translateX(calc(-50% + var(--s,0) * 56%)) rotate(calc(3deg * (1 - var(--s,0))))}
+.trials .more{position:absolute;bottom:clamp(1.5rem,6vh,3rem);left:0;right:0;text-align:center;z-index:3;opacity:var(--s,0)}
+.trials .more a{color:#fff;font-weight:500;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.5)}
+@media (max-width:820px){.trials .card{--ch:min(44vh,78vw)}.trials .a{transform:translate(calc(-50% - var(--s,0) * 30%),calc(var(--s,0) * -22%))}.trials .b{transform:translate(calc(-50% + var(--s,0) * 30%),calc(var(--s,0) * 22%))}}
+
+/* 7 contatti */
+.end{background:var(--ink);color:var(--night-ink);padding-block:clamp(5rem,14vh,9rem)}
+.end .wrap{max-width:72rem;margin-inline:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:start}
+.end h2{font-size:clamp(2.4rem,6vw,4.8rem)}
+.end p{color:var(--night-muted);max-width:44ch;margin:1.2rem 0 0}
+.end .mail{display:flex;flex-direction:column}
+.end .mail div{border-top:1px solid #33393A;padding-block:1rem;display:flex;flex-direction:column;gap:.15rem}
+.end .mail small{color:var(--night-muted)}
+.end .mail a{color:var(--night-ink);font-family:var(--f-m);text-decoration:none}
+.end .game{grid-column:1/-1;border-top:1px dashed #33393A;padding-top:1.4rem;color:var(--night-muted);font-family:var(--f-m);font-size:.85rem}
+.end .game a{color:var(--night-ink)}
+@media (max-width:820px){.end .wrap{grid-template-columns:1fr}}
+
+.proto{position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:30;font-family:var(--f-m);font-size:.7rem;background:var(--accent);color:#fff;padding:.3rem .6rem;border-radius:4px;opacity:.9}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .hero .scene,.hero .copy,.trials .a,.trials .b{transform:none!important}
+  .hero .copy{opacity:1!important}
+  .num{opacity:1;transform:none}
+}
+
+/* logo e sfumatura del marchio */
+.brand{display:flex;align-items:center;gap:.6rem;color:inherit;text-decoration:none}
+.brand .lg{height:28px;width:auto;display:block}
+.brand .c{display:none}
+.nav.solid .brand .w{display:none}.nav.solid .brand .c{display:inline}
+.gd{background:linear-gradient(100deg,#7A00E0 0%,#2A1FD0 35%,#0036B8 60%,#00124F 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.gtl{background:linear-gradient(100deg,#B266FF 0%,#7C6BFF 35%,#3D8BFF 65%,#5CC8FF 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;text-shadow:none}
+.hero .copy .gtl{filter:drop-shadow(0 2px 14px rgba(0,0,0,.35))}
+.nav.solid .brand b{background:linear-gradient(100deg,#7A00E0,#0036B8 60%,#00124F);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.grow .stage{background:linear-gradient(100deg,#7A00E0,#0036B8 60%,#00124F);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.08em}
+.grow .bar span{border-top:0;position:relative;padding-top:calc(.5rem + 3px)}
+.grow .bar span::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--line)}
+.grow .bar span.on::before{background:linear-gradient(90deg,#7A00E0,#0036B8)}
+.end .mark{height:clamp(90px,13vw,150px);width:auto;display:block;margin-bottom:1.6rem;overflow:visible}
+.end .mark .ln{stroke:url(#ngt-l);stroke-width:6;stroke-linejoin:round}
+.end .mark .fl{opacity:0;transition:opacity 1s ease .2s}
+.end .mark.done .fl{opacity:1}
+.end .mark.done .ln{opacity:0;transition:opacity 1s ease .6s}
+@media (prefers-reduced-motion:reduce){.end .mark .fl{opacity:1}.end .mark .ln{display:none}}
+
+/* marchio NEURA GROW TECH */
+.brand .lk{height:54px;width:auto;display:block;margin-block:-8px}
+.brand .lk .c{display:none}
+.nav.solid .brand .lk .w{display:none}.nav.solid .brand .lk .c{display:inline}
+.nav.solid .brand .lk .ink{color:#0B1F78}
+.end .lkbig{width:min(460px,86%);height:auto;display:block;margin-bottom:2.2rem;overflow:visible}
+.end .lkbig .ln{stroke:url(#ngt-l);stroke-width:9;stroke-linejoin:round}
+.end .lkbig .fl{opacity:0;transition:opacity 1s ease .2s}
+.end .lkbig .lt{opacity:0;transform:translateY(10px);transition:opacity .6s ease calc(var(--i)*.12s),transform .6s ease calc(var(--i)*.12s)}
+.end .lkbig.done .fl{opacity:1}.end .lkbig.done .lt{opacity:1;transform:none}
+.end .lkbig.done .ln{opacity:0;transition:opacity 1s ease .6s}
+@media (max-width:820px){.brand .lk{height:46px}}
+@media (prefers-reduced-motion:reduce){.end .lkbig .fl{opacity:1}.end .lkbig .lt{opacity:1;transform:none;transition:none}.end .lkbig .ln{display:none}}
+
+/* ---- tema chiaro / scuro ---- */
+.navr{display:flex;align-items:center;gap:1rem}
+.tt{width:34px;height:34px;border-radius:50%;border:1px solid currentColor;background:transparent;color:inherit;display:grid;place-items:center;cursor:pointer;opacity:.85;padding:0}
+.tt svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.tt .sun circle{fill:none}.tt .moon{display:none;fill:currentColor;stroke:none}
+[data-theme="dark"] .tt .sun{display:none}[data-theme="dark"] .tt .moon{display:inline}
+html{transition:background-color .4s}
+body,.nav.solid,.end{transition:background-color .4s,color .4s}
+/* chiusura chiara (logo nei colori originali) */
+.end{background:#EEEDF8;color:var(--ink)}
+.end p,.end .mail small,.end .game{color:var(--muted)}
+.end .mail div{border-color:#D6D4E6}.end .game{border-color:#C9C6DD}
+.end .mail a,.end .game a{color:var(--ink)}
+.end .gtl{background-image:linear-gradient(100deg,#7A00E0,#2A1FD0 40%,#0036B8 70%,#00124F)}
+.end .lkbig .fl{fill:url(#lka)}
+.end .lkbig .wm{stroke:#0B1F78}.end .lkbig .wmt{fill:#0B1F78}
+.end .lkbig .ln{stroke:url(#lka)}
+/* tema scuro */
+[data-theme="dark"]{--paper:#0E1112;--ink:#ECEEED;--muted:#9AA3A1;--line:#2A3133;--night:#06080A;color-scheme:dark}
+[data-theme="dark"] .nav.solid{background:rgba(14,17,18,.84);box-shadow:0 1px 0 #22282A}
+[data-theme="dark"] .nav.solid .brand .lk .ink{color:#E4E8FF}
+[data-theme="dark"] .grow .pics{background:#1A1F21}
+[data-theme="dark"] .grow .stage,[data-theme="dark"] .nav.solid .brand b{background-image:linear-gradient(100deg,#B266FF,#7C6BFF 40%,#3D8BFF 75%,#5CC8FF)}
+[data-theme="dark"] .grow .bar span.on::before{background:linear-gradient(90deg,#B266FF,#3D8BFF)}
+[data-theme="dark"] #loopg stop:nth-child(1){stop-color:#9A4DFF}[data-theme="dark"] #loopg stop:nth-child(2){stop-color:#6C5CFF}
+[data-theme="dark"] #loopg stop:nth-child(3){stop-color:#3D7BFF}[data-theme="dark"] #loopg stop:nth-child(4){stop-color:#3FA8F0}
+[data-theme="dark"] .loop .ring{stroke:#3A4244}
+[data-theme="dark"] .end{background:#06080A;color:var(--night-ink)}
+[data-theme="dark"] .end p,[data-theme="dark"] .end .mail small,[data-theme="dark"] .end .game{color:var(--night-muted)}
+[data-theme="dark"] .end .mail div{border-color:#262C2E}[data-theme="dark"] .end .game{border-color:#33393A}
+[data-theme="dark"] .end .mail a,[data-theme="dark"] .end .game a{color:var(--night-ink)}
+[data-theme="dark"] .end .gtl{background-image:linear-gradient(100deg,#B266FF 0%,#7C6BFF 35%,#3D8BFF 65%,#5CC8FF 100%)}
+[data-theme="dark"] .end .lkbig .fl{fill:url(#ngt-l)}[data-theme="dark"] .end .lkbig .ln{stroke:url(#ngt-l)}
+[data-theme="dark"] .end .lkbig .wm{stroke:url(#wg)}[data-theme="dark"] .end .lkbig .wmt{fill:url(#wg)}
+
+.nav .brand .lk .ink{color:#fff}
+.nav:not(.solid) .brand .lk g.ink:first-of-type{stroke:url(#wg)}.nav:not(.solid) .brand .lk g.ink+g.ink{fill:url(#wg)}
+[data-theme="dark"] .nav.solid .brand .lk .w{display:inline}[data-theme="dark"] .nav.solid .brand .lk .c{display:none}
+[data-theme="dark"] .nav.solid .brand .lk g.ink:first-of-type{stroke:url(#wg)}[data-theme="dark"] .nav.solid .brand .lk g.ink+g.ink{fill:url(#wg)}
+.end .lkbig .fl2{fill:url(#lkb)}[data-theme="dark"] .end .lkbig .fl2{display:none}
+.end .mail b{font-weight:500;font-size:.95rem;margin-top:.1rem}
+
+/* team */
+.team{padding-block:clamp(5rem,14vh,9rem)}
+.team .wrap{max-width:72rem;margin-inline:auto}
+.team .th{display:flex;flex-direction:column;gap:1rem}.team .th .eyebrow{color:var(--muted)}
+.team h2{font-size:clamp(2rem,4.6vw,3.6rem);max-width:18ch}
+.tg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin-top:clamp(2.5rem,7vh,4rem)}
+.pp{display:flex;flex-direction:column;gap:.5rem;min-width:0}
+.pp .ph{aspect-ratio:4/5;border-radius:16px;background:linear-gradient(160deg,#E7E5F6,#D4D9F2);display:grid;place-items:center;font-family:var(--f-d);font-stretch:125%;font-weight:800;font-size:2.4rem;color:#0B1F78;margin-bottom:.6rem}
+.pp .eyebrow{color:#3A2BE0}
+.pp h3{margin:0;font-size:1.15rem;font-weight:500}
+.pp p{margin:0 0 .4rem;color:var(--muted);font-size:.92rem}
+.pl{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:auto;padding-top:.7rem;border-top:1px solid var(--line)}
+.pl a{color:var(--ink);font-family:var(--f-m);font-size:.78rem;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pl .li{flex:none;width:28px;height:28px;display:grid;place-items:center;border:1px solid var(--line);border-radius:6px}
+.pl .li svg{width:14px;height:14px;fill:currentColor}
+.pl .em{display:flex;align-items:center;gap:.45rem;min-width:0}.pl .em span{overflow:hidden;text-overflow:ellipsis}.pl .em svg{flex:none;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6}
+.adv{margin:2.5rem 0 0;color:var(--muted);font-size:.9rem}.adv .eyebrow{color:var(--ink);margin-right:.6rem}
+@media (max-width:900px){.tg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.tg{grid-template-columns:1fr 1fr;gap:.8rem}.pp .ph{font-size:1.8rem}.pl .em span{display:none}.pl .em{width:28px;height:28px;justify-content:center;border:1px solid var(--line);border-radius:6px}}
+[data-theme="dark"] .pp .ph{background:linear-gradient(160deg,#1C1F33,#141A2E);color:#B8C6FF}
+[data-theme="dark"] .pp .eyebrow{color:#8FA8FF}
+/* chiusura: tre strade */
+.paths{display:flex;flex-direction:column}
+.btnp{align-self:flex-start;display:inline-flex;gap:.5rem;align-items:center;background:#0B1F78;color:#fff!important;font-family:var(--f-b)!important;font-weight:500;text-decoration:none;padding:.9rem 1.5rem;border-radius:999px;margin-bottom:1.4rem}
+.pa{border-top:1px solid #D6D4E6;padding-block:.9rem;display:flex;flex-direction:column;gap:.15rem}
+.pa small{color:var(--muted)}.pa a{color:var(--ink);font-family:var(--f-m);text-decoration:none}
+.pa.gen{border-bottom:1px solid #D6D4E6}
+[data-theme="dark"] .btnp{background:linear-gradient(100deg,#7A3CFF,#2F6BFF)}
+[data-theme="dark"] .pa{border-color:#262C2E}[data-theme="dark"] .pa small{color:var(--night-muted)}[data-theme="dark"] .pa a{color:var(--night-ink)}
+/* footer legale */
+.legal{background:#E4E2F2;padding-block:1.4rem;font-size:.8rem;color:var(--muted)}
+.legal .wrap{max-width:72rem;margin-inline:auto;display:flex;justify-content:space-between;gap:1rem 2rem;flex-wrap:wrap;align-items:center}
+.legal .lb{display:flex;flex-direction:column;gap:.15rem}.legal b{color:var(--ink);font-weight:500}
+.legal .ll{display:flex;gap:1.2rem;align-items:center}.legal a{color:var(--ink);text-decoration:none}
+[data-theme="dark"] .legal{background:#030405;color:var(--night-muted)}[data-theme="dark"] .legal b,[data-theme="dark"] .legal a{color:var(--night-ink)}
+.nav .lang a{color:inherit;text-decoration:none;opacity:.7}.nav .lang a[aria-current]{opacity:1;font-weight:500}
+</style>
 </head>
 <body>
-<header>
-  <div class="wrap nav">
-    <a class="brand" href="#top" aria-label="Neura GrowTech, inizio pagina">
-      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 21V11c0-3 2-5 5-5 0 3-2 5-5 5M13 15c0-2.5-1.8-4-4.5-4 0 2.5 1.8 4 4.5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="21.5" cy="7" r="2.2" fill="var(--accent)"/></svg>
-      NEURA GROWTECH
-    </a>
-    <ul>
-      <li><a href="#come-funziona">Come funziona</a></li>
-      <li><a href="#moduli">Moduli</a></li>
-      <li><a href="#sperimentazioni">Sperimentazioni</a></li>
-      <li><a href="#team">Team</a></li>
-      <li><a href="#contatti">Contatti</a></li>
-    </ul>
-    <div class="nav-end">
-      <nav class="lang" aria-label="Lingua"><a href="/" aria-current="true" hreflang="it" lang="it" title="Italiano">IT</a><a href="/en/" hreflang="en" lang="en" title="English">EN</a><a href="/es/" hreflang="es" lang="es" title="Español">ES</a></nav>
-      <a class="btn" href="#contatti">Diventa sito pilota</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="ngt-a" gradientUnits="userSpaceOnUse" x1="800" y1="100" x2="720" y2="1380"><stop offset="0" stop-color="#0A86F5"/><stop offset=".33" stop-color="#0036B8"/><stop offset=".68" stop-color="#001C72"/><stop offset="1" stop-color="#00124F"/></linearGradient>
+<radialGradient id="ngt-b" gradientUnits="userSpaceOnUse" cx="230" cy="740" r="470"><stop offset="0" stop-color="#7A00E0"/><stop offset=".45" stop-color="#6A06DA" stop-opacity=".85"/><stop offset="1" stop-color="#3010D0" stop-opacity="0"/></radialGradient>
+<linearGradient id="ngt-l" gradientUnits="userSpaceOnUse" x1="250" y1="600" x2="900" y2="900"><stop offset="0" stop-color="#B266FF"/><stop offset=".5" stop-color="#3D8BFF"/><stop offset="1" stop-color="#5CC8FF"/></linearGradient>
+<linearGradient id="lka" gradientUnits="userSpaceOnUse" x1="800" y1="100" x2="720" y2="1380"><stop offset="0" stop-color="#0A86F5"/><stop offset=".22" stop-color="#0036B8"/><stop offset=".45" stop-color="#0B1F78"/><stop offset="1" stop-color="#00124F"/></linearGradient><radialGradient id="lkb" gradientUnits="userSpaceOnUse" cx="230" cy="740" r="470"><stop offset="0" stop-color="#7A00E0"/><stop offset=".45" stop-color="#6A06DA" stop-opacity=".85"/><stop offset="1" stop-color="#3010D0" stop-opacity="0"/></radialGradient><linearGradient id="wg" gradientUnits="userSpaceOnUse" x1="186" y1="0" x2="750" y2="0"><stop offset="0" stop-color="#B266FF"/><stop offset=".5" stop-color="#3D8BFF"/><stop offset="1" stop-color="#5CC8FF"/></linearGradient></defs></svg>
+
+<nav class="nav gut" id="nav"><a class="brand" href="#hero" aria-label="Neura GrowTech"><svg class="lk" viewBox="186 90 564 262" aria-hidden="true"><g class="ink" stroke="currentColor"><g fill="none" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+<path d="M348 222 L402 263 V221"/>
+<path d="M482 220 H427 V266 H482 M427 243 H472"/>
+<path d="M502 221 V244 C502 270 560 270 560 244 V221"/>
+<path d="M584 266 V220 H627 C650 220 650 247 627 247 H611 L641 266"/>
+<path d="M667 266 L705 221 L742 266"/><path d="M682 255 H728" stroke-width="10"/>
+</g></g><path class="w" fill="url(#ngt-l)" transform="matrix(0.2145 0 0 0.1924 147.35 79.24)" fill-rule="evenodd" d="M735.0 1375.8C725.4 1373.9 718.6 1370.6 712.6 1364.8C708.2 1360.6 705.6 1357.2 703.3 1352.5C699.9 1345.8 698.6 1340.8 697.3 1329.2C695.1 1310.4 690.2 1294.6 680.8 1276.2C670.9 1257.0 659.8 1241.7 644.0 1226.0C625.6 1207.6 605.3 1192.6 579.0 1177.9C566.8 1171.1 553.9 1165.0 529.0 1154.4C504.0 1143.8 500.9 1142.4 489.0 1137.0C475.4 1130.8 449.0 1117.5 439.8 1112.2C427.1 1104.9 409.5 1093.7 402.0 1088.2C400.5 1087.1 397.1 1084.6 394.5 1082.7C366.7 1062.5 335.5 1032.7 312.0 1003.8C294.4 982.1 276.8 954.6 263.1 927.2C245.1 891.3 231.0 851.8 224.7 820.2C219.8 795.0 217.8 774.4 217.9 746.0C217.9 727.3 218.3 719.4 220.5 701.5C228.6 633.4 258.0 555.6 304.7 478.5C314.6 462.3 337.4 429.1 349.7 413.2C389.5 361.8 430.1 319.2 480.7 275.8C494.0 264.5 531.0 235.2 542.8 226.7C576.7 202.2 591.1 192.5 618.8 175.5C655.7 152.8 673.2 142.9 707.5 125.8C733.9 112.6 754.9 103.2 766.0 99.6C772.5 97.5 783.1 96.9 789.7 98.2C799.2 100.3 808.4 107.4 813.2 116.5C821.0 131.4 819.0 147.7 807.7 161.8C775.7 201.4 762.2 227.2 756.2 260.2C755.4 264.3 755.3 267.9 755.3 279.8C755.3 293.8 755.4 294.5 756.9 303.0C762.1 331.9 775.0 361.8 802.1 407.6C813.6 427.1 828.2 449.6 860.2 497.6C883.7 532.7 891.9 545.6 902.7 563.7C913.9 582.6 914.4 583.4 921.0 595.6C944.1 638.9 956.9 671.9 967.4 715.0C971.0 729.6 974.3 751.0 976.1 770.0C976.9 779.2 976.9 813.6 976.1 823.0C974.4 841.7 970.0 867.0 965.7 883.0C961.5 898.5 954.3 919.9 950.0 929.5C949.0 931.8 946.9 936.4 945.5 939.7C941.0 950.0 931.5 967.7 923.6 980.5C910.2 1002.3 891.5 1026.3 880.3 1036.1C870.3 1044.9 859.5 1049.7 849.2 1049.6C843.1 1049.6 838.6 1048.6 833.0 1045.9C829.6 1044.3 827.9 1043.1 824.7 1039.8C812.8 1027.8 811.3 1010.0 820.7 993.1C823.2 988.7 825.4 985.8 832.5 977.7C837.8 971.6 846.9 960.1 851.1 954.5C873.4 924.2 886.7 893.6 894.4 855.2C898.0 837.7 899.9 813.4 899.0 797.2C898.0 778.5 897.0 769.6 894.2 754.5C885.4 705.9 864.6 655.0 830.6 598.9C815.9 574.7 808.0 562.5 777.5 516.8C751.6 478.1 742.6 464.2 729.6 442.6C697.7 390.2 681.7 347.7 678.5 307.3C676.2 278.5 681.4 248.2 693.0 222.4C694.6 218.7 696.0 215.5 696.0 215.3C696.0 214.6 694.1 215.1 691.5 216.6C690.0 217.4 684.6 220.4 679.5 223.1C648.3 240.1 598.4 273.9 564.0 301.2C529.9 328.4 507.1 348.5 480.5 375.0C452.4 403.0 430.3 428.4 403.8 462.9C391.9 478.5 371.4 508.7 363.4 522.5C349.1 547.1 348.2 548.8 340.0 565.2C331.5 582.3 328.3 589.6 321.9 605.5C304.7 648.2 295.1 688.4 291.9 730.5C291.2 740.1 291.7 765.6 292.7 776.5C296.1 810.2 303.0 839.8 315.1 872.0C318.8 881.8 320.9 886.3 321.5 885.7C321.8 885.4 322.0 864.8 322.1 834.0C322.3 783.8 322.3 782.6 323.4 777.8C325.0 770.5 326.7 765.5 330.0 758.7C336.2 745.8 343.3 737.6 357.0 727.9C360.2 725.6 364.8 722.3 367.2 720.5C369.7 718.7 374.0 715.7 376.8 713.8C399.3 698.2 406.8 690.5 410.7 678.2C412.7 672.0 413.0 668.7 413.0 653.5L413.0 639.2L409.0 635.6C403.7 630.7 400.5 626.4 397.2 619.8C390.4 605.7 389.5 593.6 394.3 578.2C394.8 576.9 395.9 574.2 396.9 572.3C404.8 556.5 419.2 545.7 436.7 542.7C443.3 541.5 453.1 542.0 459.4 543.7C480.9 549.6 496.4 567.9 498.5 589.8C499.3 597.6 498.6 603.3 496.2 610.5C492.8 620.5 488.3 627.5 481.1 633.9C474.3 640.0 469.0 643.1 460.6 646.0L455.2 647.8L454.9 663.3C454.6 679.7 454.2 684.1 452.2 691.2C449.2 702.0 444.2 709.9 434.1 720.1C426.1 728.0 420.2 732.6 395.2 750.3C377.2 763.0 373.1 767.0 368.9 775.5C362.5 788.2 362.5 788.9 362.5 878.7L362.5 949.8L363.9 952.0C368.7 959.4 389.7 983.0 391.5 983.0C391.8 983.0 392.0 980.2 392.0 975.4C392.0 971.2 392.1 953.0 392.2 935.0C392.4 899.3 392.6 897.1 395.5 885.3C398.9 871.7 406.0 859.4 417.1 847.8C421.8 842.8 422.5 842.3 447.0 822.7C456.2 815.4 465.1 808.1 466.7 806.6C470.6 802.8 473.3 798.6 474.6 794.4L475.6 790.9L474.6 784.6C473.3 777.1 473.2 774.1 474.3 767.8C476.8 752.1 484.8 739.2 497.5 730.6C505.1 725.3 511.6 722.7 520.7 721.2C538.3 718.4 555.0 723.9 568.1 737.0C580.8 749.7 585.6 769.8 580.3 788.0C575.9 803.3 563.6 817.5 549.3 824.0C538.9 828.7 525.4 830.0 514.2 827.3C512.6 826.9 510.7 826.5 510.1 826.5C509.4 826.5 505.7 829.2 500.1 833.6C489.7 842.0 485.9 844.9 467.2 858.8C459.6 864.5 452.2 870.0 450.8 870.9C445.9 874.6 440.4 882.7 437.8 890.0C432.9 903.7 431.9 919.4 432.1 976.6L432.2 1016.4L433.5 1017.7C437.2 1021.7 458.5 1036.5 472.5 1044.7C477.0 1047.4 481.8 1050.2 483.0 1051.0C486.4 1053.1 504.2 1062.6 509.1 1065.0C511.6 1066.3 513.7 1067.0 514.2 1066.8C514.9 1066.6 515.0 1063.0 515.0 1026.0L515.0 985.4L509.6 980.1C501.8 972.4 497.7 965.6 495.3 956.4C492.6 946.3 492.6 937.6 495.3 927.5C497.7 918.2 503.9 907.9 510.6 901.7C514.3 898.4 520.8 894.0 524.3 892.5C541.0 885.2 556.5 885.2 571.8 892.7C577.2 895.4 584.3 900.3 587.3 903.6C589.7 906.1 594.4 912.9 596.0 916.0C598.9 921.7 601.5 933.0 601.5 939.9C601.5 943.3 600.1 951.0 598.6 955.8C593.9 970.7 581.2 984.8 567.2 990.3L563.2 991.9L563.1 1040.7L563.0 1089.6L565.6 1090.7C567.1 1091.4 574.2 1094.4 581.4 1097.5C613.3 1111.0 628.4 1118.4 649.0 1130.4C681.5 1149.4 709.4 1173.2 729.5 1199.2C740.0 1212.7 744.4 1219.0 752.8 1233.0C776.9 1272.5 791.1 1319.3 785.7 1341.4C784.1 1348.4 780.2 1355.8 775.0 1361.6C770.0 1367.3 760.5 1373.0 752.8 1375.0C747.7 1376.3 739.4 1376.7 735.0 1375.8ZM554.3 956.3C557.9 954.7 561.2 951.5 562.9 948.1C564.0 945.7 564.2 944.6 564.2 941.0C564.2 937.4 564.1 936.3 562.8 933.9C561.1 930.4 557.3 926.9 553.6 925.5C551.8 924.8 549.7 924.5 547.1 924.5C543.7 924.5 542.7 924.7 540.1 926.0C536.2 928.0 532.4 932.1 531.2 935.6C530.0 939.3 530.4 945.4 532.1 948.8C534.3 953.0 538.9 956.5 543.7 957.5C546.7 958.1 551.4 957.6 554.3 956.3ZM535.3 789.6C539.4 787.6 541.7 785.5 543.5 781.8C545.6 777.5 545.9 774.1 544.6 769.6C542.6 763.3 538.6 759.4 532.0 757.7C528.1 756.7 524.2 757.3 519.9 759.6C508.3 765.7 508.0 782.7 519.3 788.9C524.8 791.9 529.9 792.1 535.3 789.6ZM452.3 610.8C460.1 607.2 463.9 598.3 461.3 589.9C457.6 578.2 442.1 574.4 432.9 583.0C428.2 587.3 426.2 595.6 428.5 601.6C430.3 606.3 434.3 610.2 439.2 611.8C442.5 612.9 448.8 612.4 452.3 610.8Z"/><path class="c" fill="url(#lka)" transform="matrix(0.2145 0 0 0.1924 147.35 79.24)" fill-rule="evenodd" d="M735.0 1375.8C725.4 1373.9 718.6 1370.6 712.6 1364.8C708.2 1360.6 705.6 1357.2 703.3 1352.5C699.9 1345.8 698.6 1340.8 697.3 1329.2C695.1 1310.4 690.2 1294.6 680.8 1276.2C670.9 1257.0 659.8 1241.7 644.0 1226.0C625.6 1207.6 605.3 1192.6 579.0 1177.9C566.8 1171.1 553.9 1165.0 529.0 1154.4C504.0 1143.8 500.9 1142.4 489.0 1137.0C475.4 1130.8 449.0 1117.5 439.8 1112.2C427.1 1104.9 409.5 1093.7 402.0 1088.2C400.5 1087.1 397.1 1084.6 394.5 1082.7C366.7 1062.5 335.5 1032.7 312.0 1003.8C294.4 982.1 276.8 954.6 263.1 927.2C245.1 891.3 231.0 851.8 224.7 820.2C219.8 795.0 217.8 774.4 217.9 746.0C217.9 727.3 218.3 719.4 220.5 701.5C228.6 633.4 258.0 555.6 304.7 478.5C314.6 462.3 337.4 429.1 349.7 413.2C389.5 361.8 430.1 319.2 480.7 275.8C494.0 264.5 531.0 235.2 542.8 226.7C576.7 202.2 591.1 192.5 618.8 175.5C655.7 152.8 673.2 142.9 707.5 125.8C733.9 112.6 754.9 103.2 766.0 99.6C772.5 97.5 783.1 96.9 789.7 98.2C799.2 100.3 808.4 107.4 813.2 116.5C821.0 131.4 819.0 147.7 807.7 161.8C775.7 201.4 762.2 227.2 756.2 260.2C755.4 264.3 755.3 267.9 755.3 279.8C755.3 293.8 755.4 294.5 756.9 303.0C762.1 331.9 775.0 361.8 802.1 407.6C813.6 427.1 828.2 449.6 860.2 497.6C883.7 532.7 891.9 545.6 902.7 563.7C913.9 582.6 914.4 583.4 921.0 595.6C944.1 638.9 956.9 671.9 967.4 715.0C971.0 729.6 974.3 751.0 976.1 770.0C976.9 779.2 976.9 813.6 976.1 823.0C974.4 841.7 970.0 867.0 965.7 883.0C961.5 898.5 954.3 919.9 950.0 929.5C949.0 931.8 946.9 936.4 945.5 939.7C941.0 950.0 931.5 967.7 923.6 980.5C910.2 1002.3 891.5 1026.3 880.3 1036.1C870.3 1044.9 859.5 1049.7 849.2 1049.6C843.1 1049.6 838.6 1048.6 833.0 1045.9C829.6 1044.3 827.9 1043.1 824.7 1039.8C812.8 1027.8 811.3 1010.0 820.7 993.1C823.2 988.7 825.4 985.8 832.5 977.7C837.8 971.6 846.9 960.1 851.1 954.5C873.4 924.2 886.7 893.6 894.4 855.2C898.0 837.7 899.9 813.4 899.0 797.2C898.0 778.5 897.0 769.6 894.2 754.5C885.4 705.9 864.6 655.0 830.6 598.9C815.9 574.7 808.0 562.5 777.5 516.8C751.6 478.1 742.6 464.2 729.6 442.6C697.7 390.2 681.7 347.7 678.5 307.3C676.2 278.5 681.4 248.2 693.0 222.4C694.6 218.7 696.0 215.5 696.0 215.3C696.0 214.6 694.1 215.1 691.5 216.6C690.0 217.4 684.6 220.4 679.5 223.1C648.3 240.1 598.4 273.9 564.0 301.2C529.9 328.4 507.1 348.5 480.5 375.0C452.4 403.0 430.3 428.4 403.8 462.9C391.9 478.5 371.4 508.7 363.4 522.5C349.1 547.1 348.2 548.8 340.0 565.2C331.5 582.3 328.3 589.6 321.9 605.5C304.7 648.2 295.1 688.4 291.9 730.5C291.2 740.1 291.7 765.6 292.7 776.5C296.1 810.2 303.0 839.8 315.1 872.0C318.8 881.8 320.9 886.3 321.5 885.7C321.8 885.4 322.0 864.8 322.1 834.0C322.3 783.8 322.3 782.6 323.4 777.8C325.0 770.5 326.7 765.5 330.0 758.7C336.2 745.8 343.3 737.6 357.0 727.9C360.2 725.6 364.8 722.3 367.2 720.5C369.7 718.7 374.0 715.7 376.8 713.8C399.3 698.2 406.8 690.5 410.7 678.2C412.7 672.0 413.0 668.7 413.0 653.5L413.0 639.2L409.0 635.6C403.7 630.7 400.5 626.4 397.2 619.8C390.4 605.7 389.5 593.6 394.3 578.2C394.8 576.9 395.9 574.2 396.9 572.3C404.8 556.5 419.2 545.7 436.7 542.7C443.3 541.5 453.1 542.0 459.4 543.7C480.9 549.6 496.4 567.9 498.5 589.8C499.3 597.6 498.6 603.3 496.2 610.5C492.8 620.5 488.3 627.5 481.1 633.9C474.3 640.0 469.0 643.1 460.6 646.0L455.2 647.8L454.9 663.3C454.6 679.7 454.2 684.1 452.2 691.2C449.2 702.0 444.2 709.9 434.1 720.1C426.1 728.0 420.2 732.6 395.2 750.3C377.2 763.0 373.1 767.0 368.9 775.5C362.5 788.2 362.5 788.9 362.5 878.7L362.5 949.8L363.9 952.0C368.7 959.4 389.7 983.0 391.5 983.0C391.8 983.0 392.0 980.2 392.0 975.4C392.0 971.2 392.1 953.0 392.2 935.0C392.4 899.3 392.6 897.1 395.5 885.3C398.9 871.7 406.0 859.4 417.1 847.8C421.8 842.8 422.5 842.3 447.0 822.7C456.2 815.4 465.1 808.1 466.7 806.6C470.6 802.8 473.3 798.6 474.6 794.4L475.6 790.9L474.6 784.6C473.3 777.1 473.2 774.1 474.3 767.8C476.8 752.1 484.8 739.2 497.5 730.6C505.1 725.3 511.6 722.7 520.7 721.2C538.3 718.4 555.0 723.9 568.1 737.0C580.8 749.7 585.6 769.8 580.3 788.0C575.9 803.3 563.6 817.5 549.3 824.0C538.9 828.7 525.4 830.0 514.2 827.3C512.6 826.9 510.7 826.5 510.1 826.5C509.4 826.5 505.7 829.2 500.1 833.6C489.7 842.0 485.9 844.9 467.2 858.8C459.6 864.5 452.2 870.0 450.8 870.9C445.9 874.6 440.4 882.7 437.8 890.0C432.9 903.7 431.9 919.4 432.1 976.6L432.2 1016.4L433.5 1017.7C437.2 1021.7 458.5 1036.5 472.5 1044.7C477.0 1047.4 481.8 1050.2 483.0 1051.0C486.4 1053.1 504.2 1062.6 509.1 1065.0C511.6 1066.3 513.7 1067.0 514.2 1066.8C514.9 1066.6 515.0 1063.0 515.0 1026.0L515.0 985.4L509.6 980.1C501.8 972.4 497.7 965.6 495.3 956.4C492.6 946.3 492.6 937.6 495.3 927.5C497.7 918.2 503.9 907.9 510.6 901.7C514.3 898.4 520.8 894.0 524.3 892.5C541.0 885.2 556.5 885.2 571.8 892.7C577.2 895.4 584.3 900.3 587.3 903.6C589.7 906.1 594.4 912.9 596.0 916.0C598.9 921.7 601.5 933.0 601.5 939.9C601.5 943.3 600.1 951.0 598.6 955.8C593.9 970.7 581.2 984.8 567.2 990.3L563.2 991.9L563.1 1040.7L563.0 1089.6L565.6 1090.7C567.1 1091.4 574.2 1094.4 581.4 1097.5C613.3 1111.0 628.4 1118.4 649.0 1130.4C681.5 1149.4 709.4 1173.2 729.5 1199.2C740.0 1212.7 744.4 1219.0 752.8 1233.0C776.9 1272.5 791.1 1319.3 785.7 1341.4C784.1 1348.4 780.2 1355.8 775.0 1361.6C770.0 1367.3 760.5 1373.0 752.8 1375.0C747.7 1376.3 739.4 1376.7 735.0 1375.8ZM554.3 956.3C557.9 954.7 561.2 951.5 562.9 948.1C564.0 945.7 564.2 944.6 564.2 941.0C564.2 937.4 564.1 936.3 562.8 933.9C561.1 930.4 557.3 926.9 553.6 925.5C551.8 924.8 549.7 924.5 547.1 924.5C543.7 924.5 542.7 924.7 540.1 926.0C536.2 928.0 532.4 932.1 531.2 935.6C530.0 939.3 530.4 945.4 532.1 948.8C534.3 953.0 538.9 956.5 543.7 957.5C546.7 958.1 551.4 957.6 554.3 956.3ZM535.3 789.6C539.4 787.6 541.7 785.5 543.5 781.8C545.6 777.5 545.9 774.1 544.6 769.6C542.6 763.3 538.6 759.4 532.0 757.7C528.1 756.7 524.2 757.3 519.9 759.6C508.3 765.7 508.0 782.7 519.3 788.9C524.8 791.9 529.9 792.1 535.3 789.6ZM452.3 610.8C460.1 607.2 463.9 598.3 461.3 589.9C457.6 578.2 442.1 574.4 432.9 583.0C428.2 587.3 426.2 595.6 428.5 601.6C430.3 606.3 434.3 610.2 439.2 611.8C442.5 612.9 448.8 612.4 452.3 610.8Z"/><path class="c" fill="url(#lkb)" transform="matrix(0.2145 0 0 0.1924 147.35 79.24)" fill-rule="evenodd" d="M735.0 1375.8C725.4 1373.9 718.6 1370.6 712.6 1364.8C708.2 1360.6 705.6 1357.2 703.3 1352.5C699.9 1345.8 698.6 1340.8 697.3 1329.2C695.1 1310.4 690.2 1294.6 680.8 1276.2C670.9 1257.0 659.8 1241.7 644.0 1226.0C625.6 1207.6 605.3 1192.6 579.0 1177.9C566.8 1171.1 553.9 1165.0 529.0 1154.4C504.0 1143.8 500.9 1142.4 489.0 1137.0C475.4 1130.8 449.0 1117.5 439.8 1112.2C427.1 1104.9 409.5 1093.7 402.0 1088.2C400.5 1087.1 397.1 1084.6 394.5 1082.7C366.7 1062.5 335.5 1032.7 312.0 1003.8C294.4 982.1 276.8 954.6 263.1 927.2C245.1 891.3 231.0 851.8 224.7 820.2C219.8 795.0 217.8 774.4 217.9 746.0C217.9 727.3 218.3 719.4 220.5 701.5C228.6 633.4 258.0 555.6 304.7 478.5C314.6 462.3 337.4 429.1 349.7 413.2C389.5 361.8 430.1 319.2 480.7 275.8C494.0 264.5 531.0 235.2 542.8 226.7C576.7 202.2 591.1 192.5 618.8 175.5C655.7 152.8 673.2 142.9 707.5 125.8C733.9 112.6 754.9 103.2 766.0 99.6C772.5 97.5 783.1 96.9 789.7 98.2C799.2 100.3 808.4 107.4 813.2 116.5C821.0 131.4 819.0 147.7 807.7 161.8C775.7 201.4 762.2 227.2 756.2 260.2C755.4 264.3 755.3 267.9 755.3 279.8C755.3 293.8 755.4 294.5 756.9 303.0C762.1 331.9 775.0 361.8 802.1 407.6C813.6 427.1 828.2 449.6 860.2 497.6C883.7 532.7 891.9 545.6 902.7 563.7C913.9 582.6 914.4 583.4 921.0 595.6C944.1 638.9 956.9 671.9 967.4 715.0C971.0 729.6 974.3 751.0 976.1 770.0C976.9 779.2 976.9 813.6 976.1 823.0C974.4 841.7 970.0 867.0 965.7 883.0C961.5 898.5 954.3 919.9 950.0 929.5C949.0 931.8 946.9 936.4 945.5 939.7C941.0 950.0 931.5 967.7 923.6 980.5C910.2 1002.3 891.5 1026.3 880.3 1036.1C870.3 1044.9 859.5 1049.7 849.2 1049.6C843.1 1049.6 838.6 1048.6 833.0 1045.9C829.6 1044.3 827.9 1043.1 824.7 1039.8C812.8 1027.8 811.3 1010.0 820.7 993.1C823.2 988.7 825.4 985.8 832.5 977.7C837.8 971.6 846.9 960.1 851.1 954.5C873.4 924.2 886.7 893.6 894.4 855.2C898.0 837.7 899.9 813.4 899.0 797.2C898.0 778.5 897.0 769.6 894.2 754.5C885.4 705.9 864.6 655.0 830.6 598.9C815.9 574.7 808.0 562.5 777.5 516.8C751.6 478.1 742.6 464.2 729.6 442.6C697.7 390.2 681.7 347.7 678.5 307.3C676.2 278.5 681.4 248.2 693.0 222.4C694.6 218.7 696.0 215.5 696.0 215.3C696.0 214.6 694.1 215.1 691.5 216.6C690.0 217.4 684.6 220.4 679.5 223.1C648.3 240.1 598.4 273.9 564.0 301.2C529.9 328.4 507.1 348.5 480.5 375.0C452.4 403.0 430.3 428.4 403.8 462.9C391.9 478.5 371.4 508.7 363.4 522.5C349.1 547.1 348.2 548.8 340.0 565.2C331.5 582.3 328.3 589.6 321.9 605.5C304.7 648.2 295.1 688.4 291.9 730.5C291.2 740.1 291.7 765.6 292.7 776.5C296.1 810.2 303.0 839.8 315.1 872.0C318.8 881.8 320.9 886.3 321.5 885.7C321.8 885.4 322.0 864.8 322.1 834.0C322.3 783.8 322.3 782.6 323.4 777.8C325.0 770.5 326.7 765.5 330.0 758.7C336.2 745.8 343.3 737.6 357.0 727.9C360.2 725.6 364.8 722.3 367.2 720.5C369.7 718.7 374.0 715.7 376.8 713.8C399.3 698.2 406.8 690.5 410.7 678.2C412.7 672.0 413.0 668.7 413.0 653.5L413.0 639.2L409.0 635.6C403.7 630.7 400.5 626.4 397.2 619.8C390.4 605.7 389.5 593.6 394.3 578.2C394.8 576.9 395.9 574.2 396.9 572.3C404.8 556.5 419.2 545.7 436.7 542.7C443.3 541.5 453.1 542.0 459.4 543.7C480.9 549.6 496.4 567.9 498.5 589.8C499.3 597.6 498.6 603.3 496.2 610.5C492.8 620.5 488.3 627.5 481.1 633.9C474.3 640.0 469.0 643.1 460.6 646.0L455.2 647.8L454.9 663.3C454.6 679.7 454.2 684.1 452.2 691.2C449.2 702.0 444.2 709.9 434.1 720.1C426.1 728.0 420.2 732.6 395.2 750.3C377.2 763.0 373.1 767.0 368.9 775.5C362.5 788.2 362.5 788.9 362.5 878.7L362.5 949.8L363.9 952.0C368.7 959.4 389.7 983.0 391.5 983.0C391.8 983.0 392.0 980.2 392.0 975.4C392.0 971.2 392.1 953.0 392.2 935.0C392.4 899.3 392.6 897.1 395.5 885.3C398.9 871.7 406.0 859.4 417.1 847.8C421.8 842.8 422.5 842.3 447.0 822.7C456.2 815.4 465.1 808.1 466.7 806.6C470.6 802.8 473.3 798.6 474.6 794.4L475.6 790.9L474.6 784.6C473.3 777.1 473.2 774.1 474.3 767.8C476.8 752.1 484.8 739.2 497.5 730.6C505.1 725.3 511.6 722.7 520.7 721.2C538.3 718.4 555.0 723.9 568.1 737.0C580.8 749.7 585.6 769.8 580.3 788.0C575.9 803.3 563.6 817.5 549.3 824.0C538.9 828.7 525.4 830.0 514.2 827.3C512.6 826.9 510.7 826.5 510.1 826.5C509.4 826.5 505.7 829.2 500.1 833.6C489.7 842.0 485.9 844.9 467.2 858.8C459.6 864.5 452.2 870.0 450.8 870.9C445.9 874.6 440.4 882.7 437.8 890.0C432.9 903.7 431.9 919.4 432.1 976.6L432.2 1016.4L433.5 1017.7C437.2 1021.7 458.5 1036.5 472.5 1044.7C477.0 1047.4 481.8 1050.2 483.0 1051.0C486.4 1053.1 504.2 1062.6 509.1 1065.0C511.6 1066.3 513.7 1067.0 514.2 1066.8C514.9 1066.6 515.0 1063.0 515.0 1026.0L515.0 985.4L509.6 980.1C501.8 972.4 497.7 965.6 495.3 956.4C492.6 946.3 492.6 937.6 495.3 927.5C497.7 918.2 503.9 907.9 510.6 901.7C514.3 898.4 520.8 894.0 524.3 892.5C541.0 885.2 556.5 885.2 571.8 892.7C577.2 895.4 584.3 900.3 587.3 903.6C589.7 906.1 594.4 912.9 596.0 916.0C598.9 921.7 601.5 933.0 601.5 939.9C601.5 943.3 600.1 951.0 598.6 955.8C593.9 970.7 581.2 984.8 567.2 990.3L563.2 991.9L563.1 1040.7L563.0 1089.6L565.6 1090.7C567.1 1091.4 574.2 1094.4 581.4 1097.5C613.3 1111.0 628.4 1118.4 649.0 1130.4C681.5 1149.4 709.4 1173.2 729.5 1199.2C740.0 1212.7 744.4 1219.0 752.8 1233.0C776.9 1272.5 791.1 1319.3 785.7 1341.4C784.1 1348.4 780.2 1355.8 775.0 1361.6C770.0 1367.3 760.5 1373.0 752.8 1375.0C747.7 1376.3 739.4 1376.7 735.0 1375.8ZM554.3 956.3C557.9 954.7 561.2 951.5 562.9 948.1C564.0 945.7 564.2 944.6 564.2 941.0C564.2 937.4 564.1 936.3 562.8 933.9C561.1 930.4 557.3 926.9 553.6 925.5C551.8 924.8 549.7 924.5 547.1 924.5C543.7 924.5 542.7 924.7 540.1 926.0C536.2 928.0 532.4 932.1 531.2 935.6C530.0 939.3 530.4 945.4 532.1 948.8C534.3 953.0 538.9 956.5 543.7 957.5C546.7 958.1 551.4 957.6 554.3 956.3ZM535.3 789.6C539.4 787.6 541.7 785.5 543.5 781.8C545.6 777.5 545.9 774.1 544.6 769.6C542.6 763.3 538.6 759.4 532.0 757.7C528.1 756.7 524.2 757.3 519.9 759.6C508.3 765.7 508.0 782.7 519.3 788.9C524.8 791.9 529.9 792.1 535.3 789.6ZM452.3 610.8C460.1 607.2 463.9 598.3 461.3 589.9C457.6 578.2 442.1 574.4 432.9 583.0C428.2 587.3 426.2 595.6 428.5 601.6C430.3 606.3 434.3 610.2 439.2 611.8C442.5 612.9 448.8 612.4 452.3 610.8Z"/><g class="ink" fill="currentColor"><text x="354" y="306" textLength="372" lengthAdjust="spacing" font-family="Archivo" font-stretch="125%" font-weight="500" font-size="27.5">GROW TECH</text></g></svg></a><ul><li><a href="#nex">NEX</a></li><li><a href="#prove">Sperimentazioni</a></li><li><a href="#team">Chi siamo</a></li><li><a href="#contatti">Contatti</a></li></ul><span class="navr"><button class="tt" id="tt" type="button" aria-label="Tema chiaro o scuro"><svg viewBox="0 0 24 24" aria-hidden="true"><g class="sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></g><path class="moon" d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1z"/></svg></button><span class="lang"><a href="/" aria-current="page" lang="it">IT</a> · <a href="/en/" lang="en" hreflang="en">EN</a> · <a href="/es/" lang="es" hreflang="es">ES</a></span></span></nav>
+
+<header class="hero" id="hero">
+  <div class="stick">
+    <svg class="scene" viewBox="0 0 1000 750" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Pilota in serra commerciale: file di basilico fuori suolo con la telecamera di NEX">
+      <image href="/img/pilota/wide.jpg" width="1000" height="750"/>
+      <g class="ov" data-d="0"><rect class="box" x="398" y="126" width="108" height="76" rx="3" stroke-dasharray="5 4"/><rect class="tagbg" x="398" y="104" width="96" height="18" rx="3"/><text class="tag" x="404" y="117">NEX · visione</text></g>
+      <g class="ov bx" data-d="1"><rect class="box" x="505" y="622" width="46" height="46" rx="3"/><rect class="tagbg" x="555" y="622" width="128" height="18" rx="3"/><text class="tag" x="561" y="635">basilico · trapianto</text></g>
+      <g class="ov bx" data-d="2"><rect class="box" x="658" y="605" width="46" height="46" rx="3"/><rect class="tagbg" x="708" y="605" width="128" height="18" rx="3"/><text class="tag" x="714" y="618">basilico · trapianto</text></g>
+      <g class="ov bx" data-d="3"><rect class="box" x="698" y="546" width="32" height="32" rx="3"/><rect class="box" x="609" y="508" width="32" height="32" rx="3"/><rect class="box" x="728" y="502" width="32" height="32" rx="3"/></g>
+    </svg>
+    <div class="shade"></div>
+    <div class="panel" id="panel" aria-label="Esempio di dati letti da NEX">
+      <div class="t"><span class="dot"></span>NEX · LIVE</div>
+      <div class="row"><span>Stadio</span><b>trapianto</b></div>
+      <div class="row"><span>EC</span><b id="pv-ec">1,8 mS/cm</b></div>
+      <div class="row"><span>pH</span><b id="pv-ph">5,9</b></div>
+      <div class="row"><span>VPD</span><b>1,0 kPa</b></div>
+      <div class="row last"><span>Ultima azione</span><b>dosaggio A</b></div>
+      <i>valori di esempio</i>
+    </div>
+    <div class="copy gut">
+      <h1 class="big">La serra che decide e agisce <span class="gtl">da sola.</span></h1>
+      <p>NEX osserva la coltura, riconosce lo stadio di crescita e regola nutrizione, irrigazione e clima in tempo reale.</p>
+      <div class="cta"><a class="pill light" href="#contatti">Richiedi un progetto pilota</a><a class="pill line" href="#nex">Guarda come funziona ↓</a></div>
     </div>
   </div>
 </header>
-<div class="lang-hint" id="lang-hint" hidden>
-  <div class="wrap" data-hint="en" lang="en" hidden><span>This page is also available in English.</span><a href="/en/" hreflang="en">Read in English →</a><button type="button" class="lang-hint-close" aria-label="Close">×</button></div><div class="wrap" data-hint="es" lang="es" hidden><span>Esta página también está disponible en español.</span><a href="/es/" hreflang="es">Leer en español →</a><button type="button" class="lang-hint-close" aria-label="Cerrar">×</button></div>
-</div>
 
-<main id="top">
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <span class="eyebrow">Agricoltura in ambiente controllato</span>
-        <h1>La serra che <em>decide</em> e agisce da sola.</h1>
-        <p class="lede">Neura GrowTech sviluppa NEX, un sistema hardware e software per serre, fuori suolo e vertical farm. NEX osserva la coltura, riconosce specie e stadio di crescita e regola da solo nutrizione, irrigazione e clima, in tempo reale.</p>
-        <div class="cta-row">
-          <a class="btn" href="#contatti">Richiedi un progetto pilota</a>
-          <a class="btn ghost" href="#come-funziona">Scopri come funziona</a>
-        </div>
-        <span class="origin">Nato dalla ricerca del DISTAL, Università di Bologna</span>
-      </div>
+<section class="intro gut" id="nex">
+  <span class="eyebrow" style="color:var(--muted)">Pilota in serra commerciale</span>
+  <h2 class="big">Una stagione di basilico, guidata da NEX.</h2>
+  <p>Fuori suolo, su perlite, in una serra commerciale. Ecco come è cresciuto.</p>
+</section>
 
-      <div class="console" aria-label="Esempio di ciclo di controllo NEX">
-        <div class="console-head"><span>NEX · Serra 2 · Bancale B</span><span class="live">attivo</span></div>
-        <div class="stage" data-i="0">
-          <span class="tag">Percezione</span>
-          <dl>
-            <dt>Coltura</dt><dd>Basilico · 3ª foglia vera</dd>
-            <dt>EC soluzione</dt><dd>1.42 mS/cm</dd>
-            <dt>pH</dt><dd>6.3</dd>
-            <dt>VPD</dt><dd>1.12 kPa</dd>
-          </dl>
-        </div>
-        <div class="stage" data-i="1">
-          <span class="tag">Decisione</span>
-          <p>Stadio vegetativo avanzato: EC obiettivo 1.8 mS/cm, pH 5.8–6.0. VPD sopra soglia, aumentare umidità.</p>
-        </div>
-        <div class="stage" data-i="2">
-          <span class="tag">Azione</span>
-          <dl>
-            <dt>NEX-F</dt><dd>Stock A+B · 14 mL</dd>
-            <dt>NEX-F</dt><dd>Acido · 3 mL</dd>
-            <dt>NEX-C</dt><dd>Nebulizzazione · 40 s</dd>
-          </dl>
-        </div>
-        <div class="console-foot">Valori di esempio a scopo illustrativo</div>
-      </div>
+<section class="grow gut" id="grow">
+  <div class="stick">
+    <div class="txt">
+      <span class="eyebrow">Basilico · fuori suolo · serra commerciale</span>
+      <h2 class="big">Dal trapianto al pieno sviluppo, con NEX al controllo.</h2>
+      <div class="stage" id="stage">Trapianto</div>
+      <div class="bar" id="bar"><span class="on">Trapianto</span><span>Crescita</span><span>Pieno sviluppo</span></div>
     </div>
-  </section>
-
-  <div class="wrap" style="padding-bottom:clamp(3rem,7vw,5rem)">
-    <div class="band">
-      <figure class="photo"><img loading="lazy" src="/img/nex-camera-crescita.jpg" alt="Bancale di coltivazione fuori suolo sotto luci LED, con il sistema NEX installato sopra le piante"></figure>
-      <div class="side">
-        <figure class="photo"><img loading="lazy" src="/img/nex-f-dosaggio.jpg" alt="Taniche di soluzioni concentrate A, B e acido collegate al sistema di dosaggio NEX-F"></figure>
-        <figure class="photo"><img loading="lazy" src="/img/nex-sensore.jpg" alt="Sensore ambientale NEX posizionato tra le piante di basilico"></figure>
-      </div>
-    </div>
-    <figcaption>Installazione sperimentale in ambiente controllato: unità NEX sopra il bancale, dosaggio delle soluzioni nutritive e sensore ambientale.</figcaption>
+    <div class="pics"><img class="on" src="/img/pilota/g1.jpg" alt="Basilico al trapianto"><img src="/img/pilota/g2.jpg" alt="Basilico in crescita"><img src="/img/pilota/g3.jpg" alt="Basilico in pieno sviluppo"></div>
   </div>
+</section>
 
-  <section>
-    <div class="wrap split">
-      <div>
-        <span class="eyebrow">Il problema</span>
-        <h2>I dati ci sono. Manca chi li trasforma in azioni.</h2>
-        <p class="lede">Fertirrigazione, irrigazione e clima vengono ancora gestiti in gran parte a esperienza, o con sistemi che si fermano al monitoraggio. I software di supporto alle decisioni suggeriscono, ma poi qualcuno deve intervenire a mano.</p>
-        <p>Con i costi di fertilizzanti ed energia in crescita e meno personale specializzato disponibile, ogni correzione fatta in ritardo pesa su resa e margini.</p>
-      </div>
-      <div class="facts">
-        <div class="fact"><b>~70%</b><span>dei prelievi di acqua dolce nel mondo è destinato all'agricoltura.<small>FAO, 2023</small></span></div>
-        <div class="fact"><b>&gt;20%</b><span>di crescita annua prevista per l'agricoltura in ambiente controllato: serre hi-tech, fuori suolo e vertical farm.<small>CAGR · Grand View Research, 2024</small></span></div>
-        <div class="fact"><b>Ogni ora</b><span>i parametri di una coltura fuori suolo cambiano. Un sistema che solo li registra lascia la correzione a una persona.</span></div>
-      </div>
+<section class="sys" id="sys">
+  <div class="stick">
+    <div class="photo">
+      <img src="/img/pilota/cam.jpg" alt="Telecamera NEX sopra le file di basilico">
+      <img class="dose" src="/img/pilota/dose.jpg" alt="Serbatoio e dosaggio della soluzione nutritiva">
+      <span class="pin" style="left:46%;top:24%" data-l="visione"></span>
+      <span class="pin" style="left:47%;top:66%" data-l="sensori"></span>
     </div>
-  </section>
-
-  <section id="come-funziona">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Come funziona</span>
-        <h2>Un ciclo chiuso, che gira da solo.</h2>
-        <p class="lede">NEX unisce osservazione, analisi e controllo in un unico sistema. Il ciclo si ripete in continuo e si adatta a ciò che la pianta richiede in quel momento.</p>
-      </div>
-      <div class="loop">
-        <div class="step">
-          <h3>Percezione</h3>
-          <p>Telecamere e sensori misurano in continuo lo stato della coltura, della soluzione nutritiva e dell'aria.</p>
-          <ul><li>immagini</li><li>EC</li><li>pH</li><li>temperatura</li><li>umidità</li></ul>
-        </div>
-        <div class="step">
-          <h3>Decisione</h3>
-          <p>Il nucleo cognitivo riconosce specie e stadio fenologico e calcola la strategia adatta, come una diagnosi agronomica personalizzata.</p>
-          <ul><li>visione artificiale</li><li>machine learning</li><li>modelli agronomici</li></ul>
-        </div>
-        <div class="step">
-          <h3>Azione</h3>
-          <p>NEX comanda direttamente pompe, valvole e impianti di climatizzazione. Nessun passaggio manuale tra il dato e l'intervento.</p>
-          <ul><li>dosaggio</li><li>irrigazione</li><li>clima</li></ul>
-        </div>
-      </div>
-      <p class="loop-note">↻ Poi il ciclo ricomincia, verificando l'effetto dell'intervento.</p>
+    <div class="copy">
+      <span class="eyebrow">Il sistema</span>
+      <h2 class="big">Occhi, cervello e mani.</h2>
+      <ol id="sysl"><li class="on"><b>01</b><span>Una telecamera riconosce specie e stadio di crescita.</span></li><li><b>02</b><span>I sensori misurano soluzione nutritiva e clima.</span></li><li><b>03</b><span>NEX dosa e corregge da solo, senza intervento umano.</span></li></ol>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="moduli">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">La piattaforma</span>
-        <h2>Tre moduli, una sola logica decisionale.</h2>
-        <p class="lede">Si parte dal processo che pesa di più sui costi e si aggiungono gli altri moduli quando serve. Tutti condividono gli stessi dati e la stessa intelligenza.</p>
-      </div>
-      <div class="modules">
-        <article class="module">
-          <span class="code">NEX-F</span>
-          <h3>Fertilizzazione</h3>
-          <p>Prepara e corregge la soluzione nutritiva in base allo stadio della coltura, dosando concentrati e correttori di pH.</p>
-          <dl><dt>Controlla</dt><dd>EC, pH, dosaggi</dd></dl>
-        </article>
-        <article class="module">
-          <span class="code">NEX-I</span>
-          <h3>Irrigazione</h3>
-          <p>Decide quando e quanto irrigare a partire dal fabbisogno reale delle piante, non da un timer fisso.</p>
-          <dl><dt>Controlla</dt><dd>turni, volumi, drenaggio</dd></dl>
-        </article>
-        <article class="module">
-          <span class="code">NEX-C</span>
-          <h3>Climatizzazione</h3>
-          <p>Mantiene il microclima nella finestra ottimale per la coltura, agendo su ventilazione, umidificazione e temperatura.</p>
-          <dl><dt>Controlla</dt><dd>temperatura, UR, VPD</dd></dl>
-        </article>
-      </div>
-      <div class="retrofit">
-        <h3>Si installa sull'impianto che hai già.</h3>
-        <p>NEX è progettato per il retrofit: si collega alle infrastrutture esistenti, senza rifare la serra e senza cambiare il modo di coltivare.</p>
-      </div>
-    </div>
-  </section>
+<section class="loop gut" id="loop">
+  <div class="stick">
+    <h2 class="big">Un ciclo che non si ferma.</h2>
+    <svg viewBox="0 0 860 260" aria-hidden="true">
+      <defs><linearGradient id="loopg" gradientUnits="userSpaceOnUse" x1="70" y1="80" x2="790" y2="200"><stop offset="0" stop-color="#7A00E0"/><stop offset=".45" stop-color="#2A1FD0"/><stop offset=".75" stop-color="#0036B8"/><stop offset="1" stop-color="#001C72"/></linearGradient></defs>
+      <path class="arc" id="arc1" d="M190 120 C 270 40, 350 40, 380 110"/>
+      <path class="arc" id="arc2" d="M480 110 C 510 40, 590 40, 670 120"/>
+      <path class="ret" id="ret" d="M680 160 C 560 260, 300 260, 180 160"/>
+      <circle class="ring on" id="r1" cx="130" cy="140" r="58"/><text class="lab on" id="t1" x="130" y="146" text-anchor="middle">vede</text>
+      <circle class="ring" id="r2" cx="430" cy="140" r="58"/><text class="lab" id="t2" x="430" y="146" text-anchor="middle">decide</text>
+      <circle class="ring" id="r3" cx="730" cy="140" r="58"/><text class="lab" id="t3" x="730" y="146" text-anchor="middle">agisce</text>
+    </svg>
+    <p>Percezione, decisione, azione. Poi NEX verifica l’effetto e ricomincia: ogni pochi secondi, 24 ore su 24.</p>
+  </div>
+</section>
 
-  <section>
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Risultati</span>
-        <h2>Cosa cambia in serra.</h2>
-      </div>
-      <div class="results">
-        <div class="result"><span class="num">−15–20%</span><p>di input produttivi: acqua, fertilizzanti ed energia.</p></div>
-        <div class="result"><span class="num">fino a +20%</span><p>di produttività, con rese più stabili tra un ciclo e l'altro.</p></div>
-        <div class="result"><span class="num">&gt;70%</span><p>di interventi manuali in meno nella gestione quotidiana.</p></div>
-      </div>
-      <p class="footnote">Stime basate sulle sperimentazioni condotte in ambiente operativo. I risultati variano in base a coltura e impianto.</p>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Per chi è</span>
-        <h2>Chi coltiva sul serio, e chi fa ricerca.</h2>
-      </div>
-      <div class="aud">
-        <article>
-          <span class="eyebrow">Produzione</span>
-          <h3>Serre tecnologiche, fuori suolo e vertical farm</h3>
-          <p>Aziende ad alta intensità produttiva, dove ogni punto di efficienza su nutrizione, acqua ed energia si vede a fine anno. NEX riduce i costi operativi e la dipendenza da competenze specialistiche sempre presenti.</p>
-        </article>
-        <article>
-          <span class="eyebrow">Ricerca</span>
-          <h3>Università e centri sperimentali</h3>
-          <p>Protocolli standardizzati, meno variabilità operativa tra le prove e dati strutturati di alta qualità. Un'infrastruttura su cui costruire sperimentazioni ripetibili.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="tecnologia">
-    <div class="wrap status">
-      <figure class="photo"><img loading="lazy" src="/img/nex-unita.jpg" alt="Unità di calcolo NEX"></figure>
-      <div style="display:flex;flex-direction:column;gap:1.5rem;min-width:0">
-        <span class="eyebrow">A che punto siamo</span>
-        <h2>Una tecnologia già validata sul campo.</h2>
-        <div>
-          <div class="mono" style="font-size:.85rem">Maturità tecnologica: <b>TRL 6</b> su 9</div>
-          <div class="trl" aria-hidden="true"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span></span><span></span><span></span></div>
-          <div class="trl-labels"><span>ricerca</span><span>prototipo in ambiente reale</span><span>mercato</span></div>
-        </div>
-        <ul class="milestones">
-          <li><span class="dot done"></span><div>Prototipi funzionanti e validazione in laboratorio<small>MVP completato</small></div></li>
-          <li><span class="dot done"></span><div>Sperimentazioni in ambienti operativi reali<small>anche in collaborazione con aziende del settore</small></div></li>
-          <li><span class="dot done"></span><div>Domanda di brevetto depositata presso l'UIBM<small>sistema e metodo per la gestione autonoma dei processi colturali</small></div></li>
-          <li><span class="dot"></span><div>Industrializzazione e marcatura CE<small>in corso</small></div></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="sperimentazioni">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Sperimentazioni</span>
-        <h2>Ogni numero viene da una prova in serra.</h2>
-        <p class="lede">Qui raccogliamo le sperimentazioni e le validazioni di NEX: dove, su quale coltura, con quali moduli e con quali risultati misurati.</p>
-      </div>
-      <div class="trials">
-        <article class="trial">
-          <figure class="photo"><img loading="lazy" src="/img/nex-camera-crescita.jpg" alt="Camera di crescita con NEX installato sopra il bancale"></figure>
-          <div class="trial-body">
-            <div class="trial-meta"><span class="pill">Validazione</span><span class="mono">DISTAL · Università di Bologna</span></div>
-            <h3>Gestione autonoma in camera di crescita</h3>
-            <p>Coltura fuori suolo su bancali sotto luce LED, con NEX che gestisce la soluzione nutritiva e il microclima, riconoscendo lo stadio delle piante dalle immagini.</p>
-            <dl class="trial-facts">
-              <dt>Ambiente</dt><dd>Controllato, fuori suolo</dd>
-              <dt>Moduli</dt><dd>NEX-F, NEX-C</dd>
-              <dt>Stato</dt><dd>Completata</dd>
-            </dl>
-          </div>
-        </article>
-        <article class="trial upcoming">
-          <div class="trial-body">
-            <div class="trial-meta"><span class="pill">Prossimamente</span></div>
-            <h3>Progetti pilota in azienda</h3>
-            <p>Le prime installazioni presso aziende agricole e centri di ricerca. Ogni progetto pilota avrà qui la sua scheda con i risultati misurati.</p>
-            <a class="btn ghost" href="#contatti">Candida la tua serra</a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="team">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Team</span>
-        <h2>Agronomia, ingegneria e software nella stessa squadra.</h2>
-      </div>
-      <div class="team">
-        <div class="person"><span class="role">CEO</span><h3>Matteo Landolfo</h3><p>Assegnista di ricerca al DISTAL. Direzione strategica e coordinamento.</p></div>
-        <div class="person"><span class="role">CTO</span><h3>Fabio Perotti</h3><p>Dottorando di ricerca. Sviluppo tecnologico e modelli decisionali.</p></div>
-        <div class="person"><span class="role">COO</span><h3>Giuseppe Landolfo</h3><p>Ingegnere con esperienza industriale. Operazioni e industrializzazione.</p></div>
-        <div class="person"><span class="role">Business</span><h3>Alessandro Pistillo</h3><p>Tecnico al DISTAL. Sviluppo commerciale e rapporti con i clienti.</p></div>
-      </div>
-      <div class="advisors">
-        <span class="eyebrow">Referenti scientifici</span>
-        <p>Francesco Orsini, Giorgio Gianquinto Prosdocimi e Giuseppina Pennisi, del Dipartimento di Scienze e Tecnologie Agro-Alimentari dell'Università di Bologna, esperti di fisiologia delle colture e sistemi di coltivazione innovativi.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact" id="contatti">
-    <div class="wrap contact-grid">
-      <div>
-        <span class="eyebrow">Progetti pilota</span>
-        <h2>Prova NEX nella tua serra.</h2>
-        <p class="lede">Stiamo selezionando le prime aziende e i primi centri di ricerca con cui installare NEX. Raccontaci che cosa coltivi e com'è fatto il tuo impianto: valutiamo insieme da quale modulo partire.</p>
-      </div>
-      <div class="contact-side">
-        <div class="mail-primary">
-          <small>Informazioni generali</small>
-          <div class="mail-primary-row"><a class="addr" href="mailto:info@neuragrowtech.com">info@neuragrowtech.com</a><button class="copy" type="button" data-done="Copiato" data-copy="info@neuragrowtech.com">Copia</button></div>
-          <p>Non sai a chi scrivere? Usa questo indirizzo: inoltriamo noi il messaggio alla persona giusta.</p>
-        </div>
-        <span class="eyebrow">Contatti diretti</span>
-        <div class="mail compact">
-          <div class="mail-row"><div><small>Strategia, partnership e investitori</small><b>Matteo Landolfo · CEO</b><a class="addr" href="mailto:m.landolfo@neuragrowtech.com">m.landolfo@neuragrowtech.com</a></div><button class="copy" type="button" data-done="Copiato" data-copy="m.landolfo@neuragrowtech.com">Copia</button></div>
-          <div class="mail-row"><div><small>Progetti pilota e offerte commerciali</small><b>Alessandro Pistillo</b><a class="addr" href="mailto:a.pistillo@neuragrowtech.com">a.pistillo@neuragrowtech.com</a></div><button class="copy" type="button" data-done="Copiato" data-copy="a.pistillo@neuragrowtech.com">Copia</button></div>
-          <div class="mail-row"><div><small>Tecnologia, integrazione con l'impianto e collaborazioni scientifiche</small><b>Fabio Perotti · CTO</b><a class="addr" href="mailto:f.perotti@neuragrowtech.com">f.perotti@neuragrowtech.com</a></div><button class="copy" type="button" data-done="Copiato" data-copy="f.perotti@neuragrowtech.com">Copia</button></div>
-          <div class="mail-row"><div><small>Installazioni, forniture e produzione</small><b>Giuseppe Landolfo · COO</b><a class="addr" href="mailto:g.landolfo@neuragrowtech.com">g.landolfo@neuragrowtech.com</a></div><button class="copy" type="button" data-done="Copiato" data-copy="g.landolfo@neuragrowtech.com">Copia</button></div>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer>
+<section class="nums gut" id="nums">
   <div class="wrap">
-    <span>© 2026 Neura GrowTech · Progetto imprenditoriale in fase di costituzione, nato dalla ricerca del DISTAL, Università di Bologna</span>
-    <span>Bologna · neuragrowtech.com</span>
+    <div class="nh"><span class="eyebrow">Risultati</span><h2 class="big">Cosa cambia in serra.</h2></div>
+    <div class="rows">
+      <div class="num"><b data-to="20" data-pre="−">−0%</b><div><h3>Input produttivi, fino a</h3><p>Meno acqua, fertilizzanti ed energia: NEX dosa solo ciò che serve, quando serve.</p></div></div>
+      <div class="num"><b data-to="20" data-pre="+">+0%</b><div><h3>Produttività, fino a</h3><p>Condizioni più stabili lungo tutto il ciclo, rese più costanti.</p></div></div>
+      <div class="num"><b data-to="70" data-pre="&gt;">&gt;0%</b><div><h3>Interventi manuali in meno</h3><p>Le correzioni di routine le fa NEX. Il personale si occupa del resto.</p></div></div>
+    </div>
+    <p class="foot">Stime da sperimentazioni in ambiente operativo. I risultati variano in base a coltura e impianto.</p>
+  </div>
+</section>
+
+<section class="trials" id="prove">
+  <div class="stick">
+    <h2 class="big">Dal laboratorio alla serra.</h2>
+    <div class="card a"><img src="/img/pilota/lab.jpg" alt="Camera di crescita al DISTAL"><div class="tag"><span class="eyebrow">Validazione · DISTAL</span><b>Camera di crescita</b></div></div>
+    <div class="card b"><img src="/img/pilota/serra.jpg" alt="Pilota in serra commerciale"><div class="tag"><span class="eyebrow">Pilota · serra commerciale</span><b>Basilico fuori suolo</b></div></div>
+    <div class="more"><a href="#prove">Scopri le sperimentazioni →</a></div>
+  </div>
+</section>
+
+<section class="team gut" id="team"><div class="wrap">
+<div class="th"><span class="eyebrow">Team</span><h2 class="big">Agronomia, ingegneria e software nella stessa squadra.</h2></div>
+<div class="tg"><article class="pp"><div class="ph" aria-hidden="true">ML</div><span class="eyebrow">CEO</span><h3>Matteo Landolfo</h3><p>Postdoc al DISTAL, dottorato in intelligenza artificiale applicata all’agrifood. Direzione strategica e coordinamento.</p><div class="pl"><a class="em" href="mailto:m.landolfo@neuragrowtech.com" aria-label="Email Matteo Landolfo"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg><span>m.landolfo@neuragrowtech.com</span></a></div></article><article class="pp"><div class="ph" aria-hidden="true">FP</div><span class="eyebrow">CTO</span><h3>Fabio Perotti</h3><p>Dottorando di ricerca. Sviluppo tecnologico e modelli decisionali.</p><div class="pl"><a class="em" href="mailto:f.perotti@neuragrowtech.com" aria-label="Email Fabio Perotti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg><span>f.perotti@neuragrowtech.com</span></a></div></article><article class="pp"><div class="ph" aria-hidden="true">GL</div><span class="eyebrow">COO</span><h3>Giuseppe Landolfo</h3><p>Ingegnere con esperienza industriale. Operazioni, installazioni e forniture.</p><div class="pl"><a class="em" href="mailto:g.landolfo@neuragrowtech.com" aria-label="Email Giuseppe Landolfo"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg><span>g.landolfo@neuragrowtech.com</span></a></div></article><article class="pp"><div class="ph" aria-hidden="true">AP</div><span class="eyebrow">Business</span><h3>Alessandro Pistillo</h3><p>Tecnico al DISTAL. Sviluppo commerciale e progetti pilota.</p><div class="pl"><a class="em" href="mailto:a.pistillo@neuragrowtech.com" aria-label="Email Alessandro Pistillo"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg><span>a.pistillo@neuragrowtech.com</span></a></div></article></div>
+<p class="adv"><span class="eyebrow">Referenti scientifici</span> Francesco Orsini, Giorgio Gianquinto Prosdocimi e Giuseppina Pennisi · DISTAL, Università di Bologna</p>
+</div></section>
+<footer class="end gut" id="contatti">
+  <div class="wrap">
+    <div><svg class="lkbig" id="mark" viewBox="186 90 564 262" aria-hidden="true"><g class="wm" fill="none" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"><g class="lt" style="--i:0"><path d="M348 222 L402 263 V221"/></g><g class="lt" style="--i:1"><path d="M482 220 H427 V266 H482 M427 243 H472"/></g><g class="lt" style="--i:2"><path d="M502 221 V244 C502 270 560 270 560 244 V221"/></g><g class="lt" style="--i:3"><path d="M584 266 V220 H627 C650 220 650 247 627 247 H611 L641 266"/></g><g class="lt" style="--i:4"><path d="M667 266 L705 221 L742 266"/><path d="M682 255 H728" stroke-width="10"/></g></g><path class="ln" fill="none" transform="matrix(0.2145 0 0 0.1924 147.35 79.24)" fill-rule="evenodd" d="M735.0 1375.8C725.4 1373.9 718.6 1370.6 712.6 1364.8C708.2 1360.6 705.6 1357.2 703.3 1352.5C699.9 1345.8 698.6 1340.8 697.3 1329.2C695.1 1310.4 690.2 1294.6 680.8 1276.2C670.9 1257.0 659.8 1241.7 644.0 1226.0C625.6 1207.6 605.3 1192.6 579.0 1177.9C566.8 1171.1 553.9 1165.0 529.0 1154.4C504.0 1143.8 500.9 1142.4 489.0 1137.0C475.4 1130.8 449.0 1117.5 439.8 1112.2C427.1 1104.9 409.5 1093.7 402.0 1088.2C400.5 1087.1 397.1 1084.6 394.5 1082.7C366.7 1062.5 335.5 1032.7 312.0 1003.8C294.4 982.1 276.8 954.6 263.1 927.2C245.1 891.3 231.0 851.8 224.7 820.2C219.8 795.0 217.8 774.4 217.9 746.0C217.9 727.3 218.3 719.4 220.5 701.5C228.6 633.4 258.0 555.6 304.7 478.5C314.6 462.3 337.4 429.1 349.7 413.2C389.5 361.8 430.1 319.2 480.7 275.8C494.0 264.5 531.0 235.2 542.8 226.7C576.7 202.2 591.1 192.5 618.8 175.5C655.7 152.8 673.2 142.9 707.5 125.8C733.9 112.6 754.9 103.2 766.0 99.6C772.5 97.5 783.1 96.9 789.7 98.2C799.2 100.3 808.4 107.4 813.2 116.5C821.0 131.4 819.0 147.7 807.7 161.8C775.7 201.4 762.2 227.2 756.2 260.2C755.4 264.3 755.3 267.9 755.3 279.8C755.3 293.8 755.4 294.5 756.9 303.0C762.1 331.9 775.0 361.8 802.1 407.6C813.6 427.1 828.2 449.6 860.2 497.6C883.7 532.7 891.9 545.6 902.7 563.7C913.9 582.6 914.4 583.4 921.0 595.6C944.1 638.9 956.9 671.9 967.4 715.0C971.0 729.6 974.3 751.0 976.1 770.0C976.9 779.2 976.9 813.6 976.1 823.0C974.4 841.7 970.0 867.0 965.7 883.0C961.5 898.5 954.3 919.9 950.0 929.5C949.0 931.8 946.9 936.4 945.5 939.7C941.0 950.0 931.5 967.7 923.6 980.5C910.2 1002.3 891.5 1026.3 880.3 1036.1C870.3 1044.9 859.5 1049.7 849.2 1049.6C843.1 1049.6 838.6 1048.6 833.0 1045.9C829.6 1044.3 827.9 1043.1 824.7 1039.8C812.8 1027.8 811.3 1010.0 820.7 993.1C823.2 988.7 825.4 985.8 832.5 977.7C837.8 971.6 846.9 960.1 851.1 954.5C873.4 924.2 886.7 893.6 894.4 855.2C898.0 837.7 899.9 813.4 899.0 797.2C898.0 778.5 897.0 769.6 894.2 754.5C885.4 705.9 864.6 655.0 830.6 598.9C815.9 574.7 808.0 562.5 777.5 516.8C751.6 478.1 742.6 464.2 729.6 442.6C697.7 390.2 681.7 347.7 678.5 307.3C676.2 278.5 681.4 248.2 693.0 222.4C694.6 218.7 696.0 215.5 696.0 215.3C696.0 214.6 694.1 215.1 691.5 216.6C690.0 217.4 684.6 220.4 679.5 223.1C648.3 240.1 598.4 273.9 564.0 301.2C529.9 328.4 507.1 348.5 480.5 375.0C452.4 403.0 430.3 428.4 403.8 462.9C391.9 478.5 371.4 508.7 363.4 522.5C349.1 547.1 348.2 548.8 340.0 565.2C331.5 582.3 328.3 589.6 321.9 605.5C304.7 648.2 295.1 688.4 291.9 730.5C291.2 740.1 291.7 765.6 292.7 776.5C296.1 810.2 303.0 839.8 315.1 872.0C318.8 881.8 320.9 886.3 321.5 885.7C321.8 885.4 322.0 864.8 322.1 834.0C322.3 783.8 322.3 782.6 323.4 777.8C325.0 770.5 326.7 765.5 330.0 758.7C336.2 745.8 343.3 737.6 357.0 727.9C360.2 725.6 364.8 722.3 367.2 720.5C369.7 718.7 374.0 715.7 376.8 713.8C399.3 698.2 406.8 690.5 410.7 678.2C412.7 672.0 413.0 668.7 413.0 653.5L413.0 639.2L409.0 635.6C403.7 630.7 400.5 626.4 397.2 619.8C390.4 605.7 389.5 593.6 394.3 578.2C394.8 576.9 395.9 574.2 396.9 572.3C404.8 556.5 419.2 545.7 436.7 542.7C443.3 541.5 453.1 542.0 459.4 543.7C480.9 549.6 496.4 567.9 498.5 589.8C499.3 597.6 498.6 603.3 496.2 610.5C492.8 620.5 488.3 627.5 481.1 633.9C474.3 640.0 469.0 643.1 460.6 646.0L455.2 647.8L454.9 663.3C454.6 679.7 454.2 684.1 452.2 691.2C449.2 702.0 444.2 709.9 434.1 720.1C426.1 728.0 420.2 732.6 395.2 750.3C377.2 763.0 373.1 767.0 368.9 775.5C362.5 788.2 362.5 788.9 362.5 878.7L362.5 949.8L363.9 952.0C368.7 959.4 389.7 983.0 391.5 983.0C391.8 983.0 392.0 980.2 392.0 975.4C392.0 971.2 392.1 953.0 392.2 935.0C392.4 899.3 392.6 897.1 395.5 885.3C398.9 871.7 406.0 859.4 417.1 847.8C421.8 842.8 422.5 842.3 447.0 822.7C456.2 815.4 465.1 808.1 466.7 806.6C470.6 802.8 473.3 798.6 474.6 794.4L475.6 790.9L474.6 784.6C473.3 777.1 473.2 774.1 474.3 767.8C476.8 752.1 484.8 739.2 497.5 730.6C505.1 725.3 511.6 722.7 520.7 721.2C538.3 718.4 555.0 723.9 568.1 737.0C580.8 749.7 585.6 769.8 580.3 788.0C575.9 803.3 563.6 817.5 549.3 824.0C538.9 828.7 525.4 830.0 514.2 827.3C512.6 826.9 510.7 826.5 510.1 826.5C509.4 826.5 505.7 829.2 500.1 833.6C489.7 842.0 485.9 844.9 467.2 858.8C459.6 864.5 452.2 870.0 450.8 870.9C445.9 874.6 440.4 882.7 437.8 890.0C432.9 903.7 431.9 919.4 432.1 976.6L432.2 1016.4L433.5 1017.7C437.2 1021.7 458.5 1036.5 472.5 1044.7C477.0 1047.4 481.8 1050.2 483.0 1051.0C486.4 1053.1 504.2 1062.6 509.1 1065.0C511.6 1066.3 513.7 1067.0 514.2 1066.8C514.9 1066.6 515.0 1063.0 515.0 1026.0L515.0 985.4L509.6 980.1C501.8 972.4 497.7 965.6 495.3 956.4C492.6 946.3 492.6 937.6 495.3 927.5C497.7 918.2 503.9 907.9 510.6 901.7C514.3 898.4 520.8 894.0 524.3 892.5C541.0 885.2 556.5 885.2 571.8 892.7C577.2 895.4 584.3 900.3 587.3 903.6C589.7 906.1 594.4 912.9 596.0 916.0C598.9 921.7 601.5 933.0 601.5 939.9C601.5 943.3 600.1 951.0 598.6 955.8C593.9 970.7 581.2 984.8 567.2 990.3L563.2 991.9L563.1 1040.7L563.0 1089.6L565.6 1090.7C567.1 1091.4 574.2 1094.4 581.4 1097.5C613.3 1111.0 628.4 1118.4 649.0 1130.4C681.5 1149.4 709.4 1173.2 729.5 1199.2C740.0 1212.7 744.4 1219.0 752.8 1233.0C776.9 1272.5 791.1 1319.3 785.7 1341.4C784.1 1348.4 780.2 1355.8 775.0 1361.6C770.0 1367.3 760.5 1373.0 752.8 1375.0C747.7 1376.3 739.4 1376.7 735.0 1375.8ZM554.3 956.3C557.9 954.7 561.2 951.5 562.9 948.1C564.0 945.7 564.2 944.6 564.2 941.0C564.2 937.4 564.1 936.3 562.8 933.9C561.1 930.4 557.3 926.9 553.6 925.5C551.8 924.8 549.7 924.5 547.1 924.5C543.7 924.5 542.7 924.7 540.1 926.0C536.2 928.0 532.4 932.1 531.2 935.6C530.0 939.3 530.4 945.4 532.1 948.8C534.3 953.0 538.9 956.5 543.7 957.5C546.7 958.1 551.4 957.6 554.3 956.3ZM535.3 789.6C539.4 787.6 541.7 785.5 543.5 781.8C545.6 777.5 545.9 774.1 544.6 769.6C542.6 763.3 538.6 759.4 532.0 757.7C528.1 756.7 524.2 757.3 519.9 759.6C508.3 765.7 508.0 782.7 519.3 788.9C524.8 791.9 529.9 792.1 535.3 789.6ZM452.3 610.8C460.1 607.2 463.9 598.3 461.3 589.9C457.6 578.2 442.1 574.4 432.9 583.0C428.2 587.3 426.2 595.6 428.5 601.6C430.3 606.3 434.3 610.2 439.2 611.8C442.5 612.9 448.8 612.4 452.3 610.8Z"/><path class="fl" transform="matrix(0.2145 0 0 0.1924 147.35 79.24)" fill-rule="evenodd" d="M735.0 1375.8C725.4 1373.9 718.6 1370.6 712.6 1364.8C708.2 1360.6 705.6 1357.2 703.3 1352.5C699.9 1345.8 698.6 1340.8 697.3 1329.2C695.1 1310.4 690.2 1294.6 680.8 1276.2C670.9 1257.0 659.8 1241.7 644.0 1226.0C625.6 1207.6 605.3 1192.6 579.0 1177.9C566.8 1171.1 553.9 1165.0 529.0 1154.4C504.0 1143.8 500.9 1142.4 489.0 1137.0C475.4 1130.8 449.0 1117.5 439.8 1112.2C427.1 1104.9 409.5 1093.7 402.0 1088.2C400.5 1087.1 397.1 1084.6 394.5 1082.7C366.7 1062.5 335.5 1032.7 312.0 1003.8C294.4 982.1 276.8 954.6 263.1 927.2C245.1 891.3 231.0 851.8 224.7 820.2C219.8 795.0 217.8 774.4 217.9 746.0C217.9 727.3 218.3 719.4 220.5 701.5C228.6 633.4 258.0 555.6 304.7 478.5C314.6 462.3 337.4 429.1 349.7 413.2C389.5 361.8 430.1 319.2 480.7 275.8C494.0 264.5 531.0 235.2 542.8 226.7C576.7 202.2 591.1 192.5 618.8 175.5C655.7 152.8 673.2 142.9 707.5 125.8C733.9 112.6 754.9 103.2 766.0 99.6C772.5 97.5 783.1 96.9 789.7 98.2C799.2 100.3 808.4 107.4 813.2 116.5C821.0 131.4 819.0 147.7 807.7 161.8C775.7 201.4 762.2 227.2 756.2 260.2C755.4 264.3 755.3 267.9 755.3 279.8C755.3 293.8 755.4 294.5 756.9 303.0C762.1 331.9 775.0 361.8 802.1 407.6C813.6 427.1 828.2 449.6 860.2 497.6C883.7 532.7 891.9 545.6 902.7 563.7C913.9 582.6 914.4 583.4 921.0 595.6C944.1 638.9 956.9 671.9 967.4 715.0C971.0 729.6 974.3 751.0 976.1 770.0C976.9 779.2 976.9 813.6 976.1 823.0C974.4 841.7 970.0 867.0 965.7 883.0C961.5 898.5 954.3 919.9 950.0 929.5C949.0 931.8 946.9 936.4 945.5 939.7C941.0 950.0 931.5 967.7 923.6 980.5C910.2 1002.3 891.5 1026.3 880.3 1036.1C870.3 1044.9 859.5 1049.7 849.2 1049.6C843.1 1049.6 838.6 1048.6 833.0 1045.9C829.6 1044.3 827.9 1043.1 824.7 1039.8C812.8 1027.8 811.3 1010.0 820.7 993.1C823.2 988.7 825.4 985.8 832.5 977.7C837.8 971.6 846.9 960.1 851.1 954.5C873.4 924.2 886.7 893.6 894.4 855.2C898.0 837.7 899.9 813.4 899.0 797.2C898.0 778.5 897.0 769.6 894.2 754.5C885.4 705.9 864.6 655.0 830.6 598.9C815.9 574.7 808.0 562.5 777.5 516.8C751.6 478.1 742.6 464.2 729.6 442.6C697.7 390.2 681.7 347.7 678.5 307.3C676.2 278.5 681.4 248.2 693.0 222.4C694.6 218.7 696.0 215.5 696.0 215.3C696.0 214.6 694.1 215.1 691.5 216.6C690.0 217.4 684.6 220.4 679.5 223.1C648.3 240.1 598.4 273.9 564.0 301.2C529.9 328.4 507.1 348.5 480.5 375.0C452.4 403.0 430.3 428.4 403.8 462.9C391.9 478.5 371.4 508.7 363.4 522.5C349.1 547.1 348.2 548.8 340.0 565.2C331.5 582.3 328.3 589.6 321.9 605.5C304.7 648.2 295.1 688.4 291.9 730.5C291.2 740.1 291.7 765.6 292.7 776.5C296.1 810.2 303.0 839.8 315.1 872.0C318.8 881.8 320.9 886.3 321.5 885.7C321.8 885.4 322.0 864.8 322.1 834.0C322.3 783.8 322.3 782.6 323.4 777.8C325.0 770.5 326.7 765.5 330.0 758.7C336.2 745.8 343.3 737.6 357.0 727.9C360.2 725.6 364.8 722.3 367.2 720.5C369.7 718.7 374.0 715.7 376.8 713.8C399.3 698.2 406.8 690.5 410.7 678.2C412.7 672.0 413.0 668.7 413.0 653.5L413.0 639.2L409.0 635.6C403.7 630.7 400.5 626.4 397.2 619.8C390.4 605.7 389.5 593.6 394.3 578.2C394.8 576.9 395.9 574.2 396.9 572.3C404.8 556.5 419.2 545.7 436.7 542.7C443.3 541.5 453.1 542.0 459.4 543.7C480.9 549.6 496.4 567.9 498.5 589.8C499.3 597.6 498.6 603.3 496.2 610.5C492.8 620.5 488.3 627.5 481.1 633.9C474.3 640.0 469.0 643.1 460.6 646.0L455.2 647.8L454.9 663.3C454.6 679.7 454.2 684.1 452.2 691.2C449.2 702.0 444.2 709.9 434.1 720.1C426.1 728.0 420.2 732.6 395.2 750.3C377.2 763.0 373.1 767.0 368.9 775.5C362.5 788.2 362.5 788.9 362.5 878.7L362.5 949.8L363.9 952.0C368.7 959.4 389.7 983.0 391.5 983.0C391.8 983.0 392.0 980.2 392.0 975.4C392.0 971.2 392.1 953.0 392.2 935.0C392.4 899.3 392.6 897.1 395.5 885.3C398.9 871.7 406.0 859.4 417.1 847.8C421.8 842.8 422.5 842.3 447.0 822.7C456.2 815.4 465.1 808.1 466.7 806.6C470.6 802.8 473.3 798.6 474.6 794.4L475.6 790.9L474.6 784.6C473.3 777.1 473.2 774.1 474.3 767.8C476.8 752.1 484.8 739.2 497.5 730.6C505.1 725.3 511.6 722.7 520.7 721.2C538.3 718.4 555.0 723.9 568.1 737.0C580.8 749.7 585.6 769.8 580.3 788.0C575.9 803.3 563.6 817.5 549.3 824.0C538.9 828.7 525.4 830.0 514.2 827.3C512.6 826.9 510.7 826.5 510.1 826.5C509.4 826.5 505.7 829.2 500.1 833.6C489.7 842.0 485.9 844.9 467.2 858.8C459.6 864.5 452.2 870.0 450.8 870.9C445.9 874.6 440.4 882.7 437.8 890.0C432.9 903.7 431.9 919.4 432.1 976.6L432.2 1016.4L433.5 1017.7C437.2 1021.7 458.5 1036.5 472.5 1044.7C477.0 1047.4 481.8 1050.2 483.0 1051.0C486.4 1053.1 504.2 1062.6 509.1 1065.0C511.6 1066.3 513.7 1067.0 514.2 1066.8C514.9 1066.6 515.0 1063.0 515.0 1026.0L515.0 985.4L509.6 980.1C501.8 972.4 497.7 965.6 495.3 956.4C492.6 946.3 492.6 937.6 495.3 927.5C497.7 918.2 503.9 907.9 510.6 901.7C514.3 898.4 520.8 894.0 524.3 892.5C541.0 885.2 556.5 885.2 571.8 892.7C577.2 895.4 584.3 900.3 587.3 903.6C589.7 906.1 594.4 912.9 596.0 916.0C598.9 921.7 601.5 933.0 601.5 939.9C601.5 943.3 600.1 951.0 598.6 955.8C593.9 970.7 581.2 984.8 567.2 990.3L563.2 991.9L563.1 1040.7L563.0 1089.6L565.6 1090.7C567.1 1091.4 574.2 1094.4 581.4 1097.5C613.3 1111.0 628.4 1118.4 649.0 1130.4C681.5 1149.4 709.4 1173.2 729.5 1199.2C740.0 1212.7 744.4 1219.0 752.8 1233.0C776.9 1272.5 791.1 1319.3 785.7 1341.4C784.1 1348.4 780.2 1355.8 775.0 1361.6C770.0 1367.3 760.5 1373.0 752.8 1375.0C747.7 1376.3 739.4 1376.7 735.0 1375.8ZM554.3 956.3C557.9 954.7 561.2 951.5 562.9 948.1C564.0 945.7 564.2 944.6 564.2 941.0C564.2 937.4 564.1 936.3 562.8 933.9C561.1 930.4 557.3 926.9 553.6 925.5C551.8 924.8 549.7 924.5 547.1 924.5C543.7 924.5 542.7 924.7 540.1 926.0C536.2 928.0 532.4 932.1 531.2 935.6C530.0 939.3 530.4 945.4 532.1 948.8C534.3 953.0 538.9 956.5 543.7 957.5C546.7 958.1 551.4 957.6 554.3 956.3ZM535.3 789.6C539.4 787.6 541.7 785.5 543.5 781.8C545.6 777.5 545.9 774.1 544.6 769.6C542.6 763.3 538.6 759.4 532.0 757.7C528.1 756.7 524.2 757.3 519.9 759.6C508.3 765.7 508.0 782.7 519.3 788.9C524.8 791.9 529.9 792.1 535.3 789.6ZM452.3 610.8C460.1 607.2 463.9 598.3 461.3 589.9C457.6 578.2 442.1 574.4 432.9 583.0C428.2 587.3 426.2 595.6 428.5 601.6C430.3 606.3 434.3 610.2 439.2 611.8C442.5 612.9 448.8 612.4 452.3 610.8Z"/><path class="fl fl2" fill="url(#lkb)" transform="matrix(0.2145 0 0 0.1924 147.35 79.24)" fill-rule="evenodd" d="M735.0 1375.8C725.4 1373.9 718.6 1370.6 712.6 1364.8C708.2 1360.6 705.6 1357.2 703.3 1352.5C699.9 1345.8 698.6 1340.8 697.3 1329.2C695.1 1310.4 690.2 1294.6 680.8 1276.2C670.9 1257.0 659.8 1241.7 644.0 1226.0C625.6 1207.6 605.3 1192.6 579.0 1177.9C566.8 1171.1 553.9 1165.0 529.0 1154.4C504.0 1143.8 500.9 1142.4 489.0 1137.0C475.4 1130.8 449.0 1117.5 439.8 1112.2C427.1 1104.9 409.5 1093.7 402.0 1088.2C400.5 1087.1 397.1 1084.6 394.5 1082.7C366.7 1062.5 335.5 1032.7 312.0 1003.8C294.4 982.1 276.8 954.6 263.1 927.2C245.1 891.3 231.0 851.8 224.7 820.2C219.8 795.0 217.8 774.4 217.9 746.0C217.9 727.3 218.3 719.4 220.5 701.5C228.6 633.4 258.0 555.6 304.7 478.5C314.6 462.3 337.4 429.1 349.7 413.2C389.5 361.8 430.1 319.2 480.7 275.8C494.0 264.5 531.0 235.2 542.8 226.7C576.7 202.2 591.1 192.5 618.8 175.5C655.7 152.8 673.2 142.9 707.5 125.8C733.9 112.6 754.9 103.2 766.0 99.6C772.5 97.5 783.1 96.9 789.7 98.2C799.2 100.3 808.4 107.4 813.2 116.5C821.0 131.4 819.0 147.7 807.7 161.8C775.7 201.4 762.2 227.2 756.2 260.2C755.4 264.3 755.3 267.9 755.3 279.8C755.3 293.8 755.4 294.5 756.9 303.0C762.1 331.9 775.0 361.8 802.1 407.6C813.6 427.1 828.2 449.6 860.2 497.6C883.7 532.7 891.9 545.6 902.7 563.7C913.9 582.6 914.4 583.4 921.0 595.6C944.1 638.9 956.9 671.9 967.4 715.0C971.0 729.6 974.3 751.0 976.1 770.0C976.9 779.2 976.9 813.6 976.1 823.0C974.4 841.7 970.0 867.0 965.7 883.0C961.5 898.5 954.3 919.9 950.0 929.5C949.0 931.8 946.9 936.4 945.5 939.7C941.0 950.0 931.5 967.7 923.6 980.5C910.2 1002.3 891.5 1026.3 880.3 1036.1C870.3 1044.9 859.5 1049.7 849.2 1049.6C843.1 1049.6 838.6 1048.6 833.0 1045.9C829.6 1044.3 827.9 1043.1 824.7 1039.8C812.8 1027.8 811.3 1010.0 820.7 993.1C823.2 988.7 825.4 985.8 832.5 977.7C837.8 971.6 846.9 960.1 851.1 954.5C873.4 924.2 886.7 893.6 894.4 855.2C898.0 837.7 899.9 813.4 899.0 797.2C898.0 778.5 897.0 769.6 894.2 754.5C885.4 705.9 864.6 655.0 830.6 598.9C815.9 574.7 808.0 562.5 777.5 516.8C751.6 478.1 742.6 464.2 729.6 442.6C697.7 390.2 681.7 347.7 678.5 307.3C676.2 278.5 681.4 248.2 693.0 222.4C694.6 218.7 696.0 215.5 696.0 215.3C696.0 214.6 694.1 215.1 691.5 216.6C690.0 217.4 684.6 220.4 679.5 223.1C648.3 240.1 598.4 273.9 564.0 301.2C529.9 328.4 507.1 348.5 480.5 375.0C452.4 403.0 430.3 428.4 403.8 462.9C391.9 478.5 371.4 508.7 363.4 522.5C349.1 547.1 348.2 548.8 340.0 565.2C331.5 582.3 328.3 589.6 321.9 605.5C304.7 648.2 295.1 688.4 291.9 730.5C291.2 740.1 291.7 765.6 292.7 776.5C296.1 810.2 303.0 839.8 315.1 872.0C318.8 881.8 320.9 886.3 321.5 885.7C321.8 885.4 322.0 864.8 322.1 834.0C322.3 783.8 322.3 782.6 323.4 777.8C325.0 770.5 326.7 765.5 330.0 758.7C336.2 745.8 343.3 737.6 357.0 727.9C360.2 725.6 364.8 722.3 367.2 720.5C369.7 718.7 374.0 715.7 376.8 713.8C399.3 698.2 406.8 690.5 410.7 678.2C412.7 672.0 413.0 668.7 413.0 653.5L413.0 639.2L409.0 635.6C403.7 630.7 400.5 626.4 397.2 619.8C390.4 605.7 389.5 593.6 394.3 578.2C394.8 576.9 395.9 574.2 396.9 572.3C404.8 556.5 419.2 545.7 436.7 542.7C443.3 541.5 453.1 542.0 459.4 543.7C480.9 549.6 496.4 567.9 498.5 589.8C499.3 597.6 498.6 603.3 496.2 610.5C492.8 620.5 488.3 627.5 481.1 633.9C474.3 640.0 469.0 643.1 460.6 646.0L455.2 647.8L454.9 663.3C454.6 679.7 454.2 684.1 452.2 691.2C449.2 702.0 444.2 709.9 434.1 720.1C426.1 728.0 420.2 732.6 395.2 750.3C377.2 763.0 373.1 767.0 368.9 775.5C362.5 788.2 362.5 788.9 362.5 878.7L362.5 949.8L363.9 952.0C368.7 959.4 389.7 983.0 391.5 983.0C391.8 983.0 392.0 980.2 392.0 975.4C392.0 971.2 392.1 953.0 392.2 935.0C392.4 899.3 392.6 897.1 395.5 885.3C398.9 871.7 406.0 859.4 417.1 847.8C421.8 842.8 422.5 842.3 447.0 822.7C456.2 815.4 465.1 808.1 466.7 806.6C470.6 802.8 473.3 798.6 474.6 794.4L475.6 790.9L474.6 784.6C473.3 777.1 473.2 774.1 474.3 767.8C476.8 752.1 484.8 739.2 497.5 730.6C505.1 725.3 511.6 722.7 520.7 721.2C538.3 718.4 555.0 723.9 568.1 737.0C580.8 749.7 585.6 769.8 580.3 788.0C575.9 803.3 563.6 817.5 549.3 824.0C538.9 828.7 525.4 830.0 514.2 827.3C512.6 826.9 510.7 826.5 510.1 826.5C509.4 826.5 505.7 829.2 500.1 833.6C489.7 842.0 485.9 844.9 467.2 858.8C459.6 864.5 452.2 870.0 450.8 870.9C445.9 874.6 440.4 882.7 437.8 890.0C432.9 903.7 431.9 919.4 432.1 976.6L432.2 1016.4L433.5 1017.7C437.2 1021.7 458.5 1036.5 472.5 1044.7C477.0 1047.4 481.8 1050.2 483.0 1051.0C486.4 1053.1 504.2 1062.6 509.1 1065.0C511.6 1066.3 513.7 1067.0 514.2 1066.8C514.9 1066.6 515.0 1063.0 515.0 1026.0L515.0 985.4L509.6 980.1C501.8 972.4 497.7 965.6 495.3 956.4C492.6 946.3 492.6 937.6 495.3 927.5C497.7 918.2 503.9 907.9 510.6 901.7C514.3 898.4 520.8 894.0 524.3 892.5C541.0 885.2 556.5 885.2 571.8 892.7C577.2 895.4 584.3 900.3 587.3 903.6C589.7 906.1 594.4 912.9 596.0 916.0C598.9 921.7 601.5 933.0 601.5 939.9C601.5 943.3 600.1 951.0 598.6 955.8C593.9 970.7 581.2 984.8 567.2 990.3L563.2 991.9L563.1 1040.7L563.0 1089.6L565.6 1090.7C567.1 1091.4 574.2 1094.4 581.4 1097.5C613.3 1111.0 628.4 1118.4 649.0 1130.4C681.5 1149.4 709.4 1173.2 729.5 1199.2C740.0 1212.7 744.4 1219.0 752.8 1233.0C776.9 1272.5 791.1 1319.3 785.7 1341.4C784.1 1348.4 780.2 1355.8 775.0 1361.6C770.0 1367.3 760.5 1373.0 752.8 1375.0C747.7 1376.3 739.4 1376.7 735.0 1375.8ZM554.3 956.3C557.9 954.7 561.2 951.5 562.9 948.1C564.0 945.7 564.2 944.6 564.2 941.0C564.2 937.4 564.1 936.3 562.8 933.9C561.1 930.4 557.3 926.9 553.6 925.5C551.8 924.8 549.7 924.5 547.1 924.5C543.7 924.5 542.7 924.7 540.1 926.0C536.2 928.0 532.4 932.1 531.2 935.6C530.0 939.3 530.4 945.4 532.1 948.8C534.3 953.0 538.9 956.5 543.7 957.5C546.7 958.1 551.4 957.6 554.3 956.3ZM535.3 789.6C539.4 787.6 541.7 785.5 543.5 781.8C545.6 777.5 545.9 774.1 544.6 769.6C542.6 763.3 538.6 759.4 532.0 757.7C528.1 756.7 524.2 757.3 519.9 759.6C508.3 765.7 508.0 782.7 519.3 788.9C524.8 791.9 529.9 792.1 535.3 789.6ZM452.3 610.8C460.1 607.2 463.9 598.3 461.3 589.9C457.6 578.2 442.1 574.4 432.9 583.0C428.2 587.3 426.2 595.6 428.5 601.6C430.3 606.3 434.3 610.2 439.2 611.8C442.5 612.9 448.8 612.4 452.3 610.8Z"/><g class="lt tg wmt" style="--i:5"><text x="354" y="306" textLength="372" lengthAdjust="spacing" font-family="Archivo" font-stretch="125%" font-weight="500" font-size="27.5">GROW TECH</text></g></svg><h2 class="big">Prova <span class="gtl">NEX</span> nella tua serra.</h2><p>Stiamo selezionando le prime aziende e i primi centri di ricerca per i progetti pilota.</p></div>
+    <div class="paths">
+      <a class="btnp" href="mailto:info@neuragrowtech.com?subject=Progetto%20pilota%20NEX">Richiedi un progetto pilota <span aria-hidden="true">→</span></a>
+      <div class="pa"><small>Aziende agricole e serre</small><a href="mailto:a.pistillo@neuragrowtech.com">a.pistillo@neuragrowtech.com</a></div>
+      <div class="pa"><small>Investitori e partner</small><a href="mailto:m.landolfo@neuragrowtech.com">m.landolfo@neuragrowtech.com</a></div>
+      <div class="pa"><small>Ricerca e collaborazioni scientifiche</small><a href="mailto:f.perotti@neuragrowtech.com">f.perotti@neuragrowtech.com</a></div>
+      <div class="pa gen"><small>Informazioni generali</small><a href="mailto:info@neuragrowtech.com">info@neuragrowtech.com</a></div>
+    </div>
+    <div class="game">Nell’attesa: riesci a fare il lavoro di NEX? <a href="https://neuragrowtech.com/gioco/">Gioca →</a></div>
   </div>
 </footer>
+<div class="legal gut"><div class="wrap">
+<div class="lb"><b>Neura GrowTech</b><span>Progetto imprenditoriale in fase di costituzione, nato dalla ricerca del DISTAL, Università di Bologna.</span></div>
+<nav class="ll"><a href="mailto:info@neuragrowtech.com">info@neuragrowtech.com</a><span>© 2026</span></nav>
+</div></div>
+
+
+
+<script data-cfasync="false">
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nav = document.getElementById('nav');
+  function prog(el){ // 0 all'inizio della sezione, 1 quando il suo fondo arriva in fondo allo schermo
+    var r = el.getBoundingClientRect(), h = window.innerHeight, total = r.height - h;
+    return total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : (r.top < h ? 1 : 0);
+  }
+  var hero = document.getElementById('hero'), grow = document.getElementById('grow'), sys = document.getElementById('sys'),
+      loop = document.getElementById('loop'), trials = document.querySelector('.trials');
+  var gImgs = grow.querySelectorAll('.pics img'), gBar = grow.querySelectorAll('.bar span'), stage = document.getElementById('stage');
+  var labels = ['Trapianto', 'Crescita', 'Pieno sviluppo'];
+  var sysItems = document.querySelectorAll('#sysl li'), pins = sys.querySelectorAll('.pin');
+  var arc1 = document.getElementById('arc1'), arc2 = document.getElementById('arc2'), ret = document.getElementById('ret');
+  [arc1, arc2].forEach(function(p){ var L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = reduce ? 0 : L; p._L = L; });
+  function set(id, on){ document.getElementById(id).classList.toggle('on', on); }
+  var ticking = false;
+  function frame(){
+    ticking = false;
+    nav.classList.toggle('solid', hero.getBoundingClientRect().bottom < 80);
+    if (!reduce) hero.style.setProperty('--p', prog(hero).toFixed(3));
+    // crescita
+    var gp = prog(grow), gi = Math.min(2, Math.floor(gp * 3.2));
+    for (var i = 0; i < 3; i++){ gImgs[i].classList.toggle('on', i === gi); gBar[i].classList.toggle('on', i <= gi); }
+    stage.textContent = labels[gi];
+    // sistema
+    var sp = prog(sys), si = Math.min(2, Math.floor(sp * 3.3));
+    for (i = 0; i < 3; i++) sysItems[i].classList.toggle('on', i === si);
+    pins[0].classList.toggle('on', si === 0); pins[1].classList.toggle('on', si === 1);
+    sys.classList.toggle('s3', si === 2);
+    // ciclo
+    var lp = prog(loop);
+    if (!reduce){
+      arc1.style.strokeDashoffset = arc1._L * (1 - Math.min(1, Math.max(0, lp / .33)));
+      arc2.style.strokeDashoffset = arc2._L * (1 - Math.min(1, Math.max(0, (lp - .33) / .33)));
+    }
+    set('r2', lp > .3 || reduce); set('t2', lp > .3 || reduce);
+    set('r3', lp > .63 || reduce); set('t3', lp > .63 || reduce);
+    ret.classList.toggle('on', lp > .8 || reduce);
+    // laboratorio / serra
+    if (!reduce) trials.style.setProperty('--s', Math.min(1, prog(trials) * 1.4).toFixed(3));
+  }
+  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(frame); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  if (reduce) trials.style.setProperty('--s', 1);
+  frame();
+  // apertura: NEX "analizza" la serra
+  var ovs = document.querySelectorAll('.hero .ov'), panel = document.getElementById('panel');
+  if (reduce){ ovs.forEach(function(o){ o.classList.add('on'); }); panel.classList.add('on'); }
+  else {
+    ovs.forEach(function(o){ setTimeout(function(){ o.classList.add('on'); }, 700 + (+o.dataset.d) * 450); });
+    setTimeout(function(){ panel.classList.add('on'); }, 700 + 4 * 450);
+    var ec = document.getElementById('pv-ec'), ph = document.getElementById('pv-ph'), k = 0;
+    setInterval(function(){ if (document.hidden) return; k++;
+      ec.textContent = (1.8 + [0, .02, .01, -.01][k % 4]).toFixed(2).replace('.', ',') + ' mS/cm';
+      ph.textContent = (5.9 + [0, .01, -.01, .02][k % 4]).toFixed(2).replace('.', ','); }, 2400);
+  }
+  // il logo si disegna quando arrivi in fondo
+  var mk = document.getElementById('mark'), ln = mk.querySelector('.ln');
+  if (!reduce && 'IntersectionObserver' in window){
+    var L = ln.getTotalLength(); ln.style.strokeDasharray = L; ln.style.strokeDashoffset = L;
+    new IntersectionObserver(function(es, ob){ es.forEach(function(e){ if (!e.isIntersecting) return; ob.disconnect();
+      ln.style.transition = 'stroke-dashoffset 2.2s cubic-bezier(.6,0,.3,1)'; requestAnimationFrame(function(){ ln.style.strokeDashoffset = 0; });
+      setTimeout(function(){ mk.classList.add('done'); }, 2000); }); }, { threshold: .6 }).observe(mk);
+  } else mk.classList.add('done');
+  // tema chiaro / scuro
+  document.getElementById('tt').addEventListener('click', function(){
+    var t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = t; try { localStorage.setItem('ngt-theme', t); } catch (e) {}
+  });
+  // numeri che contano quando entrano nello schermo
+  var nums = document.querySelectorAll('.num');
+  function count(n){
+    var b = n.querySelector('b'), to = +b.dataset.to, pre = b.dataset.pre, t0 = null;
+    if (reduce){ b.textContent = pre + to + '%'; return; }
+    function st(ts){ if (!t0) t0 = ts; var k = Math.min(1, (ts - t0) / 1300), e = 1 - Math.pow(1 - k, 3);
+      b.textContent = pre + Math.round(to * e) + '%'; if (k < 1) requestAnimationFrame(st); }
+    requestAnimationFrame(st);
+  }
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ var n = e.target; var idx = [].indexOf.call(nums, n);
+      setTimeout(function(){ n.classList.add('on'); count(n); }, 120); io.unobserve(n); } }); }, { threshold: .5 });
+    nums.forEach(function(n){ io.observe(n); });
+  } else nums.forEach(function(n){ n.classList.add('on'); count(n); });
+})();
+</script>
+
 </body>
 </html>

@@ -57,6 +57,14 @@ def hint(current):
     return f'<div class="lang-hint" id="lang-hint" hidden>\n  {items}\n</div>'
 
 
+def home_it():
+    """La home italiana (nuovo design) vive in _build/home-it.html e viene copiata così com'è."""
+    src = os.path.join(ROOT, "_build", "home-it.html")
+    if os.path.exists(src):
+        open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(open(src, encoding="utf-8").read())
+        print("scritto index.html (nuova home italiana)")
+
+
 def build():
     tpl = open(os.path.join(ROOT, "_build", "template.html"), encoding="utf-8").read()
     ok = True
@@ -117,6 +125,7 @@ def inline_game():
 
 if __name__ == "__main__":
     ok = build()
+    home_it()
     game_pages.build_pages(ROOT)
     ok = inline_game() and ok
     sys.exit(0 if ok else 1)
